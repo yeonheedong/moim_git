@@ -363,6 +363,7 @@ exports.fundTransferEvent = function( callback ) {
 //=================================
 
 exports.addressCreate = function(password){
+	this.unlockAccount(web3.eth.defaultAccount,'',30);
 	var _promise =  personal.newAccount(password).then(function(text){
 		//디비저장 여기에서 가능
 		console.log("address : " + text);
