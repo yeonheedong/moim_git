@@ -1,0 +1,34 @@
+뷰 엔진이 ejs로 설정되었습니다.
+config.server_port : 3000
+route_loader.init 호출됨.
+설정에 정의된 라우팅 모듈의 수 : 4
+./post 파일에서 모듈정보를 읽어옴.
+라우팅 모듈 [addpost]이(가) 설정됨.
+./post 파일에서 모듈정보를 읽어옴.
+라우팅 모듈 [showpost]이(가) 설정됨.
+./post 파일에서 모듈정보를 읽어옴.
+라우팅 모듈 [listpost]이(가) 설정됨.
+./post 파일에서 모듈정보를 읽어옴.
+라우팅 모듈 [listpost]이(가) 설정됨.
+config/passport 호출됨.
+3가지 passport 인증방식 설정됨.
+user_passport 호출됨.
+서버가 시작되었습니다. 포트 : 3000
+init() 호출됨.
+connect() 호출됨.
+connect() 호출됨.
+uncaughtException 발생함 : TypeError: Cannot read property 'db_url' of undefined
+서버 프로세스 종료하지 않고 유지함.
+TypeError: Cannot read property 'db_url' of undefined
+    at NativeConnection.connect (/root/gittest/moim_git/database/database.js:29:25)
+    at emitNone (events.js:86:13)
+    at NativeConnection.emit (events.js:185:7)
+    at NativeConnection.set (/root/gittest/moim_git/node_modules/mongoose/lib/connection.js:116:12)
+    at /root/gittest/moim_git/node_modules/mongoose/lib/connection.js:505:26
+    at err (/root/gittest/moim_git/node_modules/mongoose/node_modules/mongodb/lib/utils.js:415:14)
+    at executeCallback (/root/gittest/moim_git/node_modules/mongoose/node_modules/mongodb/lib/utils.js:404:25)
+    at err (/root/gittest/moim_git/node_modules/mongoose/node_modules/mongodb/lib/operations/mongo_client_ops.js:285:21)
+    at connectCallback (/root/gittest/moim_git/node_modules/mongoose/node_modules/mongodb/lib/operations/mongo_client_ops.js:241:5)
+    at process.nextTick.err (/root/gittest/moim_git/node_modules/mongoose/node_modules/mongodb/lib/operations/mongo_client_ops.js:463:7)
+    at _combinedTickCallback (internal/process/next_tick.js:73:7)
+    at process._tickCallback (internal/process/next_tick.js:104:9)
