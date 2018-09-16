@@ -368,18 +368,8 @@ exports.addressCreate = function(password){
 		//디비저장 여기에서 가능
 		console.log("address : " + text);
 		Meet.Sign_up(text);
-		web3.eth.sendTransaction({
-				from: web3.eth.defaultAccount,
-				to: text,
-				value: web3.toWei(10,'ether'),
-				gas: 28000}, function (err, hash) {
-				if (err) {
-						console.log(err);
-			} else {
-						console.log("10이더와 100코인 전송 완료");
-						return text;
-					}
-		});
+		console.log("100코인 전송 완료");
+		return text;
 	})
 }
 
