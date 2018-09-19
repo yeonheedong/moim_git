@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang=en>
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>새로운 모임 :: MOIM</title>
+        
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+
+    <script src="./config/datepicker.kr.js" charset="UTF-8"></script>
+        
+    <script type='text/javascript'>
+
+    $(function(){
+
+        $('.input-group.date').datepicker({
+
+            calendarWeeks: false,
+
+            todayHighlight: true,
+
+            autoclose: true,
+
+            format: "yyyy/mm/dd",
+
+            language: "kr"
+
+        });
+
+    });
+
+    </script>
+
+
+    
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron.css" rel="stylesheet">
+	</head>
+	<body>
+    <header>
+       <% include ./login_header.ejs%>>
+    </header>
+        
+    <main role="main">
+        <br><br><br>
+		<div class="container">
+
+			<div class="col-sm-8">
+		
+			    <br><br>
+                <h1>새로운 모임 만들기</h1><br>
+			
+			
+			    <form action="/new" method="post" >
+			      <div class="mb-4">
+                  <label for="title">모임명</label>
+                  <input type="text" class="form-control" name="title" required>
+                    <div class="invalid-feedback">
+                    모임명을 입력해주세요
+                    </div>
+                 </div>
+
+                  <div class="mb-4">
+                  <label for="introduction">모임소개</label>
+                  <input type="text" class="form-control" name="introduction" required>
+                   <div class="invalid-feedback">
+                   모임소개를 입력해주세요
+                   </div>
+                  </div>
+                    
+                  <div class="mb-4">
+                  <label for="keyword">모임주제</label>
+                  <select class="custom-select d-block w-100" name="keyword" required>
+                      <option value>선택</option>
+                      <option>친목</option><option>운동</option><option>스터디</option><option>투자</option><option>코딩</option>
+                   <div class="invalid-feedback">
+                   모임소개를 입력해주세요
+                   </div>
+                    </select>
+                  </div>
+                    
+                    <div class="mb-4">
+                  <label for="min_num">최소인원</label>
+                  <input type="text" class="form-control" name="min_num" required>
+                   <div class="invalid-feedback">
+                   최소인원을 입력해주세요
+                   </div>
+                  </div>
+                    
+                     <div class="mb-4">
+                  <label for="max_num">최대인원</label>
+                  <input type="text" class="form-control" name="max_num" required>
+                   <div class="invalid-feedback">
+                   최대인원을 입력해주세요
+                   </div>
+                  </div>
+                    
+                    <div class="mb-4">
+                  <label for="location">지역</label>
+                  <select class="custom-select d-block w-100" name="location" required>
+                      <option value>선택</option>
+                      <option>서울시 강남구</option><option>서울시 서대문구</option><option>서울시 은평구</option><option>경기</option><option>제주</option>
+                   <div class="invalid-feedback">
+                   지역을 입력해주세요
+                   </div>
+                    </select>
+                  </div>
+                    
+                    <div class="mb-4">
+                  <label for="start">시작일</label>
+        
+                    <div class="form-group">
+                        <input id="start" />
+                        <script>
+                            $('#start').datepicker({
+                                uiLibrary: 'bootstrap4'
+                            });
+                        </script>  
+                    </div>
+                </div>
+                        
+                        <div class="mb-4">
+                  <label for="finish">종료일</label>
+                
+                    <div class="form-group">
+                        <input id="finish" />
+                        <script>
+                            $('#finish').datepicker({
+                                uiLibrary: 'bootstrap4'
+                            });
+                        </script>  
+                    </div>
+                </div>
+                    
+                 <div class="mb-4">
+                  <label for="start_at">모집 시작일</label>
+        
+                    <div class="form-group">
+                        <input id="start_at" />
+                        <script>
+                            $('#start_at').datepicker({
+                                uiLibrary: 'bootstrap4'
+                            });
+                        </script>                              
+                    </div>
+                </div>
+                        
+                        <div class="mb-4">
+                  <label for="finish_at">모집 종료일</label>
+                
+                    <div class="form-group">
+                        <input id="finish_at" />
+                        <script>
+                            $('#finish_at').datepicker({
+                                uiLibrary: 'bootstrap4'
+                            });
+                        </script> 
+                    </div>
+                </div>
+                    
+               
+  
+
+                <script type="text/javascript">
+                    $(function () {
+                        $('#start').datetimepicker({
+                            uiLibrary: 'bootstrap4',
+                            iconsLibrary: 'fontawesome',
+                            minDate: today,
+                            maxDate: function () {
+                                return $('#endDate').val();
+                            }
+                        });
+                        $('#finish').datetimepicker({
+                            useCurrent: false //Important! See issue #1075
+                            uiLibrary: 'bootstrap4',
+                            iconsLibrary: 'fontawesome',
+                            minDate: function () {
+                                return $('#startDate').val();
+                            }
+                        });
+                       
+                </script>
+                                    
+                    
+                    
+			
+			     <hr class="mb-4">
+                 <button class="btn btn-primary btn-lg btn-block" type="submit">모임 만들기</button>
+			    </form>
+			
+			    <hr>
+			
+                <p>자세한 약관이 궁금하신가요? <a href="/#">확인하기</a></p>
+			    <p><a href="/">홈으로</a>.</p>
+
+			</div>
+		
+		</div>
+      </main>
+	</body>
+</html>
