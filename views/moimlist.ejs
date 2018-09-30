@@ -1,0 +1,109 @@
+<%if(contents.length>0){%>
+        <%var i = 0;%>
+        <%contents.forEach(function(item){%>
+        <%i++;%>
+        <tr>
+            <td class="number"><%=i%></td>
+            <td class="title"><a href="/boards/view?id=<%=item._id%>"><%=item.title%></a></td>
+            <td class="writer"><%=item.writer%></td>
+            <td class="date"><%=dateFormatChange(item.date)%></td>
+            <td class="cnt"><%=item.count%></td>
+        </tr>
+        <%})%>
+        <%} else {%>
+        <tr>
+            <td colspan="5">게시물이 없습니다.</td>
+        </tr>
+<%}%>
+
+<!DOCTYPE html>
+<html lang=en>
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>MOIM</title>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="form-validation.css" rel="stylesheet">
+	</head>
+	<body>
+    <header>
+       <% include ./login_header.ejs%>
+    </header>
+        
+       <main role="main">
+    <br><br><br>
+      <section class="jumbotron text-center">
+          <form class="needs-validation" novalidate>
+        <div class="container">
+          <h1 class="jumbotron-heading">MOIM</h1>
+          <br>
+            <input class="form-control mr-sm-2 mb-2" type="text" placeholder="관심 있는 모임을 찾아보세요!" aria-label="Search" style="width:800px" display="inline">
+            <div class="btn-toolbar mb-2 mb-md-2">
+              <div class="btn-group mr-2">
+                <button class="btn btn-sm btn-outline-secondary">Share</button>
+                <button class="btn btn-sm btn-outline-secondary">Export</button>
+              </div>
+              <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                <span data-feather="calendar"></span>
+                This week
+              </button>
+            </div>
+        </div>
+          </form>
+      </section>
+
+        <div class="container">
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+        <div class="btn-toolbar mb-2 mb-md-2">
+              <div class="btn-group mr-2">
+                <button class="btn btn-sm btn-outline-secondary">Share</button>
+                <button class="btn btn-sm btn-outline-secondary">Export</button>
+              </div>
+              <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                <span data-feather="calendar"></span>
+                This week
+              </button>
+            </div>
+        <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
+        
+        <div class="media text-muted pt-3">
+          <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
+          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <strong class="d-block text-gray-dark">@username</strong>
+            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+          </p>
+        </div>
+        <div class="media text-muted pt-3">
+          <img data-src="holder.js/32x32?theme=thumb&bg=e83e8c&fg=e83e8c&size=1" alt="" class="mr-2 rounded">
+          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <strong class="d-block text-gray-dark">@username</strong>
+            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+          </p>
+        </div>
+        <div class="media text-muted pt-3">
+          <img data-src="holder.js/32x32?theme=thumb&bg=6f42c1&fg=6f42c1&size=1" alt="" class="mr-2 rounded">
+          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <strong class="d-block text-gray-dark">@username</strong>
+            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+          </p>
+        </div>
+        <small class="d-block text-right mt-3">
+          <a href="#">All updates</a>
+        </small>
+      </div>
+            
+        </div>
+        </main>			
+	</body>
+</html>

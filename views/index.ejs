@@ -14,6 +14,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 
+      
     <!-- Custom styles for this template -->
     <link href="album.css" rel="stylesheet">
   </head>
@@ -38,7 +39,7 @@
           <form class="needs-validation" novalidate>
         <div class="container">
           <h1 class="jumbotron-heading">MOIM</h1>
-          <img src="views/mainlogo2.png" width="478" height="190">
+          <img src="./mainlogo2.png" width="478" height="190">
           <br>
             <input class="form-control mr-sm-2" type="text" placeholder="관심 있는 모임을 찾아보세요!" aria-label="Search" style="width:800px" display="inline">
             <nav class="my-2 my-md-0 mr-md-3">
@@ -50,6 +51,24 @@
 
       <div class="album py-5">
         <div class="container">
+            
+            <% if(Moim.length>0){ %>
+                        <% var i=0;%>
+                        <% Moim.forEach(function(Moim){%>
+                        <%i++;%>
+                        <tr>
+                            <div class="mb-2">
+                            <td class="title">모임이름<a href="/moimDetail?id=<%= Moim.moim_id%>"><%= Moim.moim_id %></a></td>
+                            <td for="data">날짜<%=Moim.createdAt%></td>
+                            <td for="state">진행상태<%=Moim.state%></td>
+                            </div>
+                        </tr>
+                        <%})%>
+                        <%}else{%>
+                        <tr>
+                            <td class="noData" colspan="5"> 모임이 없습니다 :'( </td>
+                        </tr>
+            <%}%>
 
           <div class="row">
             <div class="col-md-4">
