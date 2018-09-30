@@ -1,8 +1,40 @@
-
+var ObjectID = require('mongodb').ObjectID;
 module.exports = function(router, MoimList) {
 
     
     console.log('moimlist 호출됨.');
+    
+    // 로그인 전 인덱스 화면
+    router.route('/').get(function(req, res) {
+        console.log('/ 패스 요청됨.');
+        
+        var database = req.app.get('database'); 
+        
+        console.log("모든 모임 정보 출력");
+        
+        var searchMoim = new database.Moim();
+        
+        database.Moim.find({}).sort({createdAt:-1}).exec(function(err, searchMoim){
+            if(err) throw err;
+                res.render("index.ejs", {Moim:searchMoim});                          
+            });
+    });
+    
+    // 로그인 후 인덱스 화면
+    router.route('/home').get(function(req, res) {
+        console.log('/home 패스 요청됨.');
+        
+        var database = req.app.get('database'); 
+        
+        console.log("모든 모임 정보 출력");
+        
+        var searchMoim = new database.Moim();
+        
+        database.Moim.find({}).sort({createdAt:-1}).exec(function(err, searchMoim){
+            if(err) throw err;
+                res.render("home.ejs", {Moim:searchMoim});                          
+            });
+    });
 
     
     // 새로운 모임 만들기 화면
@@ -53,6 +85,7 @@ module.exports = function(router, MoimList) {
         
     });
     
+    
     // 나의 모임 조회 화면
     router.route('/mymoim').get(function(req, res) {
         console.log('/mymoim 패스 요청됨.');
@@ -63,20 +96,77 @@ module.exports = function(router, MoimList) {
         
         console.log(userid+"의 모임 정보 출력");
         
-        database.Moim.find({user_id:userid, state:'waiting', member_type:'manager'})
-                     .sort("-createdAt")
-                     .exec(function(err, Moim){
+        var searchMoim = new database.Moim();
+        
+        database.Moim.find({user_id:userid}).sort({createdAt:-1}).exec(function(err, searchMoim){
             if(err) throw err;
-        });
-    
-        res.render('mymoim.ejs', Moim);
-                
-      
-                
+                res.render("mymoim.ejs", {Moim:searchMoim});                          
+            });
     });
     
+    // 모임 상세보기
+    router.route('/moimdetail').get(function(req, res){
+        console.log('moimDetail 패스 요청됨');
+        
+        var moimId = req.param('id');
+        console.log(moimId+"의 모임 정보 출력");
+        
+        var database = req.app.get('database'); 
+        var searchMoim = new database.MoimList();
+        var moim = new database.Moim();
+
+        database.MoimList.findOne({_id:moimId}, function(err, searchMoim){
+            if(err) throw err;
+              res.render("moimDetail.ejs", {Moim:searchMoim});  
+        });  
+        
+    });
     
+    // 모임 모집 참여하기
+    router.route('/moimJoin').get(function(req, res){
+        console.log('moimJoin 패스 요청됨');
+        
+        var moimId = ObjectID.createFromHexString(req.params.id);
+        console.log(moimId+"모임에 참여자 추가");
+        
+        var database = req.app.get('database'); 
+        
+        databases.MoimList.findOne({_id: moimId}, function(err, moim){
+            if(err) throw err;
+            moim.count += 1;
+            
+            moim.save(function(err){
+                if(err) throw err;
+            });
+        });
+                                    
+        var newMoim = new database.Moim();
+        
+        var newMoim = new database.Moim({
+          moim_id:moimId 
+	    , user_id: req.user._id 
+	    , member_type: 'manager'
+        , payment: 0
+        , event_refund: 0
+        , total_refund: 0
+        , state: 'waiting'});
+        
+        newMoim.save(function(err) {
+		      if (err) {
+		         throw err;
+		      }
+		      console.log(moimId+"모임 사용자 추가함.");
+        });
+        
+        
+
+        res.render("moimJoin.ejs");
+        
+    });
+        
+
 
 
 };
+                    
 

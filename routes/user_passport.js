@@ -4,7 +4,7 @@
  * @date 2016-11-10
  * @author Mike
  */
-  
+
 module.exports = function(router, passport) {
     console.log('user_passport 호출됨.');
 
@@ -22,6 +22,31 @@ module.exports = function(router, passport) {
         } else {
             console.log('사용자 인증된 상태임.');
             res.render('index.ejs', {login_success:true});
+        }
+    });    
+      
+
+    
+     router.route('/login_header').get(function(req, res) {
+        console.log('/login_header 패스 요청됨.');
+
+        console.log('req.user의 정보');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.redirect('/');
+        } else {
+            console.log('사용자 인증된 상태임.');
+            console.log('/login_header 패스 요청됨.');
+            console.dir(req.user);
+
+            if (Array.isArray(req.user)) {
+                res.render('login_header.ejs', {user: req.user[0]._doc});
+            } else {
+                res.render('login_header.ejs', {user: req.user});
+            }
         }
     });
     
@@ -42,6 +67,8 @@ module.exports = function(router, passport) {
         console.log('/find 패스 요청됨.');
         res.render('find.ejs', {message: req.flash('findMessage')});
     });
+    
+  
     
 	 
     // 로그인 후 인덱스 화면
@@ -119,9 +146,9 @@ module.exports = function(router, passport) {
         }
     });
     
-    // 모임 만들기 화면
-    router.route('/make').get(function(req, res) {
-        console.log('/make 패스 요청됨.');
+    // 모임 만들기 첫 화면
+    router.route('/new').get(function(req, res) {
+        console.log('/new 패스 요청됨.');
 
         // 인증된 경우, req.user 객체에 사용자 정보 있으며, 인증안된 경우 req.user는 false값임
         console.log('req.user 객체의 값');
@@ -133,17 +160,142 @@ module.exports = function(router, passport) {
             res.redirect('/');
         } else {
             console.log('사용자 인증된 상태임.');
-            console.log('/make 패스 요청됨.');
+            console.log('/new 패스 요청됨.');
             console.dir(req.user);
 
             if (Array.isArray(req.user)) {
-                res.render('make.ejs', {user: req.user[0]._doc});
+                res.render('new.ejs', {user: req.user[0]._doc});
             } else {
-                res.render('make.ejs', {user: req.user});
+                res.render('new.ejs', {user: req.user});
             }
         }
     });
     
+    // 모임 만들기 화면
+    router.route('/new_confirm').get(function(req, res) {
+        console.log('/new_confirm 패스 요청됨.');
+
+        // 인증된 경우, req.user 객체에 사용자 정보 있으며, 인증안된 경우 req.user는 false값임
+        console.log('req.user 객체의 값');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.redirect('/');
+        } else {
+            console.log('사용자 인증된 상태임.');
+            console.log('/new_confirm 패스 요청됨.');
+            console.dir(req.user);
+
+            if (Array.isArray(req.user)) {
+                res.render('new_confirm.ejs', {user: req.user[0]._doc});
+            } else {
+                res.render('new_confirm.ejs', {user: req.user});
+            }
+        }
+    });
+    
+    // 모임 만들기 화면
+    router.route('/new_info').get(function(req, res) {
+        console.log('/new_info 패스 요청됨.');
+
+        console.log('req.user의 정보');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.redirect('/');
+        } else {
+            console.log('사용자 인증된 상태임.');
+            console.log('/new_info 패스 요청됨.');
+            console.dir(req.user);
+
+            if (Array.isArray(req.user)) {
+                res.render('new_info.ejs', {user: req.user[0]._doc});
+            } else {
+                res.render('new_info.ejs', {user: req.user});
+            }
+        }
+    });
+    
+        // 모임 만들기 첫 화면
+    router.route('/new').get(function(req, res) {
+        console.log('/new 패스 요청됨.');
+
+        // 인증된 경우, req.user 객체에 사용자 정보 있으며, 인증안된 경우 req.user는 false값임
+        console.log('req.user 객체의 값');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.redirect('/');
+        } else {
+            console.log('사용자 인증된 상태임.');
+            console.log('/new 패스 요청됨.');
+            console.dir(req.user);
+
+            if (Array.isArray(req.user)) {
+                res.render('new.ejs', {user: req.user[0]._doc});
+            } else {
+                res.render('new.ejs', {user: req.user});
+            }
+        }
+    });
+    
+    // 모임 만들기 화면
+    router.route('/new_complete').get(function(req, res) {
+        console.log('/new_complete 패스 요청됨.');
+
+        // 인증된 경우, req.user 객체에 사용자 정보 있으며, 인증안된 경우 req.user는 false값임
+        console.log('req.user 객체의 값');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.redirect('/');
+        } else {
+            console.log('사용자 인증된 상태임.');
+            console.log('/new_complete 패스 요청됨.');
+            console.dir(req.user);
+
+            if (Array.isArray(req.user)) {
+                res.render('new_complete.ejs', {user: req.user[0]._doc});
+            } else {
+                res.render('new_complete.ejs', {user: req.user});
+            }
+        }
+    });  
+    
+    // 모임 만들기 화면
+    router.route('/moimDetail').get(function(req, res) {
+        console.log('/moimDetail 패스 요청됨.');
+
+        // 인증된 경우, req.user 객체에 사용자 정보 있으며, 인증안된 경우 req.user는 false값임
+        console.log('req.user 객체의 값');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.redirect('/');
+        } else {
+            console.log('사용자 인증된 상태임.');
+            console.log('/moimDetail 패스 요청됨.');
+            console.dir(req.user);
+
+            if (Array.isArray(req.user)) {
+                res.render('moimDetail.ejs', {user: req.user[0]._doc});
+            } else {
+                res.render('moimDetail.ejs', {user: req.user});
+            }
+        }
+    }); 
+    
+
     
     // 회원정보 없음 화면
     router.route('/find_fail').get(function(req, res) {
