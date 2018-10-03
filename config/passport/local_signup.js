@@ -10,6 +10,9 @@
 var LocalStrategy = require('passport-local').Strategy;
 var eth = require('../../dapp/eth.js');
 
+//회원가입 승인 메일보내기 모듈
+var mailer = require('../../verification/signup_verification.js');
+
 module.exports = new LocalStrategy({
 		usernameField : 'email',
 		passwordField : 'password',
@@ -43,6 +46,9 @@ module.exports = new LocalStrategy({
 		        		}
 
 		        	    console.log("사용자 데이터 추가함.");
+				    
+					//회원가입 승인 메일 보내기
+                        	    mailer.send(email);
 		        	    return done(null, user);  // 검증 콜백에서 두 번째 파라미터의 값을 user 객체로 넣어 인증 성공한 것으로 처리
 		        	});
 		        }
