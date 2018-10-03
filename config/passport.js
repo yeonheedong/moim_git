@@ -10,7 +10,6 @@
 
 var local_login = require('./passport/local_login');
 var local_signup = require('./passport/local_signup');
-var local_find = require('./passport/local_find');
 
 
 module.exports = function (app, passport) {
@@ -41,7 +40,6 @@ module.exports = function (app, passport) {
 	// 인증방식 설정
 	passport.use('local-login', local_login);
 	passport.use('local-signup', local_signup);
-    passport.use('local-find', local_find);
-	console.log('3가지 passport 인증방식 설정됨.');
+	console.log('2가지 passport 인증방식 설정됨.');
 	
 };
