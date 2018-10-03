@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang=en>
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>마이페이지 :: MOIM</title>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="pricing.css" rel="stylesheet">
+	</head>
+	<body>
+    <header>
+       <div class="fixed-top d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <a href="/home" class="p-2 text-dark">MOIM</a>
+        <h5 class="my-0 mr-md-auto font-weight-normal"></h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+        <a href="#" class="p-2 text-dark"><span class="fa fa-search"></span></a>
+        <% if (user.provider == undefined || user.provider == '') { %>
+        <a href="/profile/profile_main" class="p-2 text-blue"><%= user.name %> 님 환영합니다</a>
+        <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in">
+        <% } %>
+        </span></a>
+        </nav>
+        </div>
+    </header>
+        
+       <main role="main">
+           <div class="container">			
+			<br><br><br>
+        <div class="card-deck mb-3 text-center">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal"></h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">정보수정</h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>닉네임 변경</li>
+                <br>
+            </ul>
+            <a class="btn btn-lg btn-block btn-outline-primary" "style=float:right;" href="/process/mypage_modification" role="botton">수정</a>
+          </div>
+        </div>
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal"></h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">토큰관리</h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>토큰사용 내역</li>
+                <li>토큰 충전 및 환불</li>
+            </ul>
+            <button type="button" class="btn btn-lg btn-block btn-outline-primary">관리</button>
+          </div>
+        </div>
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal"></h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">보안</h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>보안 강도 강화</li>
+                <br>
+            </ul>
+            <button type="button" class="btn btn-lg btn-block btn-outline-primary">인증</button>
+          </div>
+        </div>
+           <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal"></h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">방관리</h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>사용자가 속해있는</li>
+                <li>방 관리</li>
+            </ul>
+            <button type="button" class="btn btn-lg btn-block btn-outline-primary">관리</button>
+          </div>
+        </div>
+      </div>		
+      </div>
+        </main>
+			
+	</body>
+</html>

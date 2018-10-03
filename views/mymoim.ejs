@@ -1,3 +1,6 @@
+// 항목별로 보여주기
+// 한글 출력 안됨
+
 <!DOCTYPE html>
 <html lang=en>
     <head>
@@ -20,17 +23,29 @@
 	</head>
 	<body>
     <header>
+        <div class="fixed-top d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <a href="/home" class="p-2 text-dark">MOIM</a>
+        <h5 class="my-0 mr-md-auto font-weight-normal"></h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+        <a href="#" class="p-2 text-dark"><span class="fa fa-search"></span></a>
+        <% if (user.provider == undefined || user.provider == '') { %>
+        <a href="/profile/profile_main" class="p-2 text-blue"><%= user.name %> 님 환영합니다</a>
+        <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in">
+        <% } %>
+        </span></a>
+        </nav>
+</div>
     </header>
         
        <main role="main">
-    <br><br><br>
+  
       <section class="container">
               <h1 class="jumbotron-heading">내 모임</h1><br>
                      
                 
                 <section class = mb-4>
                 <div class = mb-4>
-                <h3> 운영 중인 모임 </h3>
+                <h3> 참여 중인 모임 </h3>
                 </div>
                                     
                 <h5> 전체보기 </h5>
@@ -52,18 +67,6 @@
                         </tr>
                     <%}%>
                     
-                
-                <h5> 진행 중 </h5>
-                </section>
-               
-                <section class = mb-4>
-                <div class = mb-4>
-                <h3> 참여 중인 모임 </h3>
-                </div>
-                
-                <h5> 모집 중 </h5>
-                
-                <h5> 참여 중 </h5>
                 </section>
              
          
