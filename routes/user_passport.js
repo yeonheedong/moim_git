@@ -17,9 +17,9 @@ module.exports = function(router, passport) {
         
         console.log("모든 모임 정보 출력");
         
-        var searchMoim = new database.Moim();
+        var searchMoim = new database.MoimList();
         
-        database.Moim.find({}).sort({createdAt:-1}).exec(function(err, searchMoim){
+        database.MoimList.find({}).sort({createdAt:-1}).exec(function(err, searchMoim){
             if(err) throw err;
             // 인증 안된 경우
             if (!req.user) {
@@ -55,10 +55,7 @@ module.exports = function(router, passport) {
         }
     });
     
-    
-  
-    
-	 
+
     // 로그인 후 홈 화면
     router.route('/home').get(function(req, res) {
         console.log('/home 패스 요청됨.');
@@ -76,9 +73,9 @@ module.exports = function(router, passport) {
         
             console.log("모든 모임 정보 출력");
 
-            var searchMoim = new database.Moim();
+            var searchMoim = new database.MoimList();
 
-            database.Moim.find({}).sort({createdAt:-1}).exec(function(err, searchMoim){
+            database.MoimList.find({}).sort({createdAt:-1}).exec(function(err, searchMoim){
                 if(err) throw err;   
                 if (Array.isArray(req.user)) {
                 res.render('home.ejs', {user: req.user[0]._doc, Moim:searchMoim});
@@ -90,7 +87,7 @@ module.exports = function(router, passport) {
     });
     
     // 프로필 화면( 헤더 파일 있음 )
-    router.route('/profile').get(function(req, res) {
+    router.route('/profile/profile_main').get(function(req, res) {
         console.log('/profile 패스 요청됨.');
 
         // 인증된 경우, req.user 객체에 사용자 정보 있으며, 인증안된 경우 req.user는 false값임
@@ -107,9 +104,9 @@ module.exports = function(router, passport) {
             console.dir(req.user);
 
             if (Array.isArray(req.user)) {
-                res.render('profile.ejs', {user: req.user[0]._doc});
+                res.render('profile/profile_main.ejs', {user: req.user[0]._doc});
             } else {
-                res.render('profile.ejs', {user: req.user});
+                res.render('profile/profile_main.ejs', {user: req.user});
             }
         }
     });
@@ -134,15 +131,21 @@ module.exports = function(router, passport) {
             console.log(userid+"의 모임 정보 출력");
 
             var searchMoim = new database.Moim();
+            var moim = new database.MoimList();
+            
+            database.MoimList.find({}).sort({createdAt:-1}).exec(function(err, moim){
+                if(err) throw err;                
+            });
 
             database.Moim.find({user_id:userid}).sort({createdAt:-1}).exec(function(err, searchMoim){
                 if(err) throw err;
                 if (Array.isArray(req.user)) {
-                    res.render('mymoim.ejs', {user: req.user[0]._doc, Moim:searchMoim});
+                    res.render('mymoim.ejs', {user: req.user[0]._doc, Moim:searchMoim, moim:moim});
                 } else {
-                    res.render('mymoim.ejs', {user: req.user, Moim:searchMoim});
-                }                        
+                    res.render('mymoim.ejs', {user: req.user, Moim:searchMoim, moim:moim});
+                }
             });
+             
         }
     });
     
@@ -318,9 +321,9 @@ module.exports = function(router, passport) {
         }
     });
     
-    // 참여하기 (get)
-    router.route('/moimJoin').get(function(req, res) {
-        console.log('/moimJoin 패스 요청됨.');
+    // 참여하기 (post)
+    router.route('/moimDetail').post(function(req, res) {
+        console.log('/moimDetail 패스 요청됨.');
 
         if (!req.user) {
             console.log('사용자 인증 안된 상태임.');
@@ -330,7 +333,9 @@ module.exports = function(router, passport) {
             console.log('req.user의 정보');
             console.dir(req.user);
             
-            var moimId = req.param('id');
+            var moimId = req.body.moimid;
+            console.log(moimId);
+            
             console.log(moimId+"모임 참여 화면");
             
             var database = req.app.get('database'); 
@@ -341,6 +346,7 @@ module.exports = function(router, passport) {
 
                 moim.save(function(err){
                     if(err) throw err;
+                    console.log(moimId+"모임 count +1");
                 });
             });
 
@@ -362,6 +368,26 @@ module.exports = function(router, passport) {
 		          console.log(moimId+"모임 사용자 추가");
             });          
             
+            if (Array.isArray(req.user)) {
+                res.render('moimJoin.ejs', {user: req.user[0]._doc});
+            } else {
+                res.render('moimJoin.ejs', {user: req.user});
+            }
+        }
+    });
+    
+    // 참여하기 (get)
+    router.route('/moimJoin').get(function(req, res) {
+        console.log('/moimJoin 패스 요청됨.');
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.redirect('/');
+        } else {
+            console.log('사용자 인증된 상태임.');
+            console.log('req.user 객체의 값');
+            console.dir(req.user);
 
             if (Array.isArray(req.user)) {
                 res.render('moimJoin.ejs', {user: req.user[0]._doc});
@@ -371,9 +397,54 @@ module.exports = function(router, passport) {
         }
     });
     
+    // 회원정보 찾기 화면 (get)
+    router.route('/find/find_pw').get(function(req, res) {
+        console.log('/find_pw 패스 요청됨.');
+
+        console.log('req.user의 정보');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.render('find/find_pw.ejs', {login_success:false});
+        } else {
+            console.log('사용자 인증된 상태임.');
+            res.render('home.ejs', {login_success:true});
+        }
+    });
+    
+    // 회원정보 찾기 화면 (post)
+    router.route('/find/find_pw').post(function(req, res) {
+        console.log('/find_pw post 패스 요청됨.');
+
+        console.log('req.user의 정보');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            
+            var mail = req.body.email;
+            console.log(mail);
+            var database = req.app.get('database'); 
+            
+            database.UserModel.findOne({email:mail}, function(err, searchMail){
+            if(err) throw err;
+            if (searchMail) {
+                res.render('find/find_success.ejs', {mail:searchMail});
+            } else {
+                res.render('find/find_fail.ejs');
+            }  
+            }); 
+        } else {
+            console.log('사용자 인증된 상태임.');
+            res.render('home.ejs', {login_success:true});
+        }
+    });
 
     // 회원정보 없음 화면
-    router.route('/find_fail').get(function(req, res) {
+    router.route('/find/find_fail').get(function(req, res) {
         console.log('/find_fail 패스 요청됨.');
 
         console.log('req.user의 정보');
@@ -382,15 +453,15 @@ module.exports = function(router, passport) {
         // 인증 안된 경우
         if (!req.user) {
             console.log('사용자 인증 안된 상태임.');
-            res.render('find_fail.ejs', {login_success:false});
+            res.render('find/find_fail.ejs', {login_success:false});
         } else {
             console.log('사용자 인증된 상태임.');
-            res.render('index.ejs', {login_success:true});
+            res.render('home.ejs', {login_success:true});
         }
     });
     
     // 회원정보 있음 화면
-    router.route('/find_success').get(function(req, res) {
+    router.route('/find/find_success').get(function(req, res) {
         console.log('/find_success 패스 요청됨.');
 
         console.log('req.user의 정보');
@@ -399,10 +470,10 @@ module.exports = function(router, passport) {
         // 인증 안된 경우
         if (!req.user) {
             console.log('사용자 인증 안된 상태임.');
-            res.render('index.ejs', {login_success:false});
+            res.render('find/find_success.ejs', {login_success:false});
         } else {
             console.log('사용자 인증된 상태임.');
-            res.render('find_success.ejs', {login_success:false});
+            res.render('home.ejs', {login_success:true});
         }
     });
     
@@ -425,12 +496,6 @@ module.exports = function(router, passport) {
         console.log('/signup 패스 요청됨.');
         res.render('signup.ejs', {message: req.flash('signupMessage')});
     });
-    
-    // 정보찾기 화면
-    router.route('/find').get(function(req, res) {
-        console.log('/find 패스 요청됨.');
-        res.render('find.ejs', {message: req.flash('findMessage')});
-    });
 
     // 로그인 인증
     router.route('/login').post(passport.authenticate('local-login', {
@@ -444,13 +509,6 @@ module.exports = function(router, passport) {
         successRedirect : '/profile', 
         failureRedirect : '/signup', 
         failureFlash : true 
-    }));
-    
-    // 회원정보 찾기 인증
-    router.route('/find').post(passport.authenticate('local-find', {
-        successRedirect : '/find_success', 
-        failureRedirect : '/find_fail', 
-        failureFlash : true
     }));
 
 };
