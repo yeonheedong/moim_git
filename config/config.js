@@ -5,16 +5,13 @@
 
 module.exports = {
 	server_port: 3000,
-	db_url: 'mongodb://127.0.0.1:27017/local',
+	db_url: 'mongodb://localhost:27017/local',
 	db_schemas: [
-        {file:'./user_schema', collection:'users6', schemaName:'UserSchema', modelName:'UserModel'}
-        ,{file:'./post_schema', collection:'post', schemaName:'PostSchema', modelName:'PostModel'}
+        {file:'./user_schema', collection:'users', schemaName:'UserSchema', modelName:'UserModel'}
+        ,{file:'./moimlist_schema', collection:'moimlists', schemaName:'MoimListSchema', modelName:'MoimList'}
+        ,{file:'./moim_schema', collection:'moims', schemaName:'MoimSchema', modelName:'Moim'}
 	],
 	route_info: [
-        {file:'./post', path:'/process/addpost', method:'addpost', type:'post'}
-        ,{file:'./post', path:'/process/showpost/:id', method:'showpost', type:'get'}
-        ,{file:'./post', path:'/process/listpost', method:'listpost', type:'post'}
-        ,{file:'./post', path:'/process/listpost', method:'listpost', type:'get'}
 	],
 	facebook: {	// passport facebook
 		clientID: '1442860336022433',
