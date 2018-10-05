@@ -20,16 +20,7 @@
 	<body>
     
     <header>
-       <div class="fixed-top d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-        <a href="/home" class="p-2 text-dark">MOIM</a>
-        <h5 class="my-0 mr-md-auto font-weight-normal"></h5>
-        <nav class="my-2 my-md-0 mr-md-3">
-        <a href="#" class="p-2 text-dark"><span class="fa fa-search"></span></a>
-        <a href="/profile" class="p-2 text-blue"> 님 환영합니다</a>
-        <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in">
-        </span></a>
-        </nav>
-     </div>
+       <% include ./login_header.ejs%>
     </header>
         
     <main role="main">
@@ -42,12 +33,12 @@
 
             <form action="/profile_modify" method="post">
             <div class="mb-4">
-              <label for="email">회원 이메일 </label>
+              <label for="email">회원 이메일 : <%=email%></label>
                 
             </div>
                   
             <div class="mb-4">
-              <label for="username">닉네임 </label>
+              <label for="username">닉네임 : <%=name%></label>
               
             </div>
 
@@ -55,7 +46,7 @@
               <label for="password">비밀번호</label>
               <input type="password" class="form-control" name="password" required>
               <div class="invalid-feedback">
-                Please enter your shipping address.
+                Please enter your new password.
               </div>
             </div>
             <div class="mb-4">
