@@ -16,11 +16,12 @@ module.exports = {
         });
 
         //메일 내용
+        //회원가입 승인 페이지로 이동.
         var mailOption = {
             from: 'moim_9001@naver.com',
             to: email,  
-            subject: 'MOIM계정 회원가입 승인 링크입니다',
-            html: '<h1>MOIM의 회원이 되신것을 환영합니다!</h1><p>MOIM에서 당신의 모임을 찾아 참여하세요! 모임을 완주하면 참여도에따라 보상 토큰을 받을 수 있습니다:)</p>'
+            subject: 'MOIM계정 회원가입 승인 메일입니다',
+            html: '<h1>MOIM의 회원이 되신것을 환영합니다!</h1><p><h2><a href="http://localhost:3000/login">MOIM 링크</a>를 클릭하여 로그인하세요.</h2></p><p>MOIM에서 당신의 모임을 찾아 참여하세요! 모임을 완주하면 참여도에따라 보상 토큰을 받을 수 있습니다:)</p>'
         };
 
 
