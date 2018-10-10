@@ -135,6 +135,39 @@ module.exports = function(router, passport) {
         }
     });
 
+   // 회원정보 수정 화면 (get)
+    router.route('/profile_modify').get(function (req, res) {
+        console.log('/profile_modify 패스 요청됨.');
+
+        console.dir(req.user);
+
+        if (Array.isArray(req.user)) {
+            res.render('profile/profile_modify.ejs', {
+                user: req.user[0]._doc
+            });
+        } else {
+            res.render('profile/profile_modify.ejs', {
+                user: req.user
+            });
+        }
+    });
+
+    // 토큰 화면
+    router.route('/token').get(function (req, res) {
+        console.log('/token 패스 요청됨.');
+
+        if (Array.isArray(req.user)) {
+            res.render('profile/token.ejs', {
+                user: req.user[0]._doc
+            });
+        } else {
+            res.render('profile/token.ejs', {
+                user: req.user
+            });
+        }
+    });	
+
+
     // 내 모임 화면
     router.route('/mymoim').get(function(req, res) {
         console.log('/mymoim 패스 요청됨.');
