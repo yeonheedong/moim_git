@@ -155,17 +155,20 @@ module.exports = function(router, passport) {
     // 토큰 화면
     router.route('/token').get(function (req, res) {
         console.log('/token 패스 요청됨.');
-
-        if (Array.isArray(req.user)) {
-            res.render('profile/token.ejs', {
-                user: req.user[0]._doc
-            });
-        } else {
-            res.render('profile/token.ejs', {
-                user: req.user
-            });
-        }
-    });	
+        var database = req.app.get('database');
+        database.db.collection("historys").find({'user_id' : req.user._id.toString()}).toArray(function(err,historys){
+          if (Array.isArray(req.user)) {
+              res.render('profile/token.ejs', {
+                  user: req.user[0]._doc
+              });
+          } else {
+              res.render('profile/token.ejs', {
+                  user: req.user,
+                  history: historys
+              });
+          }
+        });
+    });
 
 
     // 내 모임 화면
@@ -563,7 +566,7 @@ module.exports = function(router, passport) {
 
     // 회원가입 인증
     router.route('/signup').post(passport.authenticate('local-signup', {
-        successRedirect : '/profile',
+        successRedirect : 'profile/profile_main',
         failureRedirect : '/signup',
         failureFlash : true
     }));

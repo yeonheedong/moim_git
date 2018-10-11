@@ -10,6 +10,7 @@ module.exports = {
         {file:'./user_schema', collection:'users', schemaName:'UserSchema', modelName:'UserModel'}
         ,{file:'./moimlist_schema', collection:'moimlists', schemaName:'MoimListSchema', modelName:'MoimList'}
         ,{file:'./moim_schema', collection:'moims', schemaName:'MoimSchema', modelName:'Moim'}
+				,{file:'./history_schema', collection:'historys', schemaName:'HistorySchema', modelName:'History'}
 	],
 	route_info: [
 	],

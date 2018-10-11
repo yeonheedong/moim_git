@@ -14,7 +14,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 
-      
+
     <!-- Custom styles for this template -->
     <link href="album.css" rel="stylesheet">
   </head>
@@ -27,13 +27,14 @@
       <nav class="my-2 my-md-0 mr-md-3">
         <a href="#" class="p-2 text-dark"><span class="fa fa-search"></span></a>
         <a href="/login" class="p-2 text-dark">로그인</a>
+        
         <a href="/signup" class="p-2 text-dark">회원가입</a>
       </nav>
       <a class="btn btn-outline-primary" href="#">App 다운로드</a>
      </div>
     </header>
 
-    <main role="main">  
+    <main role="main">
     <br><br><br>
       <section class="jumbotron text-center">
           <form class="needs-validation" novalidate>
@@ -51,7 +52,7 @@
 
       <div class="album py-5">
         <div class="container">
-            
+
             <div class="center">
             <% if(Moim.length>0){ %>
                         <% var i=0;%>
@@ -72,14 +73,14 @@
                   </div>
                 </div>
               </div>
-            </div>        
+            </div>
                         <%})%>
                         <%}else{%>
                         <tr>
                             <td class="noData" colspan="5"> 모임이 없습니다 :'( </td>
                         </tr>
             <%}%>
-            
+
           </div>
 
         </div>
