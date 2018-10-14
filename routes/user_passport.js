@@ -794,7 +794,51 @@ module.exports = function(router, passport) {
             });
         }
     });
+	//백선희
+    // 사용자 출석부
+     router.route('/moim/att_user').get(function(req, res) {
+        console.log('/moim/att_user 패스 요청됨.');
 
+        console.log('req.user의 정보');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.render('/', {login_success:false});
+        } else {
+            var moimId = req.param('id');
+            console.log(moimId+" 모임 관리 시작");
+            
+            var database = req.app.get('database');
+            var moim = new database.MoimList();
+            var moimTable = new database.MoimTable();
+            
+            database.MoimTable.find({moim_id:moimId}).sort({num:+1}).exec(function(err, table){
+                if(err) throw err;
+            
+            database.MoimList.findOne({_id: moimId}, function(err, moim){
+                if(err) throw err;
+            
+                if(Array.isArray(req.user)){
+                    res.render('moim/att_user.ejs', {user: req.user[0]._doc, moim:moim, table:table});
+                }else{
+                    res.render('moim/att_user.ejs', {user: req.user, moim:moim, table:table});
+                }
+            });
+            });
+        }
+    });
+    //백선희
+    // 출석인증 화면(get)
+    // (post) 추가할거
+    router.route('/moim/att_verification').get(function (req, res) {
+        console.log('/moim/att_verification 패스 요청됨.');
+        
+        res.render('moim/att_verification.ejs');
+        
+    });
+	
     // 모임 회차별 관리 (get)
     router.route('/moim/moimSetting').get(function(req, res) {
         console.log('/setting 패스 요청됨.');
@@ -1067,6 +1111,7 @@ module.exports = function(router, passport) {
     }));
 
     // 회원가입 인증
+    // 회원가입 후 홈화면 아니라 인증메일 안내 페이지로 
     router.route('/signup').post(passport.authenticate('local-signup', {
         successRedirect : '/signup_mail',
         failureRedirect : '/signup',
