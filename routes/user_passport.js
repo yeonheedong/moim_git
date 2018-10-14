@@ -32,7 +32,21 @@ module.exports = function(router, passport) {
         });
 
     });
+	//백선희
+    //회원가입 메일안내 페이지
+    router.route('/signup_mail').get(function (req, res) {
+        console.log('/signup_mail패스 요청됨.');
 
+        res.render('signupMail.ejs');
+    });
+    
+    //백선희
+    //메일 인증완료 페이지
+    router.route('/confirmMail').get(function (req, res) {
+        console.log('/confirmMail패스 요청됨.');
+
+        res.render('confirmMail.ejs');
+    });
 
     /* 네비게이터 라우팅... 어쩌지 */
      router.route('/login_header').get(function(req, res) {
@@ -131,7 +145,40 @@ module.exports = function(router, passport) {
             }
         }
     });
+//백선희
+    // 회원정보 수정 화면 (get)
+    router.route('/profile_modify').get(function (req, res) {
+        console.log('/profile_modify 패스 요청됨.');
 
+        console.dir(req.user);
+
+        if (Array.isArray(req.user)) {
+            res.render('profile/profile_modify.ejs', {
+                user: req.user[0]._doc
+            });
+        } else {
+            res.render('profile/profile_modify.ejs', {
+                user: req.user
+            });
+        }
+    });
+
+    //백선희
+    // 토큰 화면
+    router.route('/token').get(function (req, res) {
+        console.log('/token 패스 요청됨.');
+
+        if (Array.isArray(req.user)) {
+            res.render('profile/token.ejs', {
+                user: req.user[0]._doc
+            });
+        } else {
+            res.render('profile/token.ejs', {
+                user: req.user
+            });
+        }
+    });
+    
     // 내 모임 화면 (get)
     router.route('/mymoim').get(function(req, res) {
         console.log('/mymoim 패스 요청됨.');
@@ -1021,7 +1068,7 @@ module.exports = function(router, passport) {
 
     // 회원가입 인증
     router.route('/signup').post(passport.authenticate('local-signup', {
-        successRedirect : '/profile/profile_main',
+        successRedirect : '/signup_mail',
         failureRedirect : '/signup',
         failureFlash : true
     }));
