@@ -1,3 +1,5 @@
+// 한글 왜 안떠...?
+
 <!DOCTYPE html>
 <html lang=en>
     <head>
@@ -7,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>새로운 모임 :: MOIM</title>
+    <title>참가 취소 :: MOIM</title>
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
@@ -36,12 +38,12 @@
         
     <main role="main" class="container">
           <div class="jumbotron">
-              <h1 class="mb-4">새로운 모임 만들기</h1>
+              <h1 class="mb-4">취소 완료</h1>
               <p class="lead mb-4">
-              "이제부터 새로운 모임을 만들 것입니다. 모임을 생성하는 사람은 방장 권한을 갖게 되며 모임이 성공적으로 종료되었을 때 Advantage를 얻게 됩니다. 모임을 생성하기 위해서는 60 토큰을 지불해야 하며, 앞선 3번의 모임을 무사히 완수하여 모임 생성 자격을 얻은 사람은 40토큰을 지불하게 됩니다. 더욱 자세한 정보를 얻기 위해서는 아래의 링크를 클릭해주세요."
+              "<%= moim.title%>" 모임의 모집이 취소되었습니다
               </p>
-              <a class="btn btn-lg btn-primary" href="/moimProvision" role="botton">자세히 보기</a>
-              <a class="btn btn-lg btn-secondary" "style=float:right;" href="/new/new_moim" role="botton">모임 만들기</a>
+              <a class="btn btn-lg btn-primary" href="javascript:history.back();" role="botton">돌아가기</a>
+              <a class="btn btn-lg btn-secondary" "style=float:right;" href="/mymoim" role="botton">내 모임 보러가기</a>
           </div>
               
         </main>

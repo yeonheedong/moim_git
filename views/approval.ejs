@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>새로운 모임 :: MOIM</title>
+    <title>모임 시작 :: MOIM</title>
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
@@ -33,15 +33,34 @@
         </nav>
 </div>
     </header>
-        
+    <br><br><br>
     <main role="main" class="container">
           <div class="jumbotron">
-              <h1 class="mb-4">새로운 모임 만들기</h1>
-              <p class="lead mb-4">
-              "이제부터 새로운 모임을 만들 것입니다. 모임을 생성하는 사람은 방장 권한을 갖게 되며 모임이 성공적으로 종료되었을 때 Advantage를 얻게 됩니다. 모임을 생성하기 위해서는 60 토큰을 지불해야 하며, 앞선 3번의 모임을 무사히 완수하여 모임 생성 자격을 얻은 사람은 40토큰을 지불하게 됩니다. 더욱 자세한 정보를 얻기 위해서는 아래의 링크를 클릭해주세요."
-              </p>
-              <a class="btn btn-lg btn-primary" href="/moimProvision" role="botton">자세히 보기</a>
-              <a class="btn btn-lg btn-secondary" "style=float:right;" href="/new/new_moim" role="botton">모임 만들기</a>
+              <h1 class="mb-4">모임 시작하기</h1>
+              <p class="lead mb-4">모집 상태</p>
+              <% if(moim.max_num == moim.count){%>
+              <p class="lead mb-4">"희망 모집 인원에 도달했습니다."</p>
+              <%}%>
+              <% if(moim.max_num != moim.count){%>
+              <p class="lead mb-4">"희망 모집 인원에 도달하지 못했습니다."</p>
+              <%}%>
+              <% if(moim.finish_at == Date.now()){%>
+              <p class="lead mb-4">"모집 기간이 종료되었습니다"</p>
+              <%}%>
+              <% if(moim.finish_at != Date.now()){%>
+              <p class="lead mb-4">"모집 기간이 종료되지 않았습니다"</p>
+              <%}%>
+              <br><br>
+        
+              <form action="/approval" method="post" >
+			      <div class="mb-4">
+                  <label for="confirm">계속 진행하려면 '모임시작' 버튼을 눌러주세요</label>
+                  </div>
+
+                 <input type="hidden" name="moimid" value="<%=moim._id%>">
+                 <button class="btn btn-primary btn-lg btn-block mb-2" type="submit">모임시작</button>
+			    </form>
+                <a class="btn btn-primary btn-lg btn-block" href="javascript:history.back();" role="botton">돌아가기</a>
           </div>
               
         </main>

@@ -34,32 +34,70 @@
         <% } %>
         </span></a>
         </nav>
-</div>
+        </div>
     </header>
         
        <main role="main">
-  
-      <section class="container">
-              <h1 class="jumbotron-heading">내 모임</h1><br>
-                     
                 
-                <section class = mb-4>
-                <div class = mb-4>
+                
+                <br><br>
+                <div class="text-center mb-4">
+                <h1 class="jumbotron-heading">내 모임</h1>
                 <h3> 참여 중인 모임 </h3>
-                </div>
-                                    
+                </div>                
+                
+                <div class="container">
+                <div class="center">
                 <h5> 전체보기 </h5>
                     <% if(Moim.length>0){ %>
                         <% var i=0;%>
                         <% Moim.forEach(function(Moim){%>
                         <%i++;%>
-                        <tr>
-                            <div class="mb-2">
-                            <td class="title">모임이름<a href="/moimDetail?id=<%= Moim.moim_id%>"><%= Moim.moim_id %></a></td>
-                            <td for="data">날짜<%=Moim.createdAt%></td>
-                            <td for="state">진행상태<%=Moim.state%></td>
-                            </div>
-                        </tr>
+                        
+                            <% if(moim.length>0){ %>
+                                <% var i=0;%>
+                                <% moim.forEach(function(moim){%>
+                                <%i++;%>
+                                    <% if(moim._id == Moim.moim_id) {%>
+                                    <div class="col-md-4">
+                                      <div class="card mb-4 shadow-sm">
+                                        
+                                        <div class="card-body"> 
+                                        
+                                            <div class="card-text">
+                                            <% if(Moim.state=='waiting'){%>
+                                            <p class="card=text"><a href="/join/moimDetail?id=<%= moim._id%>"><%=moim.title%></a></p>
+                                            <%}%>
+                                            <% if(Moim.state=='ongoing'){%>
+                                            <p class="card=text"><a href="/moim/moimHome?id=<%= moim._id%>"><%=moim.title%></a></p>
+                                            <%}%>
+                                            <td for="data">날짜<%=moim.start_at%>~<%=moim.finish_at%></td><br>
+                                            <td for="member_type">권한<%=Moim.member_type%></td><br>
+                                            </div>
+                                            
+                                            <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                            <% if(Moim.state == 'waiting' && user._id!=moim.manager){%>
+                                            <a class="btn btn-sm btn-outline-secondary" href="/cancel/waiting_cancel?id=<%= moim._id%>">참가 취소</a>
+                                            <%} else if(Moim.state == 'waiting' && user._id == moim.manager){%>
+                                            <a class="btn btn-sm btn-outline-secondary" href="/moimDetail?id=<%= moim._id%>">개설 취소</a>
+                                            <%} else if(Moim.state == 'progressing'){%>
+                                            <a class="btn btn-sm btn-outline-secondary" href="/cancel/waiting_cancel">중도 포기</a>
+                                            <%}%>
+                                            </div>
+                                            <small class="text-muted"><%= Moim.state %></small>
+                                          </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <%}%>
+                                    
+                                
+                                   
+                    
+                                <%})%>
+                            <%}%>
+                    
                         <%})%>
                         <%}else{%>
                         <tr>
@@ -67,13 +105,10 @@
                         </tr>
                     <%}%>
                     
-                </section>
-             
-         
-    </section>
-     
-            
-        
+
+                </div>
+             </div>
+                    
         </main>			
 	</body>
 </html>
