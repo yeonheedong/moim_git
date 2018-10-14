@@ -28,11 +28,11 @@ function connect(app, config) {
     mongoose.set('useCreateIndex', true);
 	mongoose.connect(config.db_url, {useNewUrlParser: true});
 	database.db = mongoose.connection;
+ 
 	
 	database.db.on('error', console.error.bind(console, 'mongoose connection error.'));	
 	database.db.on('open', function () {
 		console.log('데이터베이스에 연결되었습니다. : ' + config.db_url);
-		console.log(database.db);
 		
 		// config에 등록된 스키마 및 모델 객체 생성
 		createSchema(app, config);

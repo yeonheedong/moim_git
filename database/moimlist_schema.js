@@ -12,7 +12,8 @@ var MoimListSchema = mongoose.Schema({
 	    , introduction: {type: String, 'default':''}
 	    , keyword: {type: String, default:''}
         , min_num: {type:Number, default:0}
-        , max_num: {type:Number, defalut:0}
+        , max_num: {type:Number, default:0}
+        , num: {type:Number, default:0}
         , count: {type:Number, default:0}
         , location: {type: String, default:''}
         , start: {type: Date, 'default': Date.now}
@@ -21,6 +22,7 @@ var MoimListSchema = mongoose.Schema({
 	    , finish_at: {type: Date, 'default': Date.now}
         , createdAt:{type:Date, 'default':Date.now}
         , updatedAt: {type:Date, 'default':Date.now}
+        , state: {type:String, 'default':'waiting'}
 	});
     
     
