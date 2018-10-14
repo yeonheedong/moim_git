@@ -15,6 +15,7 @@
     "ejs": "^2.6.1",
     "error-handler": "^1.0.0",
     "errorhandler": "^1.5.0",
+    "ethereumjs-testrpc": "^6.0.3",
     "express": "^4.16.3",
     "express-error-handler": "^1.1.0",
     "express-session": "^1.15.6",
@@ -36,7 +37,7 @@
     "path": "^0.12.7",
     "pc-bootstrap4-datetimepicker": "^4.17.50",
     "serve-static": "^1.13.2",
-    "web3": "git+https://github.com/ethereum/web3.js.git",
+    "web3": "^0.20.1",
     "web3-eth-personal": "^1.0.0-beta.36"
   }
 }

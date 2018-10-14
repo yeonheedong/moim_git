@@ -23,19 +23,30 @@
        <div class="fixed-top d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
         <a href="/home" class="p-2 text-dark">MOIM</a>
         <h5 class="my-0 mr-md-auto font-weight-normal"></h5>
-        <nav class="my-2 my-md-0 mr-md-3">
-        <a href="#" class="p-2 text-dark"><span class="fa fa-search"></span></a>
-        <% if (user.provider == undefined || user.provider == '') { %>
-        <a href="/profile/profile_main" class="p-2 text-blue"><%= user.name %> 님 환영합니다</a>
-        <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in">
-        <% } %>
-        </span></a>
+        <nav class="my-2 my-md-0 mr-md-3"><a id="dLabel" class="dropdown text-dark fa fa-bell" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+              <span style="position: absolute;top: -2px;left: 12px;background-color: rgba(212, 19, 13, 1);color: #fff;border-radius: 3px;padding: 1px 3px;font: 8px Verdana;">
+                <%= length %>
+              </span>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            <% for(var i=0; i<length; i++){ %>
+              <li>
+                <a href="/home"><%= contents[i] %></a>
+              </li>
+            <% } %>
+          </ul>
+          <a href="#" class="p-2 text-dark"><span class="fa fa-search"></span></a>
+          <% if (user.provider == undefined || user.provider == '') { %>
+          <a href="/profile/profile_main" class="p-2 text-blue"><%= user.name %> 님 환영합니다</a>
+          <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in">
+          <% } %>
+          </span></a>
         </nav>
         </div>
     </header>
-        
+
         <br><br><br>
-        
+
       <section class="jumbotron text-center">
           <form class="needs-validation" novalidate>
         <div class="container">
@@ -55,7 +66,7 @@
 
         <div class="album py-5">
         <div class="container">
-            
+
             <div class="center">
             <% if(Moim.length>0){ %>
                         <% var i=0;%>
@@ -81,18 +92,18 @@
                   </div>
                 </div>
               </div>
-            </div>        
+            </div>
                         <%})%>
                         <%}else{%>
                         <tr>
                             <td class="noData" colspan="5"> 모임이 없습니다 :'( </td>
                         </tr>
             <%}%>
-            
+
           </div>
         </div>
       </div>
 
-      
+
     </body>
 </html>
