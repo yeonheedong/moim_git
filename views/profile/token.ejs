@@ -24,98 +24,6 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap-grid.css" rel="stylesheet">
 
-      <style>
-
-    html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.container {
-  max-width: 960px;
-  background-color:#dcdee2;
-}
-
-.pricing-header {
-  max-width: 700px;
-}
-
-.card-deck .card {
-  min-width: 200px;
-}
-
-    #jb-container {
-        width: 100%;
-        height:100%;
-        margin: 0px auto;
-        background-color:#dcdee2;
-      }
-      #jb-header {
-        margin-bottom: 20px;
-          background-color:#dcdee2;
-        height: 200px;
-      }
-      #jb-sidebar-left {
-        width: 20%;
-        margin-bottom: 20px;
-          background-color:#dcdee2;
-        float: left;
-      }
-      #jb-content {
-        width: 60%;
-        margin-bottom: 20px;
-          min-height: 600px;
-        float:left;
-/*          background-color:#dcdee2;*/
-/*          border: 1px solid #bcbcbc;*/
-          align-items:center;
-          background-color:#dcdee2;
-/*          text-align:center;*/
-      }
-            #jb-content2 {
-        width: 50%;
-        margin-bottom: 20px;
-          min-height: 600px;
-        float:center;
-/*          background-color:#dcdee2;*/
-/*          border: 1px solid #bcbcbc;*/
-          align-items:center;
-           background-color:#dcdee2;
-
-/*          text-align:center;*/
-      }
-      #jb-sidebar-right {
-        width: 20%;
-        margin-bottom: 20px;
-        float: right;
-          background-color:#dcdee2;
-
-      }
-      #jb-footer {
-        clear: both;
-        padding: 20px;
-          background-color:#dcdee2;
-        border: 1px solid #bcbcbc;
-      }
-
-
-
-
-    .box {
-        width:350px;
-        height:270px;
-        background: white;
-        float: center;
-        padding: 30px;
-         border: 1px solid #bcbcbc;
-          }
-
-        .icon-dimgray {color: dimgray}
-            </style>
 
 	</head>
 	<body>
@@ -161,77 +69,45 @@
     </header>
 
 
-            <div id="jb-sidebar-left"></div>
-           <div id="jb-content">
-               <div align="center"><h1>My Page</h1></div><br><br>
-        <div class="card-deck mb-4 text-center">
-        <div class="card mb-5 shadow-sm">
-          <div class="card-header">
-            <h3 class="my-0 font-weight-normal">정보 수정</h3>
-          </div>
-          <div class="card-body">
+            <main role="main">
 
-<!--            <h1 class="card-title pricing-card-title">정보수정</h1>-->
-            <ul class="list-unstyled mt-2 mb-4">
-                <i class="fas fa-user fa-6x icon-dimgray"><br></i>
-<!--              <li><h2><br>정보 수정</h2></li>-->
+            <br><br><br>
 
-            </ul><br>
-            <a class="btn btn-lg btn-block btn-outline-primary" "style=float:right;" href="/profile_modify" role="botton">수정</a>
-          </div>
-        </div>
-        <div class="card mb-5 shadow-sm">
-          <div class="card-header">
-            <h3 class="my-0 font-weight-normal">토큰 정보</h3>
-          </div>
-          <div class="card-body">
+            <div class="container">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <h1><i class="fas fa-wallet"></i>토큰 관리</h1><br>
 
-<!--              <h1 class="card-title pricing-card-title">토큰관리</h1>-->
-            <ul class="list-unstyled mt-2 mb-4">
-                <i class="fas fa-wallet fa-6x icon-dimgray"><br></i>
+                    <form action="/token" method="post">
 
-<!--                <li><h2><br>토큰 정보</h2></li>-->
-            </ul><br>
-            <a href="/token" role="button" class="btn btn-lg btn-block btn-outline-primary">관리</a>
-          </div>
-        </div>
-        <div class="card mb-5 shadow-sm">
-          <div class="card-header">
-            <h3 class="my-0 font-weight-normal">보안 강화</h3>
-          </div>
-          <div class="card-body">
+                        <div class="mb-4">
+                            <h3>
+                                <%= user.name %>님의 토큰 보유량 : 150이었나<i class="fas fa-cubes"></i></h3>
+                        </div>
+                        <div class="mb-4">
+                            --사용 내역 --
+                        </div>
+                        <div style="overflow:scroll; width:500px; height:150px; padding:10px; ">
+                            <% for(var i=0; i<history.length; i++){ %>
+                            <li>
+                                <%= history[i].history%>
+                            </li>
+                            <% } %>
+                        </div>
 
-<!--            <h1 class="card-title pricing-card-title">보안</h1>-->
-            <ul class="list-unstyled mt-2 mb-4">
-                <i class="fas fa-shield-alt fa-6x icon-dimgray"><br></i>
-<!--              <li><h2><br>보안 강화</h2></li>-->
+                        <div class="mb-4">
+                            <label for="token">반환할 토큰</label>
+                            <input type="text" class="form-control" name="password" required>
+                            <div class="invalid-feedback">
+                                반환할 토큰량을 입력하시오.
+                            </div>
+                        </div>
 
-            </ul>
-              <br>
-            <button type="button" class="btn btn-lg btn-block btn-outline-primary">인증</button>
-          </div>
-        </div>
-           <div class="card mb-5 shadow-sm">
-          <div class="card-header">
-            <h3 class="my-0 font-weight-normal">방 관리</h3>
-          </div>
-          <div class="card-body">
-
-<!--            <h1 class="card-title pricing-card-title">방관리</h1>-->
-            <ul class="list-unstyled mt-2 mb-4">
-                <i class="fas fa-door-open fa-6x icon-dimgray"><br></i>
-
-<!--                <li><h2><br>방 관리</h2></li>-->
-            </ul>
-              <br>
-            <a class="btn btn-lg btn-block btn-outline-primary"  href="/mymoim">관리</a>
-          </div>
-        </div>
-      </div>
-      </div>
-            <div id="jb-sidebar-right"></div>
+                        <hr class="mb-4">
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">토큰 반환하기</button>
+                    </form>
+                </div>
             </div>
-
-
+        </main>
+	</div>
 	</body>
 </html>
