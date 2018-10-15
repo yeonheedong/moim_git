@@ -1012,6 +1012,8 @@ module.exports = function(router, passport) {
                 });
 
                 });
+		
+		res.redirect('/moim/moimSetting?id='+moimId); 
         }
     });
 
@@ -1129,6 +1131,348 @@ module.exports = function(router, passport) {
                 });
         }
     });
+	
+    // 개인 출석 관리 (get)
+    router.route('/moim/attendance').get(function(req, res) {
+        console.log('/allAttendance 패스 요청됨.');
+
+        console.log('req.user의 정보');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.render('/', {login_success:false});
+        } else {            
+                var moimId = req.param('id');
+                console.log(moimId+" 모임 회차별 관리");
+
+                var database = req.app.get('database');
+                var moim = new database.MoimList();
+                var moimTable = new database.MoimTable();
+                var attendance = new database.Attendance();
+                var Moim = new database.Moim();
+                var users = new database.UserModel();
+            
+                database.UserModel.find({}).sort({_id:+1}).exec(function(err, users){
+                if(err) throw err;
+                    console.log(users);
+                    
+                database.Moim.find({moim_id:moimId}).sort({createdAt:+1}).exec(function(err, Moim){
+                if(err) throw err;
+            
+                database.MoimTable.find({moim_id:moimId}).sort({num:+1}).exec(function(err, table){
+                if(err) throw err;
+                    
+                database.Attendance.find({moim_id:moimId}).sort({num:+1}).exec(function(err, attendance){
+                if(err) throw err;
+
+                database.MoimList.findOne({_id: moimId}, function(err, moim){
+                    if(err) throw err;
+
+                    if(Array.isArray(req.user)){
+                        res.render('moim/attendance.ejs', {user: req.user[0]._doc, moim:moim, table:table, attendance:attendance, users:users});
+                    }else{
+                        res.render('moim/attendance.ejs', {user: req.user, moim:moim, table:table, attendance:attendance, users:users});
+                    }
+                });
+                });
+                });
+                });
+                });
+        }
+    });
+    
+    // 모임 게시판 인덱스 (get)
+    router.route('/moim/boardIndex').get(function(req, res) {
+        console.log('/boardIndex 패스 요청됨.');
+
+        console.log('req.user의 정보');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.render('/', {login_success:false});
+        } else {            
+                var moimId = req.param('id');
+                console.log(moimId+" 모임 게시판");
+
+                var database = req.app.get('database');
+                var moim = new database.MoimList();            
+                    
+                database.Board.find({moim_id:moimId}).sort({date:-1}).exec(function(err, board){
+                if(err) throw err;
+                    
+                database.MoimList.findOne({_id: moimId}, function(err, moim){
+                    if(err) throw err;
+                    
+
+                    if(err) throw err;
+
+                    if(Array.isArray(req.user)){
+                        res.render('moim/boardIndex.ejs', {user: req.user[0]._doc, moim:moim, board:board});
+                    }else{
+                        res.render('moim/boardIndex.ejs', {user: req.user, moim:moim, board:board});
+                    }
+               
+                });
+                });
+        }
+    });
+    
+    // 모임 게시글 쓰기 (get)
+    router.route('/moim/boardWrite').get(function(req, res) {
+        console.log('/boardWrite 패스 요청됨.');
+
+        console.log('req.user의 정보');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.render('/', {login_success:false});
+        } else {            
+                var moimId = req.param('id');
+                console.log(moimId+" 모임 게시글 쓰기");
+
+                var database = req.app.get('database');
+                var moim = new database.MoimList();
+                var Moim = new database.Moim();            
+                    
+                database.Board.find({moim_id:moimId}).sort({date:-1}).exec(function(err, board){
+                if(err) throw err;
+                    
+                database.MoimList.findOne({_id: moimId}, function(err, moim){
+                    if(err) throw err;
+
+    
+                    if(err) throw err;
+
+                    if(Array.isArray(req.user)){
+                        res.render('moim/boardWrite.ejs', {user: req.user[0]._doc, moim:moim, board:board});
+                    }else{
+                        res.render('moim/boardWrite.ejs', {user: req.user, moim:moim, board:board});
+                    }
+                });
+                });
+        }
+    });
+    
+    // 모임 게시글 쓰기 (post)
+    router.route('/moim/boardWrite').post(function(req, res) {
+        console.log('/boardWrite 패스 요청됨.');
+
+        console.log('req.user의 정보');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.redirect('/');
+            
+        } else {
+            console.log('사용자 인증된 상태임.');
+            
+                var moimId = req.body.moimid;
+                var writer = req.body.writer;
+                var title = req.body.title;
+                var content = req.body.content;
+                
+                console.log(moimId+"모임 회차 세부 수정");
+            
+                var database = req.app.get('database');
+            
+                var newWrite = new database.Board({moim_id:moimId, title:title, writer:writer, content:content});
+                newWrite.save(function(err) {
+                  if (err) {
+                     throw err;
+                  }
+                  console.log("게시글 추가함.");
+            });
+                
+                 res.redirect('/moim/boardIndex?id='+moimId); 
+        }
+    });
+    
+    // 모임 게시글 보기 (get)
+    router.route('/moim/boardView').get(function(req, res) {
+        console.log('/boardView 패스 요청됨.');
+
+        console.log('req.user의 정보');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.render('/', {login_success:false});
+        } else {            
+                var boardId = req.param('id');
+                console.log(boardId+" 모임 게시글 보기");
+
+                var database = req.app.get('database');
+                var moim = new database.MoimList();
+                var Moim = new database.Moim();
+                var moimId;
+                    
+                database.Board.findOne({_id:boardId}, function(err, board){
+                if(err) throw err;
+                    board.count += 1;
+                    board.save(function(err) {
+                      if (err) {
+                         throw err;
+                      }
+                      console.log("조회수 변경");
+                    });
+                    
+                moimId = board.moim_id;
+                console.log(moimId);
+                    
+                database.MoimList.findOne({_id: moimId}, function(err, moim){
+                    if(err) throw err;
+    
+                    if(err) throw err;
+
+                    if(Array.isArray(req.user)){
+                        res.render('moim/boardView.ejs', {user: req.user[0]._doc, moim:moim, board:board});
+                    }else{
+                        res.render('moim/boardView.ejs', {user: req.user, moim:moim, board:board});
+                    }
+                });
+                });
+        }
+    });
+    
+    // 모임 게시글 댓글 달기 (post)
+    router.route('/moim/boardView').post(function(req, res) {
+
+        console.log('req.user의 정보');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.redirect('/');
+            
+        } else {
+            console.log('사용자 인증된 상태임.');
+                
+                var boardId = req.body.boardid;
+                var moimId = req.body.moimid;
+                var writer = req.body.writer;
+                var comment = req.body.comment;
+                var date = req.body.date;
+            
+                console.log(comment);
+                console.log(boardId);
+                
+                console.log(boardId+"게시글 댓글 달기");
+            
+                var database = req.app.get('database');
+                
+                var board = new database.Board();
+                database.Board.findOne({_id:boardId}, function(err, board){
+                if(err) throw err;
+                   
+                    board.comments.push({writer:writer, contents:comment});
+                    board.save(function(err) {
+                      if (err) {
+                         throw err;
+                      }
+                      console.log("댓글 추가함.");
+                    });
+                });
+                
+                 res.redirect('/moim/boardView?id='+boardId); 
+        }
+    });
+    
+    // 모임 게시글 수정하기 (get)
+    router.route('/moim/boardEdit').get(function(req, res) {
+        console.log('/boardEdit 패스 요청됨.');
+
+        console.log('req.user의 정보');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.render('/', {login_success:false});
+        } else {            
+                var boardId = req.param('id');
+                console.log(boardId+"게시글 수정");
+
+                var database = req.app.get('database');
+                var moim = new database.MoimList();
+                var Moim = new database.Moim(); 
+                var moimId;
+                    
+                database.Board.findOne({_id:boardId}, function(err, board){
+                if(err) throw err;
+                    moimId = board.moim_id;
+                    
+                database.MoimList.findOne({_id: moimId}, function(err, moim){
+                    if(err) throw err;
+
+    
+                    if(err) throw err;
+
+                    if(Array.isArray(req.user)){
+                        res.render('moim/boardEdit.ejs', {user: req.user[0]._doc, moim:moim, board:board});
+                    }else{
+                        res.render('moim/boardEdit.ejs', {user: req.user, moim:moim, board:board});
+                    }
+                });
+                });
+        }
+    });
+    
+    // 모임 게시글 수정하기 (post)
+    router.route('/moim/boardEdit').post(function(req, res) {
+        console.log('/boardEdit 패스 요청됨.');
+
+        console.log('req.user의 정보');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.redirect('/');
+            
+        } else {
+            console.log('사용자 인증된 상태임.');
+                
+                var boardId = req.body.boardid;
+                var moimId = req.body.moimid;
+                var title = req.body.title;
+                var content = req.body.content;
+                var updatedAt = req.body.updatedAt;
+                
+                console.log(boardId+"모임 게시글 수정");
+            
+                var database = req.app.get('database');
+                
+                var board = new database.Board();
+                database.Board.findOne({_id:boardId}, function(err, board){
+                if(err) throw err;
+                    moimId = board.moim_id;
+                    board.title=title;
+                    board.content=content;
+                    board.updatedAt=updatedAt;
+            
+                board.save(function(err) {
+                  if (err) {
+                     throw err;
+                  }
+                  console.log("게시글 추가함.");
+                });
+                });
+                
+                 res.redirect('/moim/boardIndex?id='+moimId); 
+        }
+    });
+	
+    
 
     // 로그아웃
     router.route('/logout').get(function(req, res) {
