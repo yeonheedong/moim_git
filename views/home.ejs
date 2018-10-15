@@ -48,27 +48,28 @@
                 </ul>
                 <form class="form-inline mt-2 mt-md-0">
                     <!--아 모르겠다-->
-                    <nav class="my-2 my-md-0 mr-md-3"><a id="dLabel" class="dropdown text-dark fa fa-bell" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
-                            <span style="position: absolute;top: -2px;left: 12px;background-color: rgba(212, 19, 13, 1);color: #fff;border-radius: 3px;padding: 1px 3px;font: 8px Verdana;">
-                                <%= length %>
-                            </span>
+                    <nav class="my-2 my-md-0 mr-md-3"><a id="dLabel" class="dropdown text-blue fa fa-bell" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+                        <span style="position: absolute;top: -2px;left: 12px;background-color: rgba(212, 19, 13, 1);color: #fff;border-radius: 3px;padding: 1px 3px;font: 8px Verdana;">
+                          <%= length %>
+                        </span>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <% for(var i=0; i<length; i++){ %>
+                          <% for(var i=0; i<length; i++){ %>
                             <li>
-                                <a href="/home">
-                                    <%= contents[i] %></a>
+                              <a href="/home">
+                                <%= contents[i] %></a>
                             </li>
-                            <% } %>
+                          <% } %>
                         </ul>
-                        <a href="#" class="p-2 text-dark"><span class="fa fa-search"></span></a>
+                        <a href="#" class="p-2 text-blue"><span class="fa fa-search"></span></a>
+                      </nav>
                         <!--여기까지가 알람인가?-->
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
                                 <% if (user.provider == undefined || user.provider == '') { %>
                                 <a href="/profile/profile_main" class="p-2 text-white">
                                     <%= user.name %> 님 환영합니다</a>
-                                <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
+                                <a href="/logout" class="p-2 text-blue"><span class="fa fa-sign-in"></span></a>
                                 <% } %>
                             </li>
                             <li class="nav-item">
@@ -78,7 +79,6 @@
                                 <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
                             </li>
                         </ul>
-                    </nav>
                 </form>
             </div>
         </nav>

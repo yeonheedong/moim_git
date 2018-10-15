@@ -39,7 +39,7 @@ module.exports = function(router, passport) {
 
         res.render('signupMail.ejs');
     });
-    
+
     //백선희
     //메일 인증완료 페이지
     router.route('/confirmMail').get(function (req, res) {
@@ -168,17 +168,23 @@ module.exports = function(router, passport) {
     router.route('/token').get(function (req, res) {
         console.log('/token 패스 요청됨.');
 
-        if (Array.isArray(req.user)) {
-            res.render('profile/token.ejs', {
-                user: req.user[0]._doc
-            });
-        } else {
-            res.render('profile/token.ejs', {
-                user: req.user
-            });
-        }
+        var database = req.app.get('database');
+        database.db.collection("historys").find({'user_id': req.user._id.toString()}).toArray(function(err,historys){
+          if (Array.isArray(req.user)) {
+              res.render('profile/token.ejs', {
+                  user: req.user[0]._doc
+              });
+          } else {
+              // var tokenAmount = eth.getTokenAmount(req.user.address);
+              res.render('profile/token.ejs', {
+                  user: req.user,
+                  history: historys,
+                  tokenAmount : 100
+              });
+          }
+        })
     });
-    
+
     // 내 모임 화면 (get)
     router.route('/mymoim').get(function(req, res) {
         console.log('/mymoim 패스 요청됨.');
@@ -270,6 +276,8 @@ module.exports = function(router, passport) {
 
     // 모임 만들기 (post)
     router.route('/new/new_moim').post(function(req, res) {
+        //60토큰 차감
+        // eth.join(req.user.address,60);
         console.log('new_moim 패스 요청됨.');
 
         // 인증된 경우, req.user 객체에 사용자 정보 있으며, 인증안된 경우 req.user는 false값임
@@ -306,6 +314,7 @@ module.exports = function(router, passport) {
                   console.log("모임리스트 데이터 추가함.");
             });
 
+
             var moimId = newMoimList._id;
 
             var newMoim = new database.Moim({
@@ -322,6 +331,21 @@ module.exports = function(router, passport) {
                      throw err;
                   }
                   console.log("모임 데이터 추가함.");
+            });
+
+            database.MoimList.findOne({_id: moimId}, function(err, moim){
+                if(err) throw err;
+                var history = new database.History({
+                    user_id: req.user._id
+                  , history: moim.title + "모임을 생성해서 60토큰 차감"
+                });
+
+              history.save(function(err) {
+                    if (err) {
+                       throw err;
+                    }
+                console.log("history 추가 완료");
+              });
             });
 
             if (Array.isArray(req.user)) {
@@ -431,6 +455,8 @@ module.exports = function(router, passport) {
             console.log('사용자 인증 안된 상태임.');
             res.redirect('/');
         } else {
+          //40토큰 차감
+      // eth.join(req.user.address,60);
             console.log('사용자 인증된 상태임.');
             console.log('req.user의 정보');
             console.dir(req.user);
@@ -450,6 +476,17 @@ module.exports = function(router, passport) {
                     if(err) throw err;
                     console.log(moimId+"모임 count +1");
                 });
+                var history = new database.History({
+                user_id: req.user._id
+              , history: moim.title + "모임에 참가해서 40토큰 차감"
+              });
+
+              history.save(function(err) {
+                    if (err) {
+                       throw err;
+                    }
+                console.log("history 추가 완료");
+              });
             });
 
             var newMoim = new database.Moim();
@@ -809,17 +846,17 @@ module.exports = function(router, passport) {
         } else {
             var moimId = req.param('id');
             console.log(moimId+" 모임 관리 시작");
-            
+
             var database = req.app.get('database');
             var moim = new database.MoimList();
             var moimTable = new database.MoimTable();
-            
+
             database.MoimTable.find({moim_id:moimId}).sort({num:+1}).exec(function(err, table){
                 if(err) throw err;
-            
+
             database.MoimList.findOne({_id: moimId}, function(err, moim){
                 if(err) throw err;
-            
+
                 if(Array.isArray(req.user)){
                     res.render('moim/att_user.ejs', {user: req.user[0]._doc, moim:moim, table:table});
                 }else{
@@ -845,7 +882,7 @@ module.exports = function(router, passport) {
             });
         }
     });
-	
+
     // 모임 회차별 관리 (get)
     router.route('/moim/moimSetting').get(function(req, res) {
         console.log('/setting 패스 요청됨.');
@@ -1094,6 +1131,11 @@ module.exports = function(router, passport) {
     // 로그아웃
     router.route('/logout').get(function(req, res) {
         console.log('/logout 패스 요청됨.');
+        var database = req.app.get('database');
+        var date = new Date();
+        console.log(date.getTime());
+        database.db.collection("users").updateOne({'email' : req.user.email},{$set: {updated_at:date}});
+
         req.logout();
         res.redirect('/');
     });
@@ -1118,7 +1160,7 @@ module.exports = function(router, passport) {
     }));
 
     // 회원가입 인증
-    // 회원가입 후 홈화면 아니라 인증메일 안내 페이지로 
+    // 회원가입 후 홈화면 아니라 인증메일 안내 페이지로
     router.route('/signup').post(passport.authenticate('local-signup', {
         successRedirect : '/signup_mail',
         failureRedirect : '/signup',

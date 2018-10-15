@@ -44,10 +44,10 @@ module.exports = new LocalStrategy({
 		        		if (err) {
 		        			throw err;
 		        		}
-								
+
 		        	  console.log("사용자 데이터 추가함.");
 								//사용 내역 객체 만들어 저장
-								var history = new database.History({'user_id' : user._id.toString(),'history' :"회원가입 시기 : test!!!"});
+								var history = new database.History({'user_id' : user._id.toString(),'history' :""});
 								history.save(function(err){
 									if(err)
 										throw err;
