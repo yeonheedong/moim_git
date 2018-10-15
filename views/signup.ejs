@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang=en>
-    <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -10,76 +11,186 @@
     <title>회원가입 :: MOIM</title>
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
-<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 
     <!-- Custom styles for this template -->
     <link href="album.css" rel="stylesheet">
-	</head>
-	<body>
-    <header>
-       <div class="fixed-top d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-       <a href="/" class="p-2 text-dark">MOIM</a>
-        <h5 class="my-0 mr-md-auto font-weight-normal"></h5>
-        <nav class="my-2 my-md-0 mr-md-3">
-        <a class="text-muted" href="#">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-3"><circle cx="10.5" cy="10.5" r="7.5"></circle><line x1="24" y1="24" x2="15.8" y2="15.8"></line></svg>
-        </a>
-        <a href="/login" class="p-2 text-dark">로그인</a>
-        <a href="/signup" class="p-2 text-dark">회원가입</a>
-        </nav>
-       <a class="btn btn-outline-primary" href="#">App 다운로드</a>
-     </div>
-    </header>
-        
-    <main role="main">
-        
-        <br><br><br>
+    <link href="navbar-top-fixed.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-grid.css" rel="stylesheet">
 
-		  <div class="container"> 
-            <div class="col-sm-6 col-sm-offset-3">
-            <h1><span class="fa fa-sign-in"></span>회원가입</h1><br>
+    <style>
+        html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
 
-             <% if (message.length > 0) { %>
-			        <div class="alert alert-danger"><%= message %></div>
-			 <% } %>
-    
-            <form action="/signup" method="post">
-            <div class="mb-4">
-              <label for="email">이메일</label>
-              <input type="email" class="form-control" name="email" placeholder="you@example.com" required>
-              <div class="invalid-feedback">
-                이메일을 입력해주세요
-              </div>
+.container {
+  max-width: 960px;
+  background-color:#dcdee2;
+}
+
+.pricing-header {
+  max-width: 700px;
+}
+
+.card-deck .card {
+  min-width: 200px;
+}
+
+    #jb-container {
+        width: 100%;
+        margin: 0px auto;
+        background-color:#dcdee2;
+      }
+      #jb-header {
+        margin-bottom: 20px;
+          background-color:#dcdee2;
+        height: 200px;
+      }
+      #jb-sidebar-left {
+        width: 15%;
+        margin-bottom: 20px;
+          background-color:#dcdee2;
+        float: left;
+      }
+      #jb-content {
+        width: 70%;
+        margin-bottom: 20px;
+          min-height: 600px;
+        float:left;
+/*          background-color:#dcdee2;*/
+/*          border: 1px solid #bcbcbc;*/
+          align-items:center;
+          background-color:#dcdee2;
+/*          text-align:center;*/
+      }
+            #jb-content2 {
+        width: 40%;
+        margin-bottom: 20px;
+          min-height: 600px;
+        float:center;
+/*          background-color:#dcdee2;*/
+/*          border: 1px solid #bcbcbc;*/
+          align-items:center;
+           background-color:#dcdee2;
+
+/*          text-align:center;*/
+      }
+      #jb-sidebar-right {
+        width: 15%;
+        margin-bottom: 20px;
+        float: right;
+          background-color:#dcdee2;
+
+      }
+      #jb-footer {
+        clear: both;
+        padding: 20px;
+          background-color:#dcdee2;
+        border: 1px solid #bcbcbc;
+      }
+
+        </style>
+
+</head>
+
+<body>
+
+    <div id="jb-container">
+        <header>
+            <div id="jb-header">
+                <h1><br></h1>
             </div>
-                  
-            <div class="mb-4">
-              <label for="username">닉네임<span class="text-muted"> (모임 참여 시 사용됩니다)</span></label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">@</span>
+
+
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <a class="navbar-brand" href="/home">Moim</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#">Disabled</a>
+                        </li>
+                    </ul>
+                    <form class="form-inline mt-2 mt-md-0">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/login">login <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/signup">signup <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
+                            </li>
+                        </ul>
+                    </form>
                 </div>
-                <input type="text" class="form-control" name="name" placeholder="Username" required>
-                <div class="invalid-feedback" style="width: 100%;">
-                  닉네임을 입력해주세요
+            </nav>
+        </header>
+
+        <div id="jb-sidebar-left"></div>
+        <div id="jb-content">
+
+            <div align="center">
+                <div id="jb-content2">
+                    <div class="col-sm-12">
+                        <br><br><br>
+                        <% if (message.length > 0) { %>
+                        <div class="alert alert-danger">
+                            <%= message %>
+                        </div>
+                        <% } %>
+
+                        <form action="/signup" method="post" class="form-signin">
+                            <img class="mb-4" src="../bootstrap-solid.svg" alt="" width="72" height="72">
+                            <h1 class="h3 mb-3 font-weight-normal">
+                                <font size="6.7em"> sign up </font>
+                            </h1><br>
+
+                            <label for="inputEmail" class="sr-only">Email address</label>
+                            <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                            <div class="invalid-feedback">이메일을 입력해주세요</div><br>
+
+                            <label for="username" class="sr-only">User name</label>
+                            <input type="text" name="name" id="inputEmail" class="form-control" placeholder="User Name" required autofocus>
+                            <div class="invalid-feedback">닉네임을 입력해주세요</div><br>
+
+                            <label for="inputPassword" class="sr-only">Password</label>
+                            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+
+                            <br><br>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+                            <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+                        </form>
+                        <hr>
+
+                        <div align="left">
+                            <p><small>계정이 기억나지 않나요? <a href="/find/find_pw">ID/PW 찾기</a></small></p>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
+        </div>
+        <div id="jb-sidebar-right"></div>
+        <div id="jb-footer"></div>
+    </div>
 
-            <div class="mb-4">
-              <label for="password">비밀번호</label>
-              <input type="password" class="form-control" name="password" required>
-              <div class="invalid-feedback">
-                Please enter your shipping address.
-              </div>
-            </div>
+</body>
 
-            <hr class="mb-4">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">회원가입 하기</button>
-              </form>
-              </div>
-            </div>
-        </main>
-	</body>
 </html>

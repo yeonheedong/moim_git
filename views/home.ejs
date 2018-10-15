@@ -1,109 +1,176 @@
 <!DOCTYPE html>
 <html lang=en>
-    <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
+    <link rel="icon" href="../favicon.ico">
 
     <title>MOIM</title>
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 
     <!-- Custom styles for this template -->
     <link href="album.css" rel="stylesheet">
-	</head>
-	<body>
+    <link href="navbar-top-fixed.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-grid.css" rel="stylesheet">
+</head>
+
+<body>
     <header>
-       <div class="fixed-top d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-        <a href="/home" class="p-2 text-dark">MOIM</a>
-        <h5 class="my-0 mr-md-auto font-weight-normal"></h5>
-        <nav class="my-2 my-md-0 mr-md-3"><a id="dLabel" class="dropdown text-dark fa fa-bell" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
-              <span style="position: absolute;top: -2px;left: 12px;background-color: rgba(212, 19, 13, 1);color: #fff;border-radius: 3px;padding: 1px 3px;font: 8px Verdana;">
-                <%= length %>
-              </span>
-          </a>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-            <% for(var i=0; i<length; i++){ %>
-              <li>
-                <a href="/home"><%= contents[i] %></a>
-              </li>
-            <% } %>
-          </ul>
-          <a href="#" class="p-2 text-dark"><span class="fa fa-search"></span></a>
-          <% if (user.provider == undefined || user.provider == '') { %>
-          <a href="/profile/profile_main" class="p-2 text-blue"><%= user.name %> 님 환영합니다</a>
-          <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in">
-          <% } %>
-          </span></a>
-        </nav>
+
+        <div id="jb-header">
+            <h1><br></h1>
         </div>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="/home">Moim</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                </ul>
+                <form class="form-inline mt-2 mt-md-0">
+                    <!--아 모르겠다-->
+                    <nav class="my-2 my-md-0 mr-md-3"><a id="dLabel" class="dropdown text-dark fa fa-bell" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+                            <span style="position: absolute;top: -2px;left: 12px;background-color: rgba(212, 19, 13, 1);color: #fff;border-radius: 3px;padding: 1px 3px;font: 8px Verdana;">
+                                <%= length %>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <% for(var i=0; i<length; i++){ %>
+                            <li>
+                                <a href="/home">
+                                    <%= contents[i] %></a>
+                            </li>
+                            <% } %>
+                        </ul>
+                        <a href="#" class="p-2 text-dark"><span class="fa fa-search"></span></a>
+                        <!--여기까지가 알람인가?-->
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <% if (user.provider == undefined || user.provider == '') { %>
+                                <a href="/profile/profile_main" class="p-2 text-white">
+                                    <%= user.name %> 님 환영합니다</a>
+                                <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
+                                <% } %>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout"> logout <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
+                            </li>
+                        </ul>
+                    </nav>
+                </form>
+            </div>
+        </nav>
     </header>
 
-        <br><br><br>
+    <br><br><br>
 
-      <section class="jumbotron text-center">
-          <form class="needs-validation" novalidate>
-        <div class="container">
-          <h1 class="jumbotron-heading">MOIM</h1>
-          <br>
-            <input class="form-control mr-sm-2 mb-2" type="text" placeholder="관심 있는 모임을 찾아보세요!" aria-label="Search" style="width:800px" display="inline">
-            <p>
-            <a href="/new/new_info" class="btn btn-primary my-2">모임 만들기</a>
-            <a href="/mymoim" class="btn btn-secondary my-2">내 모임 보기</a>
-            </p>
-            <nav class="my-2 my-md-0 mr-md-3">
-            <small class="text-muted">키워드</small>&nbsp;<small class="text-muted">키워드</small>&nbsp;<small class="text-muted">키워드</small>&nbsp;<small class="text-muted">키워드</small>
-            </nav>
-        </div>
-          </form>
-      </section>
-
-        <div class="album py-5">
-        <div class="container">
-
-            <div class="center">
-            <% if(Moim.length>0){ %>
-                        <% var i=0;%>
-                        <% Moim.forEach(function(Moim){%>
-                        <%i++;%>
-            <div class="col-md-4">
-              <div class="card mb-4 shadow-sm">
-                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-                <div class="card-body">
-                    <% if(Moim.state=='waiting'){%>
-                    <p class="card=text"><a href="/join/moimDetail?id=<%= Moim._id%>"><%=Moim.title%></a></p>
-                    <%}%>
-                    <% if(Moim.state=='ongoing'){%>
-                    <p class="card=text"><a href="/moim/moimHome?id=<%= Moim._id%>"><%=Moim.title%></a></p>
-                    <%}%>
-                  <p class="card-text"><%=Moim.start_at%>~<%=Moim.finish_at%></p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    </div>
-                    <small class="text-muted"><%= Moim.state %></small>
-                  </div>
-                </div>
-              </div>
+    <section class="jumbotron text-center">
+        <form class="needs-validation" novalidate>
+            <div class="container">
+                <h1 class="jumbotron-heading">MOIM</h1>
+                <br>
+                <input class="form-control mr-sm-2 mb-2" type="text" placeholder="관심 있는 모임을 찾아보세요!" aria-label="Search" style="width:800px" display="inline">
+                <p>
+                    <a href="/new/new_info" class="btn btn-primary my-2">모임 만들기</a>
+                    <a href="/mymoim" class="btn btn-secondary my-2">내 모임 보기</a>
+                </p>
+                <nav class="my-2 my-md-0 mr-md-3">
+                    <!--            <small class="text-muted">키워드</small>&nbsp;<small class="text-muted">키워드</small>&nbsp;<small class="text-muted">키워드</small>&nbsp;<small class="text-muted">키워드</small>-->
+                </nav>
             </div>
-                        <%})%>
-                        <%}else{%>
-                        <tr>
-                            <td class="noData" colspan="5"> 모임이 없습니다 :'( </td>
-                        </tr>
-            <%}%>
+        </form>
+    </section>
 
-          </div>
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="row">
+                <% if(Moim.length>0){ %>
+                <% var i=0;%>
+                <% Moim.forEach(function(Moim){%>
+                <%i++;%>
+
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                        <div class="card-body">
+                            <% if(Moim.state=='waiting'){%>
+                            <p class="card=text"><a href="/join/moimDetail?id=<%= Moim._id%>">
+                                    <%=Moim.title%></a></p>
+                            <%}%>
+                            <% if(Moim.state=='ongoing'){%>
+                            <p class="card=text"><a href="/moim/moimHome?id=<%= Moim._id%>">
+                                    <%=Moim.title%></a></p>
+                            <%}%>
+                            <p class="card-text">
+                                <%=Moim.start_at%>~
+                                <%=Moim.finish_at%>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                </div>
+                                <small class="text-muted">
+                                    <%= Moim.state %></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%})%>
+                <%}else{%>
+                <tr>
+                    <td class="noData" colspan="5"> 모임이 없습니다 :'( </td>
+                </tr>
+                <%}%>
+            </div>
         </div>
-      </div>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>
+        window.jQuery || document.write('<script src="../fonts/js/jquery-slim.min.js"><\/script>')
+
+    </script>
+    <script src="../fonts/js/popper.min.js"></script>
+    <script src="../fonts/js/bootstrap.min.js"></script>
+    <script src="holder.min.js"></script>
+    <script src="holder.js"></script>
+    <script>
+        Holder.addTheme("bright", {
+            background: "white",
+            foreground: "gray",
+            size: 12
+        });
+
+    </script>
 
 
-    </body>
+
+</body>
+
 </html>

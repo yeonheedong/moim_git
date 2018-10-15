@@ -8,7 +8,7 @@
  */
 
 var LocalStrategy = require('passport-local').Strategy;
-var eth = require('../../dapp/eth.js');
+//var eth = require('../../dapp/eth.js');
 
 //회원가입 승인 메일보내기 모듈
 var mailer = require('../../verification/signup_verification.js');
@@ -39,7 +39,7 @@ module.exports = new LocalStrategy({
 		        } else {
 		        	// 모델 인스턴스 객체 만들어 저장
 		        	var user = new database.UserModel({'email':email, 'password':password, 'name':paramName});
-							eth.addressCreate(password,database,email);
+							//eth.addressCreate(password,database,email);
 							user.save(function(err) {
 		        		if (err) {
 		        			throw err;

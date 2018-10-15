@@ -17,33 +17,143 @@
 
     <!-- Custom styles for this template -->
     <link href="jumbotron.css" rel="stylesheet">
+     <link href="navbar-top-fixed.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-grid.css" rel="stylesheet">
+        
+        <style>
+            
+         #jb-container {
+        width: 100%;
+        height:100%;
+        margin: 0px auto;
+        background-color:#dcdee2;
+      }
+      #jb-header {
+        margin-bottom: 20px;
+          background-color:#dcdee2;
+        height: 200px;
+      }
+      #jb-sidebar-left {
+        width: 15%;
+        margin-bottom: 20px;
+          background-color:#dcdee2;
+        float: left;
+      }
+      #jb-content {
+        width: 70%;
+        margin-bottom: 20px;
+          min-height: 600px;
+        float:left;
+/*          background-color:#dcdee2;*/
+/*          border: 1px solid #bcbcbc;*/
+          align-items:center;
+          background-color:#dcdee2;
+/*          text-align:center;*/
+      }
+            #jb-content2 {
+        width: 40%;
+        margin-bottom: 20px;
+          min-height: 600px;
+        float:center;
+/*          background-color:#dcdee2;*/
+          border: 1px solid #bcbcbc;
+          align-items:center;
+            background-color:white;
+/*          text-align:center;*/
+      }
+      #jb-sidebar-right {
+        width: 15%;
+        margin-bottom: 20px;
+        float: right;
+          background-color:#dcdee2;
+
+      }
+      #jb-footer {
+        clear: both;
+        padding: 20px;
+          background-color:#dcdee2;
+        border: 1px solid #bcbcbc;
+      }
+
+            
+            #jb-content3 {
+        width: 50%;
+        margin-bottom: 20px;
+         border:20px;
+        padding:20px;
+        float:center;
+/*          background-color:#dcdee2;*/
+/*          border: 1px solid #bcbcbc;*/
+          align-items:center;
+          background-color:#dcdee2;
+/*          text-align:center;*/
+      }
+     .box {
+        width:650px;
+        height:0px;
+        background-color:#dcdee2;
+        float: center; 
+        padding: 40px;
+/*         border: 1px solid #bcbcbc;*/
+          } 
+            </style>
 	</head>
 	<body>
+        <div id="jb-container">
     <header>
-       <div class="fixed-top d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-        <a href="/home" class="p-2 text-dark">MOIM</a>
-        <h5 class="my-0 mr-md-auto font-weight-normal"></h5>
-        <nav class="my-2 my-md-0 mr-md-3">
-        <a href="#" class="p-2 text-dark"><span class="fa fa-search"></span></a>
-        <% if (user.provider == undefined || user.provider == '') { %>
-        <a href="/profile/profile_main" class="p-2 text-blue"><%= user.name %> 님 환영합니다</a>
-        <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in">
+        <div id="jb-header"><h1><br></h1></div>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="/home">Moim</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+        </ul>
+        <form class="form-inline mt-2 mt-md-0">
+        <ul class="navbar-nav mr-auto">
+             <li class="nav-item active">
+                 <% if (user.provider == undefined || user.provider == '') { %>
+        <a href="/profile/profile_main" class="p-2 text-white"><%= user.name %> 님 환영합니다</a>
+        <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
         <% } %>
-        </span></a>
-        </nav>
-</div>
+            </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">logout  <span class="sr-only">(current)</span></a>
+              </li>
+            <li class="nav-item">
+              <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
+          </li>
+        </ul>
+        </form>
+      </div>
+          </nav>
     </header>
-        
-    <main role="main" class="container">
-          <div class="jumbotron">
-              <h1 class="mb-4">새로운 모임 만들기</h1>
-              <p class="lead mb-4">
+        <div id="jb-sidebar-left"></div>
+<!--    <main role="main">-->
+          <div id="jb-content" align="center">
+              <div class="box">
+              <h4 class="mb-3">새로운 모임 만들기</h4><br>
+              <p class="lead mb-3"><font size="2.0em">
               "이제부터 새로운 모임을 만들 것입니다. 모임을 생성하는 사람은 방장 권한을 갖게 되며 모임이 성공적으로 종료되었을 때 Advantage를 얻게 됩니다. 모임을 생성하기 위해서는 60 토큰을 지불해야 하며, 앞선 3번의 모임을 무사히 완수하여 모임 생성 자격을 얻은 사람은 40토큰을 지불하게 됩니다. 더욱 자세한 정보를 얻기 위해서는 아래의 링크를 클릭해주세요."
-              </p>
+                  </font></p><br>
               <a class="btn btn-lg btn-primary" href="/moimProvision" role="botton">자세히 보기</a>
               <a class="btn btn-lg btn-secondary" "style=float:right;" href="/new/new_moim" role="botton">모임 만들기</a>
           </div>
+        </div>
               
-        </main>
+<!--            </main>-->
+        <div id="jb-sidebar-right"></div>
+        </div>
 	</body>
 </html>

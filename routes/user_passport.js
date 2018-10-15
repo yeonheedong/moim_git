@@ -834,9 +834,16 @@ module.exports = function(router, passport) {
     // (post) 추가할거
     router.route('/moim/att_verification').get(function (req, res) {
         console.log('/moim/att_verification 패스 요청됨.');
-        
-        res.render('moim/att_verification.ejs');
-        
+
+        if (Array.isArray(req.user)) {
+            res.render('moim/att_verification.ejs', {
+                user: req.user[0]._doc
+            });
+        } else {
+            res.render('moim/att_verification.ejs', {
+                user: req.user
+            });
+        }
     });
 	
     // 모임 회차별 관리 (get)
