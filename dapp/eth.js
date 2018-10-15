@@ -289,7 +289,7 @@ var MeetAbi =[
 ];
 var Meet = web3.eth.contract(MeetAbi).at(MeetContractAddress);
 
-web3.eth.defaultAccount = web3.eth.accounts[0];
+web3.eth.defaultAccount = web3.eth.accounts[1];
 
 //----------------------------
 // 토큰 명부 조회 (BalanceOf)
@@ -362,14 +362,16 @@ exports.fundTransferEvent = function( callback ) {
 //어카운트 생성
 //=================================
 
-exports.addressCreate = function(password){
-	this.unlockAccount(web3.eth.defaultAccount,'',30);
+exports.addressCreate = function(password,database,email){
+	this.unlockAccount(web3.eth.defaultAccount,'test1',30);
 	var _promise =  personal.newAccount(password).then(function(text){
 		//디비저장 여기에서 가능
 		console.log("address : " + text);
 		Meet.Sign_up(text);
 		console.log("100코인 전송 완료");
-		return text;
+		database.db.collection("users").updateOne({'email' : email},{$set : {'addess' : text}},function(err,res){
+			if(err) throw err;
+		});
 
 	})
 }

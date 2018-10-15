@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.6.1",
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
@@ -37,7 +38,7 @@
     "path": "^0.12.7",
     "pc-bootstrap4-datetimepicker": "^4.17.50",
     "serve-static": "^1.13.2",
-    "web3": "^0.20.1",
+    "web3": "git+https://github.com/ethereum/web3.js.git",
     "web3-eth-personal": "^1.0.0-beta.36"
   }
 }

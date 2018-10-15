@@ -38,12 +38,13 @@ module.exports = new LocalStrategy({
 		            return done(null, false, req.flash('signupMessage', '계정이 이미 있습니다.'));  // 검증 콜백에서 두 번째 파라미터의 값을 false로 하여 인증 실패한 것으로 처리
 		        } else {
 		        	// 모델 인스턴스 객체 만들어 저장
-							var address = eth.addressCreate(password);
-		        	var user = new database.UserModel({'email':email, 'password':password, 'name':paramName, 'address' : address});
-		        	user.save(function(err) {
+		        	var user = new database.UserModel({'email':email, 'password':password, 'name':paramName});
+							eth.addressCreate(password,database,email);
+							user.save(function(err) {
 		        		if (err) {
 		        			throw err;
 		        		}
+								
 		        	  console.log("사용자 데이터 추가함.");
 								//사용 내역 객체 만들어 저장
 								var history = new database.History({'user_id' : user._id.toString(),'history' :"회원가입 시기 : test!!!"});
