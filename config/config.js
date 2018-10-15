@@ -13,7 +13,6 @@ module.exports = {
         ,{file:'./moimtable_schema', collection:'moimtables', schemaName:'MoimTableSchema', modelName:'MoimTable'}
         ,{file:'./attendance_schema', collection:'attendances', schemaName:'AttendanceSchema', modelName:'Attendance'}
 				,{file:'./history_schema', collection:'historys', schemaName:'HistorySchema', modelName:'History'}
-	,{file:'./attendance_schema', collection:'attendances', schemaName:'AttendanceSchema', modelName:'Attendance'}
         ,{file:'./comment', collection:'comments', schemaName:'CommentSchema', modelName:'Comment'}
         ,{file:'./board', collection:'boards', schemaName:'BoardSchema', modelName:'Board'}
 	],
