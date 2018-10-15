@@ -1,5 +1,5 @@
 /* userPassport, moimList merge ver. + header */
-
+var eth = require("../dapp/eth.js");
 module.exports = function(router, passport) {
     console.log('user_passport 호출됨.');
     console.log('moimlist 호출됨');
@@ -175,7 +175,9 @@ module.exports = function(router, passport) {
                   user: req.user[0]._doc
               });
           } else {
-              // var tokenAmount = eth.getTokenAmount(req.user.address);
+              var tokenAmount = eth.getTokenAmount(req.user.address);
+              console.log(tokenAmount);
+              console.dir(tokenAmount);
               res.render('profile/token.ejs', {
                   user: req.user,
                   history: historys,

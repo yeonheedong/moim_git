@@ -48,11 +48,12 @@
                 </ul>
                 <form class="form-inline mt-2 mt-md-0">
                     <!--아 모르겠다-->
-                    <nav class="my-2 my-md-0 mr-md-3"><a id="dLabel" class="dropdown text-blue fa fa-bell" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+                    <nav class="dropdown my-2 my-md-0 mr-md-3">
+                      <a id="dLabel" class="dropdown text-blue fa fa-bell" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
                         <span style="position: absolute;top: -2px;left: 12px;background-color: rgba(212, 19, 13, 1);color: #fff;border-radius: 3px;padding: 1px 3px;font: 8px Verdana;">
                           <%= length %>
                         </span>
-                        </a>
+                      </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                           <% for(var i=0; i<length; i++){ %>
                             <li>
@@ -166,7 +167,6 @@
             foreground: "gray",
             size: 12
         });
-
     </script>
 
 

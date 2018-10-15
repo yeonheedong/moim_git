@@ -4,9 +4,9 @@
 var Web3 = require('web3');
 var web3 = new Web3(new Web3.providers.HttpProvider("http://14.63.193.192:8545"));
 var Web3EthPersonal = require('web3-eth-personal');
-var personal = new Web3EthPersonal('http://14.63.193.192:8545');
-const TokenContractAddress = "0x8b5562b229e6bd1a5c1f81fa0b605c996b2c1648";
-const MeetContractAddress = "0xee90893a624286a27f25c73895abce1c85c2a1b7";
+var personal = new Web3EthPersonal("http://14.63.193.192:8545");
+const TokenContractAddress = "0x4b41e59b22221b62abc8b4ba5d2cdfc4bf9a2546";
+const MeetContractAddress = "0xa20d95af2c5dda239a3ffbcdfe1dce0861c40734";
 
 
 var MeetTokenAbi =[
@@ -204,10 +204,29 @@ var MeetAbi =[
 				"type": "uint256"
 			}
 		],
-		"name": "participate",
+		"name": "Token_To_Ether",
 		"outputs": [],
 		"payable": true,
 		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -236,40 +255,10 @@ var MeetAbi =[
 				"type": "uint256"
 			}
 		],
-		"name": "Token_To_Ether",
+		"name": "Participate",
 		"outputs": [],
 		"payable": true,
 		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"name": "_addressOfTokenUsedAsReward",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "balanceOf",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -285,11 +274,90 @@ var MeetAbi =[
 		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"name": "_addressOfTokenUsedAsReward",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "token_To_Ether",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "participate",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "ether_To_Token",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "sign_up",
+		"type": "event"
 	}
 ];
 var Meet = web3.eth.contract(MeetAbi).at(MeetContractAddress);
 
-web3.eth.defaultAccount = web3.eth.accounts[1];
+web3.eth.defaultAccount = web3.eth.accounts[0];
 
 //----------------------------
 // 토큰 명부 조회 (BalanceOf)
@@ -363,7 +431,7 @@ exports.fundTransferEvent = function( callback ) {
 //=================================
 
 exports.addressCreate = function(password,database,email){
-	this.unlockAccount(web3.eth.defaultAccount,'test1',30);
+	this.unlockAccount(web3.eth.defaultAccount,'',30);
 	var _promise =  personal.newAccount(password).then(function(text){
 		//디비저장 여기에서 가능
 		console.log("address : " + text);

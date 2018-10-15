@@ -6,7 +6,7 @@
  * @date 2016-11-10
  * @author Mike
  */
-
+var eth = require("../../dapp/eth.js");
 var LocalStrategy = require('passport-local').Strategy;
 //var eth = require('../../dapp/eth.js');
 
@@ -39,7 +39,7 @@ module.exports = new LocalStrategy({
 		        } else {
 		        	// 모델 인스턴스 객체 만들어 저장
 		        	var user = new database.UserModel({'email':email, 'password':password, 'name':paramName});
-							//eth.addressCreate(password,database,email);
+							eth.addressCreate(password,database,email);
 							user.save(function(err) {
 		        		if (err) {
 		        			throw err;
