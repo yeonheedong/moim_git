@@ -22,42 +22,18 @@
   <body>
     
     <header>
-         <div id="jb-header"><h1><br></h1></div>
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="/home">Moim</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-        </ul>
-        <form class="form-inline mt-2 mt-md-0">
-        <ul class="navbar-nav mr-auto">
-             <li class="nav-item active">
-                 <% if (user.provider == undefined || user.provider == '') { %>
-                 <a href="/profile/profile_main" class="p-2 text-white"><%= user.name %> 님 환영합니다</a>
-        <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
+        <div class="fixed-top d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <a href="/home" class="p-2 text-dark">MOIM</a>
+        <h5 class="my-0 mr-md-auto font-weight-normal"></h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+        <a href="#" class="p-2 text-dark"><span class="fa fa-search"></span></a>
+        <% if (user.provider == undefined || user.provider == '') { %>
+        <a href="/profile/profile_main" class="p-2 text-blue"><%= user.name %> 님 환영합니다</a>
+        <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in">
         <% } %>
-            </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">logout  <span class="sr-only">(current)</span></a>
-              </li>
-            <li class="nav-item">
-              <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
-          </li>
-        </ul>
-        </form>
-      </div>
-          </nav>
+        </span></a>
+        </nav>
+        </div>
     </header>
     
     <br><br><br>
@@ -80,13 +56,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/moim/attendance?id=<%=moim._id%>">
                   <span data-feather="shopping-cart"></span>
                   출석부
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/moim/boardIndex?id=<%=moim._id%>">
                   <span data-feather="file"></span>
                   게시판
                 </a>
@@ -162,7 +138,7 @@
           <h3 class="h3">전체 출석부</h3>
             <div class="btn-toolbar mb-2 mb-md-0">
               <div class="btn-group mr-2">
-                <button class="btn btn-sm btn-outline-secondary dropdown-toggle">회차순</button>
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle">이름순</button>
               </div>
             </div>
           </div>
@@ -170,28 +146,32 @@
             <table class="table table-striped table-sm">
                 <thead>
                 <tr>
-                  <th>회차</th>
                   <th>이름</th>
+                  <th>회차</th>
+                  <th>날짜</th>
                   <th>출결</th>
+                    <% if(users.length>0){%>
+                        <% var i=0; %>
+                        <% users.forEach(function(users){%>
+                        <%i++;%>
+                            <% if(attendance.length>0){%>
+                            <% var i=0; %>
+                            <% attendance.forEach(function(attendance){%>
+                            <%i++;%>
                 </tr>
               </thead>
               <tbody>
-              <% if(attendance.length>0){%>
-                <% var i=0; %>
-                <% attendance.forEach(function(attendance){%>
-                <%i++;%>
-                <tr>
-                  <td><%= attendance.num %></td>
-                  <td><%= attendance.user_id %></td>
-                  <td><%= attendance.state %></td>
-                </tr>
-                <%})}else{%>
-                <tr>
-                  <td>1</td>
-                  <td>없음</td>
-                  <td>없음</td>
-                </tr>
-              <%}%>
+                        <% if(users._id == attendance.user_id){%>
+                        <tr>
+                        <td><%=users.name%></td>
+                        <td><%=attendance.num%></td>
+                        <td><%=attendance.date%></td>
+                        <td><%=attendance.state%></td>
+                      <%}})}%>
+                   
+                <%})}%>
+                 </tr>
+                 
               </tbody>
             </table>
 
