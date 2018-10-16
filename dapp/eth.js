@@ -5,8 +5,8 @@ var Web3 = require('web3');
 var web3 = new Web3(new Web3.providers.HttpProvider("http://14.63.193.192:8545"));
 var Web3EthPersonal = require('web3-eth-personal');
 var personal = new Web3EthPersonal("http://14.63.193.192:8545");
-const TokenContractAddress = "0x4b41e59b22221b62abc8b4ba5d2cdfc4bf9a2546";
-const MeetContractAddress = "0xa20d95af2c5dda239a3ffbcdfe1dce0861c40734";
+const TokenContractAddress = "0xe78aa9be0c155bd27dbc3c1e32603e2604760e84";
+const MeetContractAddress = "0x42327312007b6d711d26afa9006b9ff33274fb5c";
 
 
 var MeetTokenAbi =[
@@ -285,74 +285,6 @@ var MeetAbi =[
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "token_To_Ether",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "participate",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "ether_To_Token",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"name": "_from",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "sign_up",
-		"type": "event"
 	}
 ];
 var Meet = web3.eth.contract(MeetAbi).at(MeetContractAddress);
@@ -364,6 +296,7 @@ web3.eth.defaultAccount = web3.eth.accounts[0];
 //----------------------------
 exports.getTokenAmount = function (address) {
     //+++++++  STEP 4. Get 실습 ++++++++++++
+		console.log("eth getTokenAmount address " + address);
     return TokenContract.balanceOf(address);
 };
 
@@ -437,7 +370,7 @@ exports.addressCreate = function(password,database,email){
 		console.log("address : " + text);
 		Meet.Sign_up(text);
 		console.log("100코인 전송 완료");
-		database.db.collection("users").updateOne({'email' : email},{$set : {'addess' : text}},function(err,res){
+		database.db.collection("users").updateOne({'email' : email},{$set : {'address' : text}},function(err,res){
 			if(err) throw err;
 		});
 
@@ -474,7 +407,8 @@ exports.token_to_ether = function(address,value){
 	});
 }
 
-exports.join = function(address,value){
-	Meet.participate(address,value);
+exports.join = function(address,pw,value){
+	this.unlockAccount(web3.eth.defaultAccount,pw,30);
+	Meet.Participate(address,value);
 	console.log(address + "에서 " + value + "토큰 차감");
 }

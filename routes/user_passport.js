@@ -177,11 +177,10 @@ module.exports = function(router, passport) {
           } else {
               var tokenAmount = eth.getTokenAmount(req.user.address);
               console.log(tokenAmount);
-              console.dir(tokenAmount);
               res.render('profile/token.ejs', {
                   user: req.user,
                   history: historys,
-                  tokenAmount : 100
+                  tokenAmount : tokenAmount
               });
           }
         })
@@ -279,7 +278,7 @@ module.exports = function(router, passport) {
     // 모임 만들기 (post)
     router.route('/new/new_moim').post(function(req, res) {
         //60토큰 차감
-        // eth.join(req.user.address,60);
+        eth.join(req.user.address,req.user.hashed_password,60);
         console.log('new_moim 패스 요청됨.');
 
         // 인증된 경우, req.user 객체에 사용자 정보 있으며, 인증안된 경우 req.user는 false값임
@@ -458,7 +457,7 @@ module.exports = function(router, passport) {
             res.redirect('/');
         } else {
           //40토큰 차감
-      // eth.join(req.user.address,60);
+            eth.join(req.user.address,req.user.hashed_password,40);
             console.log('사용자 인증된 상태임.');
             console.log('req.user의 정보');
             console.dir(req.user);
@@ -837,7 +836,7 @@ module.exports = function(router, passport) {
                 });
         }
     });
-    
+
     //OTP제대로 입력해야 submit되니까
     router.route('/moim/att_verification').post(function(req, res) {
         console.log('/moim/att_verification post패스 요청됨.');
@@ -893,7 +892,7 @@ module.exports = function(router, passport) {
                 });
         }
     });
-    
+
     //백
     //방장에게 OTP코드 발급
     router.route('/moim/att_manager').get(function(req, res) {
@@ -929,7 +928,7 @@ module.exports = function(router, passport) {
                 });
         }
     });
-	
+
     // 모임 회차별 관리 (get)
     router.route('/moim/moimSetting').get(function(req, res) {
         console.log('/setting 패스 요청됨.');
@@ -1558,7 +1557,7 @@ module.exports = function(router, passport) {
         var database = req.app.get('database');
         var date = new Date();
         console.log(date.getTime());
-        database.db.collection("users").updateOne({'email' : req.user.email},{$set: {updated_at:date}});	
+        database.db.collection("users").updateOne({'email' : req.user.email},{$set: {updated_at:date}});
         req.logout();
         res.redirect('/');
         });
