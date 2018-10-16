@@ -801,7 +801,120 @@ module.exports = function(router, passport) {
             });
         }
     });
+//백
+    // 출석인증 화면(get)
+    // (post) 추가할거
+    router.route('/moim/att_verification').get(function(req, res) {
+        console.log('/moim/att_verification get패스 요청됨.');
 
+        console.log('req.user의 정보');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.render('/', {login_success:false});
+        } else {
+                var moimId = req.param('id');
+                console.log(moimId+" 모임 회차별 관리");
+
+                var database = req.app.get('database');
+                var moim = new database.MoimList();
+                var moimTable = new database.MoimTable();
+
+                database.MoimTable.find({moim_id:moimId}).sort({num:+1}).exec(function(err, table){
+                if(err) throw err;
+
+                database.MoimList.findOne({_id: moimId}, function(err, moim){
+                    if(err) throw err;
+
+                    if(Array.isArray(req.user)){
+                        res.render('moim/att_verification.ejs', {user: req.user[0]._doc, moim:moim, table:table});
+                    }else{
+                        res.render('moim/att_verification.ejs', {user: req.user, moim:moim, table:table});
+                    }
+                });
+                });
+        }
+    });
+    
+    //OTP제대로 입력해야 submit되니까
+    router.route('/moim/att_verification').post(function(req, res) {
+        console.log('/moim/att_verification post패스 요청됨.');
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.redirect('/');
+        } else {
+            console.log('사용자 인증된 상태임.');
+            console.log('req.user 객체의 값');
+            console.dir(req.user);
+
+            if (Array.isArray(req.user)) {
+                res.render('att_done.ejs', {user: req.user[0]._doc});
+            } else {
+                res.render('att_done.ejs', {user: req.user});
+            }
+        }
+    });
+    //백
+    // 출석인증완료페이지 (get)
+    router.route('/moim/att_done').get(function(req, res) {
+        console.log('/moim/att_done 패스 요청됨.');
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.redirect('/');
+        } else {
+            console.log('사용자 인증된 상태임.');
+            console.log('req.user 객체의 값');
+            console.dir(req.user);
+
+            if (Array.isArray(req.user)) {
+                res.render('att_done.ejs', {user: req.user[0]._doc});
+            } else {
+                res.render('att_done.ejs', {user: req.user});
+            }
+        }
+    });
+    
+    //백
+    //방장에게 OTP코드 발급
+    router.route('/moim/manager_att').get(function(req, res) {
+        console.log('/moim/manager_att 패스 요청됨.');
+
+        console.log('req.user의 정보');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.render('/', {login_success:false});
+        } else {
+                var moimId = req.param('id');
+                console.log(moimId+" 모임 회차별 관리");
+
+                var database = req.app.get('database');
+                var moim = new database.MoimList();
+                var moimTable = new database.MoimTable();
+
+                database.MoimTable.find({moim_id:moimId}).sort({num:+1}).exec(function(err, table){
+                if(err) throw err;
+
+                database.MoimList.findOne({_id: moimId}, function(err, moim){
+                    if(err) throw err;
+
+                    if(Array.isArray(req.user)){
+                        res.render('moim/manager_att.ejs', {user: req.user[0]._doc, moim:moim, table:table});
+                    }else{
+                        res.render('moim/manager_att.ejs', {user: req.user, moim:moim, table:table});
+                    }
+                });
+                });
+        }
+    });
     // 모임 회차별 관리 (get)
     router.route('/moim/moimSetting').get(function(req, res) {
         console.log('/setting 패스 요청됨.');
