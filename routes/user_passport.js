@@ -689,6 +689,38 @@ module.exports = function(router, passport) {
         }
     });
 
+    // 모임 시작하기 (get)
+    router.route('/approval').get(function(req, res) {
+        console.log('/approval 패스 요청됨.');
+
+        console.log('req.user의 정보');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.render('/', {login_success:false});
+        } else {
+            console.log('사용자 인증된 상태임.');
+            
+            var moimId = req.param('id');
+            console.log(moimId+" 모임 시작");
+            
+            var database = req.app.get('database');
+            var moim = new database.MoimList();
+            
+            database.MoimList.findOne({_id: moimId}, function(err, moim){
+                if(err) throw err;
+            
+                if (Array.isArray(req.user)) {
+                res.render('approval.ejs', {user: req.user[0]._doc, moim:moim, text:'false'});
+                } else {
+                    res.render('approval.ejs', {user: req.user, moim:moim, text:'false'});
+                }
+            });
+        }
+    });
+    
     // 모임 시작하기 (post)
     router.route('/approval').post(function(req, res) {
         console.log('/approval 패스 요청됨.');
@@ -700,10 +732,10 @@ module.exports = function(router, passport) {
         if (!req.user) {
             console.log('사용자 인증 안된 상태임.');
             res.redirect('/');
-
+            
         } else {
             console.log('사용자 인증된 상태임.');
-
+            
                 var moimId = req.body.moimid;
                 console.log(moimId+"모임 시작 준비");
                 var database = req.app.get('database');
@@ -715,10 +747,10 @@ module.exports = function(router, passport) {
                     if(err) throw err;
                     console.log(moimId+"모임 state 변경");
                     });
-
+                
                 database.Moim.find({moim_id:moimId}).sort({createAt:-1}).exec(function(err, moim){
                     if(err) throw err;
-
+                    
                     if(moim.length>0){
                         var i=0;
                         moim.forEach(function(moim){
@@ -733,16 +765,16 @@ module.exports = function(router, passport) {
                             console.log(moimId+"모임 참여자 state, payment 변경");
                             });
                         })
-                    }
+                    }   
                     if (Array.isArray(req.user)) {
                     res.render('moim/start.ejs', {user: req.user[0]._doc, moim:SearchMoim});
                     } else {
                     res.render('moim/start.ejs', {user: req.user, moim:SearchMoim});
                     }
-
-                });
-                });
-
+                    
+                });                    
+                });  
+        
         }
     });
 
