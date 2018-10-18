@@ -364,15 +364,17 @@ exports.fundTransferEvent = function( callback ) {
 //=================================
 
 exports.addressCreate = function(password,database,email){
-	this.unlockAccount(web3.eth.defaultAccount,'',30);
+	// this.unlockAccount(web3.eth.defaultAccount,'',30);
+	console.log(email + "@@@@");
 	var _promise =  personal.newAccount(password).then(function(text){
 		//디비저장 여기에서 가능
 		console.log("address : " + text);
-		Meet.Sign_up(text);
-		console.log("100코인 전송 완료");
 		database.db.collection("users").updateOne({'email' : email},{$set : {'address' : text}},function(err,res){
 			if(err) throw err;
 		});
+		Meet.Sign_up(text);
+		console.log("100코인 전송 완료");
+
 
 	})
 }
@@ -408,7 +410,8 @@ exports.token_to_ether = function(address,value){
 }
 
 exports.join = function(address,pw,value){
-	this.unlockAccount(web3.eth.defaultAccount,pw,30);
+	this.unlockAccount(address,pw,30);
+	// this.unlockAccount(web3.eth.defaultAccount,'',30);
 	Meet.Participate(address,value);
 	console.log(address + "에서 " + value + "토큰 차감");
 }
