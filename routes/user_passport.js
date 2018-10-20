@@ -940,8 +940,11 @@ module.exports = function(router, passport) {
             console.log('사용자 인증 안된 상태임.');
             res.render('/', {login_success:false});
         } else {
+		var otp = require("../verification/attend_verification.js");
+                var OTP = otp.genRandom();
                 var moimId = req.param('id');
-                console.log(moimId+" 모임 회차별 관리");
+                console.log(moimId+" 모임 출석인증번호 발급");
+                console.log(OTP);
 
                 var database = req.app.get('database');
                 var moim = new database.MoimList();
@@ -954,9 +957,9 @@ module.exports = function(router, passport) {
                     if(err) throw err;
 
                     if(Array.isArray(req.user)){
-                        res.render('moim/att_manager.ejs', {user: req.user[0]._doc, moim:moim, table:table});
+                        res.render('moim/att_manager.ejs', {user: req.user[0]._doc, moim:moim, table:table, OTP});
                     }else{
-                        res.render('moim/att_manager.ejs', {user: req.user, moim:moim, table:table});
+                        res.render('moim/att_manager.ejs', {user: req.user, moim:moim, table:table, OTP});
                     }
                 });
                 });
