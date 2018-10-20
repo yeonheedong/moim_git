@@ -35,25 +35,17 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
-                    </li>
+                    
                 </ul>
                 <form class="form-inline mt-2 mt-md-0">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
+                        
                             <% if (user.provider == undefined || user.provider == '') { %>
                             <a href="/profile/profile_main" class="p-2 text-white">
                                 <%= user.name %> 님 환영합니다</a>
                             <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
                             <% } %>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="/logout">logout <span class="sr-only">(current)</span></a>
                         </li>
@@ -70,10 +62,11 @@
     <main role="main" class="container">
         <div class="jumbotron">
             <h1 class="mb-4">OTP발급</h1>
-
-            <h4>OTP 인증코드입니다.</h4>
-            
-            
+         
+            <h2> 인증번호 : <%=OTP%> </h2>
+            <br>
+            <br>
+            <h5>모임회원들에게 출석인증을 안내하세요!</h5>
             
         </div>
         <a class="btn btn-lg btn-primary" "style=float:right;" href="/moim/moimHome?id=<%=moim._id%>" role="botton">모임홈으로</a>
