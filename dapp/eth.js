@@ -5,8 +5,8 @@ var Web3 = require('web3');
 var web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
 var Web3EthPersonal = require('web3-eth-personal');
 var personal = new Web3EthPersonal("http://127.0.0.1:8545");
-const TokenContractAddress = "0xe78aa9be0c155bd27dbc3c1e32603e2604760e84";
-const MeetContractAddress = "0x42327312007b6d711d26afa9006b9ff33274fb5c";
+const TokenContractAddress = "0x77ca9d954bb80627d27f705a1925045ea47c7312";
+const MeetContractAddress = "0xca144fa1c3babad15031460add0dcfdf9e93f15b";
 
 
 var MeetTokenAbi =[
