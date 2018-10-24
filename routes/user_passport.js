@@ -175,10 +175,17 @@ module.exports = function(router, passport) {
                   user: req.user[0]._doc
               });
           } else {
-            console.log("route/token - address : "+ req.user.address)
-              var tokenAmount = eth.getTokenAmount(req.user.address);
-              console.log(tokenAmount+ "@@@@@@@@@@@");
-              res.render('profile/token.ejs', {
+            //console.log("route/token - address : "+ req.user.address)
+              //var tokenAmount = eth.getTokenAmount(req.user.address);
+              //console.log(tokenAmount+ "@@@@@@@@@@@");
+              	var test = new ObjectId(historys[0].user_id);
+              var tokenAmount,data2;
+              database.db.collection("users").findOne({'_id': test},function(err,data){
+                data2 = data;
+                tokenAmount = eth.getTokenAmount(data);
+              })
+              console.log('/token  = addr : ' + data2)
+		res.render('profile/token.ejs', {
                   user: req.user,
                   history: historys,
                   tokenAmount : tokenAmount

@@ -2,9 +2,9 @@
 // Web3 연결
 //------------------------
 var Web3 = require('web3');
-var web3 = new Web3(new Web3.providers.HttpProvider("http://14.63.193.192:8545"));
+var web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
 var Web3EthPersonal = require('web3-eth-personal');
-var personal = new Web3EthPersonal("http://14.63.193.192:8545");
+var personal = new Web3EthPersonal("http://127.0.0.1:8545");
 const TokenContractAddress = "0xe78aa9be0c155bd27dbc3c1e32603e2604760e84";
 const MeetContractAddress = "0x42327312007b6d711d26afa9006b9ff33274fb5c";
 
@@ -364,7 +364,7 @@ exports.fundTransferEvent = function( callback ) {
 //=================================
 
 exports.addressCreate = function(password,database,email){
-	// this.unlockAccount(web3.eth.defaultAccount,'',30);
+	this.unlockAccount(web3.eth.defaultAccount,'',30);
 	console.log(email + "@@@@");
 	var _promise =  personal.newAccount(password).then(function(text){
 		//디비저장 여기에서 가능
