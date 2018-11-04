@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang=en>
-    <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -8,7 +9,7 @@
     <link rel="icon" href="../../../../favicon.ico">
 
     <title>My MOIM</title>
-        
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
 
@@ -25,114 +26,128 @@
     <link href="navbar-top-fixed.css" rel="stylesheet">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap-grid.css" rel="stylesheet">
-	</head>
-	<body>
+</head>
+
+<body>
     <header>
-         <div id="jb-header"><h1><br></h1></div>
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="/home">Moim</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-        </ul>
-        <form class="form-inline mt-2 mt-md-0">
-        <ul class="navbar-nav mr-auto">
-             <li class="nav-item active">
-                 <% if (user.provider == undefined || user.provider == '') { %>
-                 <a href="/profile/profile_main" class="p-2 text-white"><%= user.name %> 님 환영합니다</a>
-        <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
-        <% } %>
-            </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">logout  <span class="sr-only">(current)</span></a>
-              </li>
-            <li class="nav-item">
-              <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
-          </li>
-        </ul>
-        </form>
-      </div>
-          </nav>
-    </header>
-        
-       <main role="main">
-                
-                
-                <br><br>
-                <div class="text-center mb-4">
-                <h1 class="jumbotron-heading">내 모임</h1>
-                <h6>- 참여 중인 모임 </h6>
-                </div>                
-                
-                <div class="container">
-                    <br>
-                <h5> 전체보기 </h5><div class="row">
-                    <% if(Moim.length>0){ %>
-                        <% var i=0;%>
-                        <% Moim.forEach(function(Moim){%>
-                        <%i++;%>
+        <div id="jb-header">
+            <h1><br></h1>
+        </div>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="/home">Moim</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                </ul>
+                <form class="form-inline mt-2 mt-md-0">
+                    <ul class="navbar-nav mr-auto">
                         
-                            <% if(moim.length>0){ %>
-                                <% var i=0;%>
-                                <% moim.forEach(function(moim){%>
-                                <%i++;%>
-                                    <% if(moim._id == Moim.moim_id) {%>
-                                    <div class="col-md-4">
-                                        
-                                      <div class="card mb-4 shadow-sm">
-                                        
-                                        <div class="card-body"> 
-                                        
-                                             <div class="card-text">
-                                            <% if(Moim.state=='waiting'){%>
-                                            <p class="card=text"><a href="/join/moimDetail?id=<%= moim._id%>"><%=moim.title%></a></p>
-                                            <%}%>
-                                            <% if(Moim.state=='ongoing'){%>
-                                            <p class="card=text"><a href="/moim/moimHome?id=<%= moim._id%>"><%=moim.title%></a></p>
-                                            <%}%>
-                                            <td for="data">날짜<%=moim.start_at%>~<%=moim.finish_at%></td><br>
-                                            <td for="member_type">권한<%=Moim.member_type%></td><br>
-                                            </div>
-                                            
-                                            <div class="d-flex justify-content-between align-items-center">
-                                            <div class="btn-group">
-                                            <% if(Moim.state == 'waiting' && user._id!=moim.manager){%>
-                                            <a class="btn btn-sm btn-outline-secondary" href="/cancel/waiting_cancel?id=<%= moim._id%>">참가 취소</a>
-                                            <%} else if(Moim.state == 'waiting' && user._id == moim.manager){%>
-                                            <a class="btn btn-sm btn-outline-secondary" href="/moimDetail?id=<%= moim._id%>">개설 취소</a>
-                                            <%} else if(Moim.state == 'progressing'){%>
-                                            <a class="btn btn-sm btn-outline-secondary" href="/cancel/waiting_cancel">중도 포기</a>
-                                            <%}%>
-                                            </div>
-                                            <small class="text-muted"><%= Moim.state %></small>
-                                          </div>
-                                            </div>
-                                        </div>
-                                        </div>
-                                    
+                            <% if (user.provider == undefined || user.provider == '') { %>
+                            <a href="/profile/profile_main" class="p-2 text-white">
+                                <%= user.name %> 님 환영합니다</a>
+                            <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
+                            <% } %>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">logout <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main">
+
+
+        <br><br>
+        <div class="text-center mb-4">
+            <h1 class="jumbotron-heading">내 모임</h1>
+            <h6>- 참여 중인 모임 </h6>
+        </div>
+
+        <div class="container">
+            <br>
+            <h5> 전체보기 </h5>
+            <div class="row">
+                <% if(Moim.length>0){ %>
+                <% var i=0;%>
+                <% Moim.forEach(function(Moim){%>
+                <%i++;%>
+
+                <% if(moim.length>0){ %>
+                <% var i=0;%>
+                <% moim.forEach(function(moim){%>
+                <%i++;%>
+                <% if(moim._id == Moim.moim_id) {%>
+                <div class="col-md-4">
+
+                    <div class="card mb-4 shadow-sm">
+
+                        <div class="card-body">
+
+                            <div class="card-text">
+                                <% if(Moim.state=='waiting'){%>
+                                <p class="card=text"><a href="/join/moimDetail?id=<%= moim._id%>">
+                                        <%=moim.title%></a></p>
+                                <%}%>
+                                <% if(Moim.state=='ongoing'){%>
+                                <p class="card=text"><a href="/moim/moimHome?id=<%= moim._id%>">
+                                        <%=moim.title%></a></p>
+                                <%}%>
+                                <td for="data">날짜
+                                    <%=moim.start_at%>~
+                                    <%=moim.finish_at%>
+                                </td><br>
+                                <td for="member_type">권한
+                                    <%=Moim.member_type%>
+                                </td><br>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <% if(Moim.state == 'waiting' && user._id!=moim.manager){%>
+                                    <a class="btn btn-sm btn-outline-secondary" href="/cancel/waiting_cancel?id=<%= moim._id%>">참가 취소</a>
+                                    <%} else if(Moim.state == 'waiting' && user._id == moim.manager){%>
+                                    <a class="btn btn-sm btn-outline-secondary" href="/moimDetail?id=<%= moim._id%>">개설 취소</a>
+                                    <%} else if(Moim.state == 'progressing'){%>
+                                    <a class="btn btn-sm btn-outline-secondary" href="/cancel/waiting_cancel">중도 포기</a>
                                     <%}%>
-                                <%})%>
-                            <%}%>
-                    
-                        <%})%>
-                        <%}else{%>
-                        <tr>
-                            <td class="noData" colspan="5"> 모임이 없습니다 :'( </td>
-                        </tr>
-                    <%}%>
-               </div>
-           </div>           
-        </main>			
-	</body>
+                                </div>
+                                <small class="text-muted">
+                                    <%= Moim.state %></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <%}%>
+                <%})%>
+                <%}%>
+
+                <%})%>
+                <%}else{%>
+                <tr>
+                    <td class="noData" colspan="5"> 모임이 없습니다 :'( </td>
+                </tr>
+                <%}%>
+            </div>
+        </div>
+    </main>
+</body>
+
 </html>

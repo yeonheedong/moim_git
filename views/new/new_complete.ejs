@@ -46,13 +46,13 @@
                 </ul>
                 <form class="form-inline mt-2 mt-md-0">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
+                        
                             <% if (user.provider == undefined || user.provider == '') { %>
                             <a href="/profile/profile_main" class="p-2 text-white">
                                 <%= user.name %> 님 환영합니다</a>
                             <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
                             <% } %>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="/logout">logout <span class="sr-only">(current)</span></a>
                         </li>

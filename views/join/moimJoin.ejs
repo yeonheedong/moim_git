@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang=en>
-    <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -11,81 +12,86 @@
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 
     <!-- Custom styles for this template -->
     <link href="form-validation.css" rel="stylesheet">
     <link href="navbar-top-fixed.css" rel="stylesheet">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap-grid.css" rel="stylesheet">
-	</head>
-	<body>
-     <header>
+</head>
 
-        <div id="jb-header"><h1><br></h1></div>
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="/home">Moim</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-        </ul>
-        <form class="form-inline mt-2 mt-md-0">
-        <ul class="navbar-nav mr-auto">
-             <li class="nav-item active">
-                 <% if (user.provider == undefined || user.provider == '') { %>
-        <a href="/profile/profile_main" class="p-2 text-white"><%= user.name %> 님 환영합니다</a>
-        <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
-        <% } %>
-            </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout"> logout    <span class="sr-only">(current)</span></a>
-              </li>
-            <li class="nav-item">
-              <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
-          </li>
-        </ul>
-        </form>
-      </div>
-          </nav>
+<body>
+    <header>
+
+        <div id="jb-header">
+            <h1><br></h1>
+        </div>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="/home">Moim</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                </ul>
+                <form class="form-inline mt-2 mt-md-0">
+                    <ul class="navbar-nav mr-auto">
+                        
+                            <% if (user.provider == undefined || user.provider == '') { %>
+                            <a href="/profile/profile_main" class="p-2 text-white">
+                                <%= user.name %> 님 환영합니다</a>
+                            <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
+                            <% } %>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout"> logout <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </nav>
     </header>
-        
-       <main role="main">
-    <br><br><br>
-      <section class="container">
-              <h1 class="jumbotron-heading">모임 상세보기</h1><br>
-                     
-                
-                <section class = mb-4>
-                <div class = mb-4>
-                <h3> 모임 신청을 완료했습니다! </h3>
-                </div>
-             
-                
-                <h5> 확인하려면 내 모임 보기 창으로 이동해주세요 </h5>
-        
 
-                            <a class="btn btn-lg btn-secondary" "style=float:right;" href="/mymoim" role="botton">내 모임 보러가기</a>
-                    
-                </section>
-               
-         
-    </section>
-     
-            
-        
-        </main>			
-	</body>
+    <main role="main">
+        <br><br><br>
+        <section class="container">
+            <h1 class="jumbotron-heading">모임 상세보기</h1><br>
+
+
+            <section class=mb-4>
+                <div class=mb-4>
+                    <h3> 모임 신청을 완료했습니다! </h3>
+                </div>
+
+
+                <h5> 확인하려면 내 모임 보기 창으로 이동해주세요 </h5>
+
+
+                <a class="btn btn-lg btn-secondary" "style=float:right;" href="/mymoim" role="botton">내 모임 보러가기</a>
+
+            </section>
+
+
+        </section>
+
+
+
+    </main>
+</body>
+
 </html>

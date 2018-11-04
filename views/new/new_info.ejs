@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang=en>
-    <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -11,19 +12,19 @@
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 
     <!-- Custom styles for this template -->
     <link href="jumbotron.css" rel="stylesheet">
-     <link href="navbar-top-fixed.css" rel="stylesheet">
+    <link href="navbar-top-fixed.css" rel="stylesheet">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap-grid.css" rel="stylesheet">
-        
-        <style>
-            
-         #jb-container {
+
+    <style>
+
+        #jb-container {
         width: 100%;
         height:100%;
         margin: 0px auto;
@@ -98,62 +99,69 @@
 /*         border: 1px solid #bcbcbc;*/
           } 
             </style>
-	</head>
-	<body>
-        <div id="jb-container">
-    <header>
-        <div id="jb-header"><h1><br></h1></div>
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="/home">Moim</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-        </ul>
-        <form class="form-inline mt-2 mt-md-0">
-        <ul class="navbar-nav mr-auto">
-             <li class="nav-item active">
-                 <% if (user.provider == undefined || user.provider == '') { %>
-        <a href="/profile/profile_main" class="p-2 text-white"><%= user.name %> 님 환영합니다</a>
-        <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
-        <% } %>
-            </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">logout  <span class="sr-only">(current)</span></a>
-              </li>
-            <li class="nav-item">
-              <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
-          </li>
-        </ul>
-        </form>
-      </div>
-          </nav>
-    </header>
+</head>
+
+<body>
+    <div id="jb-container">
+        <header>
+            <div id="jb-header">
+                <h1><br></h1>
+            </div>
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <a class="navbar-brand" href="/home">Moim</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#">Disabled</a>
+                        </li>
+                    </ul>
+                    <form class="form-inline mt-2 mt-md-0">
+                        <ul class="navbar-nav mr-auto">
+                            
+                                <% if (user.provider == undefined || user.provider == '') { %>
+                                <a href="/profile/profile_main" class="p-2 text-white">
+                                    <%= user.name %> 님 환영합니다</a>
+                                <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
+                                <% } %>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout">logout <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </nav>
+        </header>
         <div id="jb-sidebar-left"></div>
-<!--    <main role="main">-->
-          <div id="jb-content" align="center">
-              <div class="box">
-              <h4 class="mb-3">새로운 모임 만들기</h4><br>
-              <p class="lead mb-3"><font size="2.0em">
-              "이제부터 새로운 모임을 만들 것입니다. 모임을 생성하는 사람은 방장 권한을 갖게 되며 모임이 성공적으로 종료되었을 때 Advantage를 얻게 됩니다. 모임을 생성하기 위해서는 60 토큰을 지불해야 하며, 앞선 3번의 모임을 무사히 완수하여 모임 생성 자격을 얻은 사람은 40토큰을 지불하게 됩니다. 더욱 자세한 정보를 얻기 위해서는 아래의 링크를 클릭해주세요."
-                  </font></p><br>
-              <a class="btn btn-lg btn-primary" href="/moimProvision" role="botton">자세히 보기</a>
-              <a class="btn btn-lg btn-secondary" "style=float:right;" href="/new/new_moim" role="botton">모임 만들기</a>
-          </div>
+        <!--    <main role="main">-->
+        <div id="jb-content" align="center">
+            <div class="box">
+                <h4 class="mb-3">새로운 모임 만들기</h4><br>
+                <p class="lead mb-3">
+                    <font size="2.0em">
+                        "이제부터 새로운 모임을 만들 것입니다. 모임을 생성하는 사람은 방장 권한을 갖게 되며 모임이 성공적으로 종료되었을 때 Advantage를 얻게 됩니다. 모임을 생성하기 위해서는 60 토큰을 지불해야 하며, 앞선 3번의 모임을 무사히 완수하여 모임 생성 자격을 얻은 사람은 40토큰을 지불하게 됩니다. 더욱 자세한 정보를 얻기 위해서는 아래의 링크를 클릭해주세요."
+                    </font>
+                </p><br>
+                <a class="btn btn-lg btn-primary" href="/moimProvision" role="botton">자세히 보기</a>
+                <a class="btn btn-lg btn-secondary" "style=float:right;" href="/new/new_moim" role="botton">모임 만들기</a>
+            </div>
         </div>
-              
-<!--            </main>-->
+
+        <!--            </main>-->
         <div id="jb-sidebar-right"></div>
-        </div>
-	</body>
+    </div>
+</body>
+
 </html>

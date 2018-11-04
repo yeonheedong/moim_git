@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -20,112 +21,135 @@
     <link href="navbar-top-fixed.css" rel="stylesheet">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap-grid.css" rel="stylesheet">
-<!--    <link href="../site/docs/4.1/examples/pricing/pricing.css" rel="stylesheet">-->
+    <!--    <link href="../site/docs/4.1/examples/pricing/pricing.css" rel="stylesheet">-->
 
 
-  </head>
+</head>
 
-  <body>
-
-
-        <header>
-          <div id="jb-header"><h1><br></h1></div>
+<body>
 
 
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="#">Moim</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-        </ul>
-        <form class="form-inline mt-2 mt-md-0">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/login">login <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/signup">signup <span class="sr-only">(current)</span></a>
-          </li>
-            <li class="nav-item">
-              <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
-          </li>
-        </ul>
-        </form>
-      </div>
-          </nav>
-        </header>
+    <header>
+        <div id="jb-header">
+            <h1><br></h1>
+        </div>
+
+
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="#">Moim</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                </ul>
+                <form class="form-inline mt-2 mt-md-0">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/login">login <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/signup">signup <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </nav>
+    </header>
 
 
     <main role="main">
-    <br><br><br>
-      <section class="jumbotron text-center">
-        <div class="container">
-          <h1 class="jumbotron-heading">MOIM</h1>
-<!--          <img src="./mainlogo2.png" width="478" height="190">-->
-          <br>
-            <input class="form-control mr-sm-2" type="text" placeholder="관심 있는 모임을 찾아보세요!" aria-label="Search" style="width:800px" display="inline">
+        <br><br><br>
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">MOIM</h1>
+                <!--          <img src="./mainlogo2.png" width="478" height="190">-->
+                <br>
+                <input class="form-control mr-sm-2" type="text" placeholder="관심 있는 모임을 찾아보세요!" aria-label="Search" style="width:800px" display="inline">
 
-          <p>
-            <a href="#" class="btn btn-primary my-2"> Search </a>
-            <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-          </p>
-        </div>
-      </section>
+                <p>
+                    <a href="#" class="btn btn-primary my-2"> Search </a>
+                    <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+                </p>
+            </div>
+        </section>
 
-      <div class="album py-5 bg-light">
-        <div class="container">
+        <div class="album py-5 ">
+            <div class="container">
 
-          <div class="row">
-              <% if(Moim.length>0){ %>
-                        <% var i=0;%>
-                        <% Moim.forEach(function(Moim){%>
-                        <%i++;%>
-             <div class="col-md-4">
-              <div class="card mb-4 shadow-sm">
-                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-                <div class="card-body">
-                  <p class="card=text"><a href="/moimDetail?id=<%= Moim._id%>"><%=Moim.title%></a></p>
-                  <p class="card-text"><%=Moim.start_at%>~<%=Moim.finish_at%></p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                <div class="row">
+                    <% if(Moim.length>0){ %>
+                    <% var i=0;%>
+                    <% Moim.forEach(function(Moim){%>
+                    <%i++;%>
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+
+                            <div class="card-body">
+                                <% if(Moim.state=='waiting'){%>
+                                <p class="card=text"><a href="/join/moimDetail?id=<%= Moim._id%>">
+                                        <%=Moim.title%></a></p>
+                                <%}%>
+                                <% if(Moim.state=='ongoing'){%>
+                                <p class="card=text"><a href="/moim/moimHome?id=<%= Moim._id%>">
+
+                                        <%=Moim.title%>
+
+                                    </a></p>
+                                <%}%>
+                                <%=Moim.keyword%> 모임
+                                <p class="card-text">
+
+                                    <%=(Moim.start_at).getFullYear()%>.
+                                    <%=((Moim.start_at).getMonth())+1 %>.
+                                    <%=((Moim.start_at).getDate()) %>~
+                                    <%=(Moim.finish_at).getFullYear()%>.
+                                    <%=((Moim.finish_at).getMonth())+1 %>.
+                                    <%=((Moim.finish_at).getDate()) %>
+                                </p>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    </div>
+                                    <small class="text-muted">
+                                        <%= Moim.state %></small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <small class="text-muted"><%= Moim.state %></small>
-                  </div>
+                    <%})%>
+                    <%}else{%>
+                    <tr>
+                        <td class="noData" colspan="5"> 모임이 없습니다 :'( </td>
+                    </tr>
+                    <%}%>
                 </div>
-              </div>
             </div>
-             <%})%>
-                        <%}else{%>
-                        <tr>
-                            <td class="noData" colspan="5"> 모임이 없습니다 :'( </td>
-                        </tr>
-            <%}%>
-            </div>
-        </div>
         </div>
 
     </main>
 
     <footer class="text-muted">
-      <div class="container">
-        <p class="float-right">
-          <a href="#">Back to top</a>
-        </p>
-        <!-- <p>모임을 이용하시겠습니까? <a href="/login">로그인</a> 혹은 <a href="/signup">회원가입</a>하세요</p> -->
-        <p>&copy; MOIM 2018</p>
+        <div class="container">
+            <p class="float-right">
+                <a href="#">Back to top</a>
+            </p>
+            <!-- <p>모임을 이용하시겠습니까? <a href="/login">로그인</a> 혹은 <a href="/signup">회원가입</a>하세요</p> -->
+            <p>&copy; MOIM 2018</p>
         </div>
     </footer>
 
@@ -134,9 +158,13 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../fonts/js/jquery-slim.min.js"><\/script>')</script>
+    <script>
+        window.jQuery || document.write('<script src="../fonts/js/jquery-slim.min.js"><\/script>')
+
+    </script>
     <script src="../fonts/js/popper.min.js"></script>
     <script src="../fonts/js/bootstrap.min.js"></script>
     <script src="../fonts/js/holder.min.js"></script>
-  </body>
+</body>
+
 </html>

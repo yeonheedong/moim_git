@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang=en>
-    <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -11,65 +12,72 @@
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 
     <!-- Custom styles for this template -->
     <link href="jumbotron.css" rel="stylesheet">
     <link href="navbar-top-fixed.css" rel="stylesheet">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap-grid.css" rel="stylesheet">
-	</head>
-	<body>
-   <header>
+</head>
 
-        <div id="jb-header"><h1><br></h1></div>
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="/home">Moim</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-        </ul>
-        <form class="form-inline mt-2 mt-md-0">
-        <ul class="navbar-nav mr-auto">
-             <li class="nav-item active">
-                 <% if (user.provider == undefined || user.provider == '') { %>
-        <a href="/profile/profile_main" class="p-2 text-white"><%= user.name %> 님 환영합니다</a>
-        <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
-        <% } %>
-            </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout"> logout    <span class="sr-only">(current)</span></a>
-              </li>
-            <li class="nav-item">
-              <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
-          </li>
-        </ul>
-        </form>
-      </div>
-          </nav>
+<body>
+    <header>
+
+        <div id="jb-header">
+            <h1><br></h1>
+        </div>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="/home">Moim</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                </ul>
+                <form class="form-inline mt-2 mt-md-0">
+                    <ul class="navbar-nav mr-auto">
+                        
+                            <% if (user.provider == undefined || user.provider == '') { %>
+                            <a href="/profile/profile_main" class="p-2 text-white">
+                                <%= user.name %> 님 환영합니다</a>
+                            <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
+                            <% } %>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout"> logout <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </nav>
     </header>
     <br><br><br>
     <main role="main" class="container">
-          <div class="jumbotron">
-              <h1 class="mb-4">모임 생성 완료!</h1>
-              <p class="lead mb-4"><%= moim.title %></p>              
+        <div class="jumbotron">
+            <h1 class="mb-4">모임 생성 완료!</h1>
+            <p class="lead mb-4">
+                <%= moim.title %>
+            </p>
 
-                <a class="btn btn-lg btn-secondary" href="/moim/moimHome?id=<%= moim._id%>">모임 시작하기</a>
-          </div>
+            <a class="btn btn-lg btn-secondary" href="/moim/moimHome?id=<%= moim._id%>">모임 시작하기</a>
+        </div>
 
-        </main>
-	</body>
+    </main>
+</body>
+
 </html>

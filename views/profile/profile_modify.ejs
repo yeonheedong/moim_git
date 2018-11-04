@@ -23,42 +23,45 @@
 <body>
 
     <header>
-         <div id="jb-header"><h1><br></h1></div>
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="/home">Moim</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-        </ul>
-        <form class="form-inline mt-2 mt-md-0">
-        <ul class="navbar-nav mr-auto">
-             <li class="nav-item active">
-                 <% if (user.provider == undefined || user.provider == '') { %>
-                 <a href="/profile/profile_main" class="p-2 text-white"><%= user.name %> 님 환영합니다</a>
-        <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
-        <% } %>
-            </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">logout  <span class="sr-only">(current)</span></a>
-              </li>
-            <li class="nav-item">
-              <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
-          </li>
-        </ul>
-        </form>
-      </div>
-          </nav>
+        <div id="jb-header">
+            <h1><br></h1>
+        </div>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="/home">Moim</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                </ul>
+                <form class="form-inline mt-2 mt-md-0">
+                    <ul class="navbar-nav mr-auto">
+                        
+                            <% if (user.provider == undefined || user.provider == '') { %>
+                            <a href="/profile/profile_main" class="p-2 text-white">
+                                <%= user.name %> 님 환영합니다</a>
+                            <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
+                            <% } %>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">logout <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </nav>
     </header>
 
     <main role="main">
@@ -71,12 +74,14 @@
 
                 <form action="/profile_modify" method="post">
                     <div class="mb-4">
-                        <label for="email">회원 이메일 : <%= user.email %> </label>
+                        <label for="email">회원 이메일 :
+                            <%= user.email %> </label>
 
                     </div>
 
                     <div class="mb-4">
-                        <label for="username">닉네임 : <%= user.name %></label>
+                        <label for="username">닉네임 :
+                            <%= user.name %></label>
 
                     </div>
 
