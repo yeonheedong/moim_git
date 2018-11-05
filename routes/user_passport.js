@@ -36,7 +36,9 @@ module.exports = function(router, passport) {
     //회원가입 메일안내 페이지
     router.route('/signup_mail').get(function (req, res) {
         console.log('/signup_mail패스 요청됨.');
-
+	req.session.destroy(function(){
+		req.session;
+	});
         res.render('signupMail.ejs');
     });
 
@@ -463,7 +465,9 @@ module.exports = function(router, passport) {
         if (!req.user) {
             console.log('사용자 인증 안된 상태임.');
             res.redirect('/');
-        } else {
+        } else if(eth.getTokenAmount(req.user.address) <= 40){
+		res.send('<script type="text/javascript">alert("토큰이 부족합니다.");</script>');
+	} else {
           //40토큰 차감
             console.log("@@"+ req.user.address);
             eth.join(req.user.address,req.user.hashed_password,40);

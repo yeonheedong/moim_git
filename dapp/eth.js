@@ -411,7 +411,7 @@ exports.token_to_ether = function(address,value){
 
 exports.join = function(address,pw,value){
 	this.unlockAccount(address,pw,30);
-	// this.unlockAccount(web3.eth.defaultAccount,'',30);
+	this.unlockAccount(web3.eth.defaultAccount,'',30);
 	Meet.Participate(address,value);
 	console.log(address + "에서 " + value + "토큰 차감");
 }
