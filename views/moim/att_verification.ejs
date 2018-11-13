@@ -69,19 +69,15 @@
 
     <main role="main" class="container">
         <div class="jumbotron">
-            <h1 class="mb-4">출석인증</h1>
+            <h1 class="mb-4">모임참석 인증</h1>
 
-            <h4>방장에게 전달받은 OTP를 입력하세요!</h4>
-
-            <form id="myform">
-                <label class="password mr-4">OTP</label>
-                <input id="password" name="password" type="password" value="inputOTPalready" readonly="readonly" />
-
+            <h4> _참여자의 위치로 인증합니다</h4>
+            <form id="myform" form method="post" action="/moim/att_verification">
                 <br />
-                <label class="password_again mr-4">verify</label>
-                <input class="left" id="password_again" name="password_again" />
+                <label class="location mr-4">위치인증 : </label>
+                <input class="left" id="user_location" name="user_location" type="text" placeholder="나중에 hidden으로"/>
                 <br>
-                <input type="button" value="submit!" onclick="location.href='/moim/att_done?id=<%=moim._id%>'">
+                <input type="button" value="인증!">
             </form>
             <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
             <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
