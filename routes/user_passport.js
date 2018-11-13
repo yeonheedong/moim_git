@@ -1,5 +1,6 @@
 /* userPassport, moimList merge ver. + header */
 var eth = require("../dapp/eth.js");
+var request = require("request");
 module.exports = function (router, passport) {
     console.log('user_passport 호출됨.');
     console.log('moimlist 호출됨');
@@ -212,7 +213,7 @@ module.exports = function (router, passport) {
                 });
             } else {
                 console.log("route/token - address : " + req.user.address)
-                var tokenAmount = eth.getTokenAmount(req.user.address);
+                // var tokenAmount = eth.getTokenAmount(req.user.address);
                 console.log(tokenAmount + "@@@@@@@@@@@");
                 // var test = new ObjectId(historys[0].user_id);
                 // var tokenAmount,data2;
@@ -344,7 +345,7 @@ module.exports = function (router, passport) {
     // 모임 만들기 (post)
     router.route('/new/new_moim').post(function (req, res) {
         //60토큰 차감
-        eth.join(req.user.address, req.user.hashed_password, 60);
+        // eth.join(req.user.address, req.user.hashed_password, 60);
         console.log('new_moim 패스 요청됨.');
 
         // 인증된 경우, req.user 객체에 사용자 정보 있으며, 인증안된 경우 req.user는 false값임
@@ -569,12 +570,12 @@ module.exports = function (router, passport) {
         if (!req.user) {
             console.log('사용자 인증 안된 상태임.');
             res.redirect('/');
-        } else if (eth.getTokenAmount(req.user.address) <= 40) {
-            res.send('<script type="text/javascript">alert("토큰이 부족합니다.");</script>');
+        // } else if (eth.getTokenAmount(req.user.address) <= 40) {
+        //     res.send('<script type="text/javascript">alert("토큰이 부족합니다.");</script>');
         } else {
             //40토큰 차감
             console.log("@@" + req.user.address);
-            eth.join(req.user.address, req.user.hashed_password, 40);
+            // eth.join(req.user.address, req.user.hashed_password, 40);
             console.log('사용자 인증된 상태임.');
             console.log('req.user의 정보');
             console.dir(req.user);
@@ -1043,7 +1044,7 @@ module.exports = function (router, passport) {
             });
         }
     });
-    
+
     //백
     //출석인증 (get)
     router.route('/moim/att_verification').get(function (req, res) {
@@ -1103,86 +1104,92 @@ module.exports = function (router, passport) {
     //user_location==moim.location이면 출석
     router.route('/moim/att_verification').post(function (req, res) {
         console.log('/moim/att_verification (post)호출됨.');
+        var latitude = req.body.latitude.substring(0,9);
+        var longitude = req.body.longitude.substring(0,10);
+        var OPTIONS = {
+          headers: {'Authorization':"KakaoAK 2227c44d872e4835f161cdd60599a506"},
+          type:'GET',
+          url : "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=" + longitude + "&y=" + latitude + "&input_coord=WGS84",
+        };
+        request.get(OPTIONS,function(err,res,result){
+          var results = JSON.parse(result);
+          console.log(results.documents[0].region_1depth_name + " " + results.documents[0].region_2depth_name);
+        });
 
-        // 요청 파라미터 확인
-        // 사용자의 위치를 파라미터로 받아온다. 
-        var paramLocation = req.body.location || req.query.location;
-
-        console.log('요청 파라미터 : ' + paramLocation);
-
-        // 데이터베이스 객체가 초기화된 경우, authLoc 함수 호출하여 사용자 인증
-        if (database) {
-            authLoc(database, paramLocation, function (err, docs) {
-                if (err) {
-                    throw err;
-                }
-
-                // 조회된 레코드가 있으면 성공 응답 전송
-                if (docs) {
-                    console.dir(docs);
-
-                    // 조회 결과에서 사용자 이름 확인
-                    var user_location = docs[0].location;
-
-                    res.writeHead('200', {
-                        'Content-Type': 'text/html;charset=utf8'
-                    });
-                    res.write('<h1>출석 성공</h1>');
-                    res.write('<div><p>사용자 위치 : ' + paramLocation + '</p></div>');
-                    res.write("<br><br><a href='/public/location.html'>다시 출석하기</a>");
-                    res.end();
-
-                } else { // 조회된 레코드가 없는 경우 실패 응답 전송
-                    res.writeHead('200', {
-                        'Content-Type': 'text/html;charset=utf8'
-                    });
-                    res.write('<h1>출석  실패</h1>');
-                    res.write('<div><p>사용자 위치를 다시 확인하십시오.</p></div>');
-                    res.write("<br><br><a href='/public/location.html'>다시 출석</a>");
-                    res.end();
-                }
-            });
-        } else { // 데이터베이스 객체가 초기화되지 않은 경우 실패 응답 전송
-            res.writeHead('200', {
-                'Content-Type': 'text/html;charset=utf8'
-            });
-            res.write('<h2>데이터베이스 연결 실패</h2>');
-            res.write('<div><p>데이터베이스에 연결하지 못했습니다.</p></div>');
-            res.end();
-        }
+        // 
+        // // 데이터베이스 객체가 초기화된 경우, authLoc 함수 호출하여 사용자 인증
+        // if (database) {
+        //     authLoc(database, paramLocation, function (err, docs) {
+        //         if (err) {
+        //             throw err;
+        //         }
+        //
+        //         // 조회된 레코드가 있으면 성공 응답 전송
+        //         if (docs) {
+        //             console.dir(docs);
+        //
+        //             // 조회 결과에서 사용자 이름 확인
+        //             var user_location = docs[0].location;
+        //
+        //             res.writeHead('200', {
+        //                 'Content-Type': 'text/html;charset=utf8'
+        //             });
+        //             res.write('<h1>출석 성공</h1>');
+        //             res.write('<div><p>사용자 위치 : ' + paramLocation + '</p></div>');
+        //             res.write("<br><br><a href='/public/location.html'>다시 출석하기</a>");
+        //             res.end();
+        //
+        //         } else { // 조회된 레코드가 없는 경우 실패 응답 전송
+        //             res.writeHead('200', {
+        //                 'Content-Type': 'text/html;charset=utf8'
+        //             });
+        //             res.write('<h1>출석  실패</h1>');
+        //             res.write('<div><p>사용자 위치를 다시 확인하십시오.</p></div>');
+        //             res.write("<br><br><a href='/public/location.html'>다시 출석</a>");
+        //             res.end();
+        //         }
+        //     });
+        // } else { // 데이터베이스 객체가 초기화되지 않은 경우 실패 응답 전송
+        //     res.writeHead('200', {
+        //         'Content-Type': 'text/html;charset=utf8'
+        //     });
+        //     res.write('<h2>데이터베이스 연결 실패</h2>');
+        //     res.write('<div><p>데이터베이스에 연결하지 못했습니다.</p></div>');
+        //     res.end();
+        // }
 
     });
-    // 위치 인증하는 함수
-    // 더 수정해야함
-    var authLoc = function (database, location, callback) {
-        console.log('authUser 호출됨 : ' + location);
-
-        // moimlists 컬렉션 참조
-        // moimlists location에 모임장소 저장되어있음
-        var locs = database.collection('moimlists');
-
-        // location 이용해 검색
-        locs.find({
-            "location": location
-        }).toArray(function (err, docs) {
-            if (err) { // 에러 발생 시 콜백 함수를 호출하면서 에러 객체 전달
-                callback(err, null);
-                return;
-            }
-
-            if (docs.length > 0) { // 조회한 레코드가 있는 경우 콜백 함수를 호출하면서 조회 결과 전달
-                console.log('위치 [%s] 가 일치하는 사용자 찾음.', location);
-                callback(null, docs);
-            } else { // 조회한 레코드가 없는 경우 콜백 함수를 호출하면서 null, null 전달
-                console.log("일치하는 사용자를 찾지 못함.");
-                callback(null, null);
-            }
-        });
-    }
+    // // 위치 인증하는 함수
+    // // 더 수정해야함
+    // var authLoc = function (database, location, callback) {
+    //     console.log('authUser 호출됨 : ' + location);
+    //
+    //     // moimlists 컬렉션 참조
+    //     // moimlists location에 모임장소 저장되어있음
+    //     var locs = database.collection('moimlists');
+    //
+    //     // location 이용해 검색
+    //     locs.find({
+    //         "location": location
+    //     }).toArray(function (err, docs) {
+    //         if (err) { // 에러 발생 시 콜백 함수를 호출하면서 에러 객체 전달
+    //             callback(err, null);
+    //             return;
+    //         }
+    //
+    //         if (docs.length > 0) { // 조회한 레코드가 있는 경우 콜백 함수를 호출하면서 조회 결과 전달
+    //             console.log('위치 [%s] 가 일치하는 사용자 찾음.', location);
+    //             callback(null, docs);
+    //         } else { // 조회한 레코드가 없는 경우 콜백 함수를 호출하면서 null, null 전달
+    //             console.log("일치하는 사용자를 찾지 못함.");
+    //             callback(null, null);
+    //         }
+    //     });
+    //   }
 
     //백
     //방장에게 OTP코드 발급
-    //gps로 바꿔야함. 
+    //gps로 바꿔야함.
     router.route('/moim/att_manager').get(function (req, res) {
         console.log('/moim/att_manager 패스 요청됨.');
 

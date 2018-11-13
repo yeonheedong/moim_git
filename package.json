@@ -38,6 +38,7 @@
     "passport-twitter": "^1.0.4",
     "path": "^0.12.7",
     "pc-bootstrap4-datetimepicker": "^4.17.50",
+    "request": "^2.88.0",
     "serve-static": "^1.13.2",
     "web3": "git+https://github.com/ethereum/web3.js.git",
     "web3-eth-personal": "^1.0.0-beta.36"

@@ -69,13 +69,13 @@
                 </ul>
                 <form class="form-inline mt-2 mt-md-0">
                     <ul class="navbar-nav mr-auto">
-                        
+
                             <% if (user.provider == undefined || user.provider == '') { %>
                             <a href="/profile/profile_main" class="p-2 text-white">
                                 <%= user.name %> 님 환영합니다</a>
                             <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
                             <% } %>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link" href="/logout">logout <span class="sr-only">(current)</span></a>
                         </li>
@@ -118,7 +118,7 @@
                         <label for="keyword">모임주제</label>
                         <br>
                         <label class="checkbox-inline mr-4">
-                            <input type="checkbox" name="keyword" value = "친목"> 친목 
+                            <input type="checkbox" name="keyword" value = "친목"> 친목
                          </label>
                         <label class="checkbox-inline mr-4">
                             <input type="checkbox" name="keyword" value="운동"> 운동
@@ -160,11 +160,11 @@
                         <label for="location">지역</label>
                         <select class="custom-select d-block w-100" name="location" required>
                             <option value>선택</option>
-                            <option>서울시 강남구</option>
-                            <option>서울시 서대문구</option>
-                            <option>서울시 은평구</option>
-                            <option>경기</option>
-                            <option>제주</option>
+                            <option>서울특별시 강남구</option>
+                            <option>서울특별시 서대문구</option>
+                            <option>서울특별시 은평구</option>
+                            <option>경기도</option>
+                            <option>제주시</option>
                             <div class="invalid-feedback">
                                 지역을 입력해주세요
                             </div>

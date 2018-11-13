@@ -47,13 +47,13 @@
                 </ul>
                 <form class="form-inline mt-2 mt-md-0">
                     <ul class="navbar-nav mr-auto">
-                        
+
                             <% if (user.provider == undefined || user.provider == '') { %>
                             <a href="/profile/profile_main" class="p-2 text-white">
                                 <%= user.name %> 님 환영합니다</a>
                             <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
                             <% } %>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link" href="/logout">logout <span class="sr-only">(current)</span></a>
                         </li>
@@ -72,13 +72,17 @@
             <h1 class="mb-4">모임참석 인증</h1>
 
             <h4> _참여자의 위치로 인증합니다</h4>
-            <form id="myform" form method="post" action="/moim/att_verification">
+            <form action="/moim/att_verification" method="post" >
                 <br />
                 <label class="location mr-4">위치인증 : </label>
                 <input class="left" id="user_location" name="user_location" type="text" placeholder="나중에 hidden으로"/>
                 <br>
-                <input type="button" value="인증!">
+                <input type="hidden" class="latitude"  name="latitude" required>
+                <input type="hidden" class="longitude" name="longitude" required>
+                <Button class="btn btn-lg btn-primary btn-block" type="submit" value="인증하기!">
             </form>
+        
+
             <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
             <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
             <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
@@ -99,7 +103,7 @@
 
             </script>
         </div>
-        
+
         <a class="btn btn-lg btn-primary" "style=float:right;" href="/moim/moimHome?id=<%=moim._id%>" role="botton">모임홈으로</a>
     </main>
 
@@ -153,6 +157,18 @@
             }
         });
 
+    </script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjo-_20AHkZP94bKSyCQDqlA0C7Brvl2k&callback=initMap"
+    async defer></script>
+    <script>
+      $(document).ready(function(){
+        navigator.geolocation.getCurrentPosition(function(position) {
+          $('.latitude').val(position.coords.latitude);
+          $('.longitude').val(position.coords.longitude);
+        })
+      });
     </script>
 </body>
 
