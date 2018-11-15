@@ -570,8 +570,8 @@ module.exports = function (router, passport) {
         if (!req.user) {
             console.log('사용자 인증 안된 상태임.');
             res.redirect('/');
-        // } else if (eth.getTokenAmount(req.user.address) <= 40) {
-        //     res.send('<script type="text/javascript">alert("토큰이 부족합니다.");</script>');
+            // } else if (eth.getTokenAmount(req.user.address) <= 40) {
+            //     res.send('<script type="text/javascript">alert("토큰이 부족합니다.");</script>');
         } else {
             //40토큰 차감
             console.log("@@" + req.user.address);
@@ -1048,7 +1048,8 @@ module.exports = function (router, passport) {
     //백
     //출석인증 (get)
     router.route('/moim/att_verification').get(function (req, res) {
-        console.log('/moim/att_verification get패스 요청됨.');
+        console.log('=====================================================================');
+        console.log('\n /moim/att_verification get패스 요청됨.');
 
         console.log('req.user의 정보');
         console.dir(req.user);
@@ -1103,148 +1104,92 @@ module.exports = function (router, passport) {
     //gps api사용해서 user의 location값을 받아와 db에 있는 모임location과 같은지 값대조
     //user_location==moim.location이면 출석
     router.route('/moim/att_verification').post(function (req, res) {
-        console.log('/moim/att_verification (post)호출됨.');
-        var latitude = req.body.latitude.substring(0,9);
-        var longitude = req.body.longitude.substring(0,10);
+        console.log('=====================================================================');
+        console.log('\n /moim/att_verification (post)호출됨.');
+        var latitude = req.body.latitude.substring(0, 9);
+        var longitude = req.body.longitude.substring(0, 10);
+        var moimId = req.body.moimid;
+
         var OPTIONS = {
-          headers: {'Authorization':"KakaoAK 2227c44d872e4835f161cdd60599a506"},
-          type:'GET',
-          url : "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=" + longitude + "&y=" + latitude + "&input_coord=WGS84",
+            headers: {
+                'Authorization': "KakaoAK 2227c44d872e4835f161cdd60599a506"
+            },
+            type: 'GET',
+            url: "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=" + longitude + "&y=" + latitude + "&input_coord=WGS84",
         };
-        request.get(OPTIONS,function(err,res,result){
-          var results = JSON.parse(result);
-          console.log(results.documents[0].region_1depth_name + " " + results.documents[0].region_2depth_name);
+        request.get(OPTIONS, function (err, res, result) {
+            var results = JSON.parse(result);
+            var user_loc = results.documents[0].region_1depth_name + " " + results.documents[0].region_2depth_name;
+
+            console.log(user_loc);
+
+            //var moimId = req.body.moimid;
+            console.log(moimId + "모임 출석인증!!");
+
+            var database = req.app.get('database');
+            var Moim_list = new database.MoimList();
+            var att = new database.Attendance();
+
+            //moimId같은 모임의 장소가 user_loc과 같은지 
+            database.MoimList.findOne({
+                _id: moimId,
+                location: user_loc
+            }, function (err, Moim_list) {
+                if (err) {
+                    console.log("모임의 위치가 다릅니다. 예외처리");//왜 로그 안찍히지..?
+                    throw err; //위치 다른경우는 에러가 난다. 예외처리
+                } else {
+                    console.log("<모임정보>\n"+Moim_list); //moimId랑 위치 같은 모임로그
+                    console.log(moimId+"모임의 위치::\n" + Moim_list.location + "\n");
+
+                    //attendance
+                    database.Attendance.findOne({
+                        moim_id: moimId,
+                        user_id: req.user._id
+                    }, function (err, att) {
+                        att.state = "출석";
+                        console.log(att);
+                    });
+                }
+            });
+
         });
-
-        // 
-        // // 데이터베이스 객체가 초기화된 경우, authLoc 함수 호출하여 사용자 인증
-        // if (database) {
-        //     authLoc(database, paramLocation, function (err, docs) {
-        //         if (err) {
-        //             throw err;
-        //         }
-        //
-        //         // 조회된 레코드가 있으면 성공 응답 전송
-        //         if (docs) {
-        //             console.dir(docs);
-        //
-        //             // 조회 결과에서 사용자 이름 확인
-        //             var user_location = docs[0].location;
-        //
-        //             res.writeHead('200', {
-        //                 'Content-Type': 'text/html;charset=utf8'
-        //             });
-        //             res.write('<h1>출석 성공</h1>');
-        //             res.write('<div><p>사용자 위치 : ' + paramLocation + '</p></div>');
-        //             res.write("<br><br><a href='/public/location.html'>다시 출석하기</a>");
-        //             res.end();
-        //
-        //         } else { // 조회된 레코드가 없는 경우 실패 응답 전송
-        //             res.writeHead('200', {
-        //                 'Content-Type': 'text/html;charset=utf8'
-        //             });
-        //             res.write('<h1>출석  실패</h1>');
-        //             res.write('<div><p>사용자 위치를 다시 확인하십시오.</p></div>');
-        //             res.write("<br><br><a href='/public/location.html'>다시 출석</a>");
-        //             res.end();
-        //         }
-        //     });
-        // } else { // 데이터베이스 객체가 초기화되지 않은 경우 실패 응답 전송
-        //     res.writeHead('200', {
-        //         'Content-Type': 'text/html;charset=utf8'
-        //     });
-        //     res.write('<h2>데이터베이스 연결 실패</h2>');
-        //     res.write('<div><p>데이터베이스에 연결하지 못했습니다.</p></div>');
-        //     res.end();
-        // }
-
+        //값 같으면 1.attendance데이터베이스 update하고 2.출석완료 페이지render
+        //값 다르면 다시인증하라는 페이지
+        res.redirect('/moim/att_done?id=' + moimId);
     });
-    // // 위치 인증하는 함수
-    // // 더 수정해야함
-    // var authLoc = function (database, location, callback) {
-    //     console.log('authUser 호출됨 : ' + location);
-    //
-    //     // moimlists 컬렉션 참조
-    //     // moimlists location에 모임장소 저장되어있음
-    //     var locs = database.collection('moimlists');
-    //
-    //     // location 이용해 검색
-    //     locs.find({
-    //         "location": location
-    //     }).toArray(function (err, docs) {
-    //         if (err) { // 에러 발생 시 콜백 함수를 호출하면서 에러 객체 전달
-    //             callback(err, null);
-    //             return;
-    //         }
-    //
-    //         if (docs.length > 0) { // 조회한 레코드가 있는 경우 콜백 함수를 호출하면서 조회 결과 전달
-    //             console.log('위치 [%s] 가 일치하는 사용자 찾음.', location);
-    //             callback(null, docs);
-    //         } else { // 조회한 레코드가 없는 경우 콜백 함수를 호출하면서 null, null 전달
-    //             console.log("일치하는 사용자를 찾지 못함.");
-    //             callback(null, null);
-    //         }
-    //     });
-    //   }
 
-    //백
-    //방장에게 OTP코드 발급
-    //gps로 바꿔야함.
-    router.route('/moim/att_manager').get(function (req, res) {
-        console.log('/moim/att_manager 패스 요청됨.');
+    // 출석 완료페이지 (get)
+    // 그냥 안내하는 페이지
+    router.route('/moim/att_done').get(function (req, res) {
+        console.log('/start 패스 요청됨.');
 
         console.log('req.user의 정보');
         console.dir(req.user);
+        var moimId = req.param('id');
+        var database = req.app.get('database');
+        var moim = new database.MoimList();
 
-        // 인증 안된 경우
-        if (!req.user) {
-            console.log('사용자 인증 안된 상태임.');
-            res.render('/', {
-                login_success: false
-            });
-        } else {
-            //var otp = require("../verification/attend_verification.js");
+        database.MoimList.findOne({
+            _id: moimId
+        }, function (err, moim) {
+            if (err) throw err;
 
-            var OTP = otp.genRandom();
-            var moimId = req.param('id');
-            console.log(moimId + " 모임 출석인증번호 발급");
-            console.log(OTP);
-
-            var database = req.app.get('database');
-            var moim = new database.MoimList();
-            var moimTable = new database.MoimTable();
-
-            database.MoimTable.find({
-                moim_id: moimId
-            }).sort({
-                num: +1
-            }).exec(function (err, table) {
-                if (err) throw err;
-
-                database.MoimList.findOne({
-                    _id: moimId
-                }, function (err, moim) {
-                    if (err) throw err;
-
-                    if (Array.isArray(req.user)) {
-                        res.render('moim/att_manager.ejs', {
-                            user: req.user[0]._doc,
-                            moim: moim,
-                            table: table,
-                            OTP: OTP
-                        });
-                    } else {
-                        res.render('moim/att_manager.ejs', {
-                            user: req.user,
-                            moim: moim,
-                            table: table,
-                            OTP: OTP
-                        });
-                    }
+            if (Array.isArray(req.user)) {
+                res.render('moim/att_done.ejs', {
+                    user: req.user[0]._doc,
+                    moim: moim
                 });
-            });
-        }
+            } else {
+                res.render('moim/att_done.ejs', {
+                    user: req.user,
+                    moim: moim
+                });
+            }
+        });
     });
+
+    // /moim/att_manager삭제: 출서인증을 gps값으로 하니 방장이 따로 인증번호를 받을 필요가 없다. 
 
     // 모임 회차별 관리 (get)
     router.route('/moim/moimSetting').get(function (req, res) {

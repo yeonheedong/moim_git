@@ -69,26 +69,13 @@
 
     <main role="main" class="container">
         <div class="jumbotron">
-            <h1 class="mb-4">출석인증</h1>
+            <h1 class="mb-4">출석완료</h1>
 
             <h5>
-                <%=moim.title%>에 출석하시겠습니까?!</h5>
+                <%=moim.title%> 출석 완료되었습니다.</h5>
             <br>
 
-            <form action="/moim/att_done" method="post" class="list-group-item d-flex justify-content-between">
-                <div class="input-group">
-                    <input type="hidden" name="moimid" value="<%=moim._id%>">
-                    <input type="text" name="userid" value="<%=user.name%>">
-                    <input type="hidden" name="att_num" value="<%=attendance.total_num%>">
-                    <input type="hidden" name="state" value="<%= attendance.state %>">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-secondary">출석인증완료</button>
-                    </div>
-                </div>
-            </form>
-
-            
-
+            <a class="btn btn-lg btn-primary" "style=float:right;" href="/moim/attendance?id=<%=moim._id%>" role="botton">출석화인</a>
         </div>
 
     </main>
