@@ -1136,23 +1136,29 @@ module.exports = function (router, passport) {
                 location: user_loc
             }, function (err, Moim_list) {
                 if (err) {
-                    console.log("모임의 위치가 다릅니다. 예외처리");//왜 로그 안찍히지..?
+                    console.log("모임의 위치가 다릅니다. 예외처리"); //왜 로그 안찍히지..?
                     throw err; //위치 다른경우는 에러가 난다. 예외처리
                 } else {
-                    console.log("<모임정보>\n"+Moim_list); //moimId랑 위치 같은 모임로그
-                    console.log(moimId+"모임의 위치::\n" + Moim_list.location + "\n");
+                    console.log("<모임정보>\n" + Moim_list);
+                    console.log(moimId + "모임의 위치::\n" + Moim_list.location + "\n");
 
                     //attendance
-                    database.Attendance.findOne({
+                    database.Attendance.updateOne({
                         moim_id: moimId,
                         user_id: req.user._id
+                    }, {
+                        $set: {
+                            "state": '출석'
+                            ,"total_num":+1
+                            //total_num을 모임의 전체횟수로 보는지 or 회원이 모임에 참여한 횟수로 보는지..?
+                        }
                     }, function (err, att) {
-                        att.state = "출석";
+                        //att.total_num=1;
+                        //att.state="출석"
                         console.log(att);
                     });
                 }
             });
-
         });
         //값 같으면 1.attendance데이터베이스 update하고 2.출석완료 페이지render
         //값 다르면 다시인증하라는 페이지
@@ -1603,8 +1609,6 @@ module.exports = function (router, passport) {
                 _id: +1
             }).exec(function (err, users) {
                 if (err) throw err;
-                console.log(users);
-                console.log(attendance);
 
                 database.Moim.find({
                     moim_id: moimId
