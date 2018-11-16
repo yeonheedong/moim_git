@@ -106,7 +106,8 @@ configPassport(app, passport);
 var userPassport = require('./routes/user_passport');
 userPassport(router, passport);
 
-
+// public 폴더를 static으로 오픈
+app.use('/public', static(path.join(__dirname, 'public')));
 
 
 //===== 404 에러 페이지 처리 =====//

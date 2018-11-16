@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html lang=en>
-
-<head>
+    <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
+    <link rel="icon" href="../../M.ico">
 
     <title>마이페이지 :: MOIM</title>
-
-
+        
+        
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 
     <!-- Custom styles for this template -->
     <link href="pricing.css" rel="stylesheet">
-    <link href="navbar-top-fixed.css" rel="stylesheet">
+     <link href="navbar-top-fixed.css" rel="stylesheet">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap-grid.css" rel="stylesheet">
+        
+      <style>
+          
+.bg-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-size:1900px 1000px;
+    background-image: url("../../public/은하수2.png");
+}
 
-    <style>
-
-        html {
+          
+    html {
   font-size: 14px;
 }
 @media (min-width: 768px) {
@@ -116,130 +124,89 @@
           } 
           
         .icon-dimgray {color: dimgray}
+          
+        table {
+            width: 100%;
+            height: 100%;
+            }
+        tr {
+              padding:60px;
+          }
+          td {
+              padding:60px;
+          }
             </style>
-
-</head>
-
-<body>
-    <div id="jb-container">
-        <header>
-
-            <div id="jb-header">
-                <h1><br></h1>
+        
+	</head>
+	<body>
+        <div id="jb-container">
+    
+    
+       
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" >
+      <a class="navbar-brand" href="/home">Moim</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+        </ul>
+        <form class="form-inline mt-2 mt-md-0">
+        <ul class="navbar-nav mr-auto">
+             <li class="nav-item active">
+                 <% if (user.provider == undefined || user.provider == '') { %>
+        <a href="/profile/profile_main" class="p-2 text-white"><%= user.name %> 님 환영합니다</a>
+        <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
+        <% } %>
+            </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">logout  <span class="sr-only">(current)</span></a>
+              </li>
+            <li class="nav-item">
+              <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
+          </li>
+        </ul>
+        </form>
+      </div>
+          </nav>
+            <table class='bg-content'>
+        <tr>
+        <td ></td>
+         <td colspan="2" ></td>
+            <td bgcolor="#586882" colspan="2" style="border:0px solid; padding:5px 60px 0px 5px;"><br><div align="right"><font size="50em" color="white">500 </font><font size="20em" color="white"> tokens </font></div>
+                   <div align="right"><font size="5em" color="white">account : </font><font size="5em" color="white"> Oxfdgfhdssfhldsflas </font></div></td>
+        </tr>
+        <tr height="330px">
+            <td width="400px" bgcolor="#283242" align="center"> <a  href="/profile_modify"><img src="../../public/정보수정.png" width="70px"></a><br><font color="white" size="3em"> 정보 수정</font></td>
+          <td background="../../public/마이페이지5.png">
+            </td>
+            <td bgcolor="dimgray" width="270px" align="center"><a href="/token"><img src="../../public/토큰관리.png" width="70px"></a><br><font color="white" size="3em"> 토큰 관리</font></td>
+          <td background="../../public/마이페이지1.jpg"></td>
+            <td  width="500px" bgcolor="#464646" align="center"><a href="/mymoim"><img src="../../public/모임관리.png" width="70px"  href="/mymoim"></a><br><font color="white" size="3em"> 모임 관리</font></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+          <td bgcolor="#3B5175" align="center"><img src="../../public/보안강화.png" width="70px"><br><font color="white" size="3em"> 보안 강화</font></td>
+          <td></td>
+          <td></td>
+        </tr>    
+         
+            </table>
+        
+            
+            
             </div>
-            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-                <a class="navbar-brand" href="/home">Moim</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Disabled</a>
-                        </li>
-                    </ul>
-                    <form class="form-inline mt-2 mt-md-0">
-                        <ul class="navbar-nav mr-auto">
-                            
-                                <% if (user.provider == undefined || user.provider == '') { %>
-                                <a href="/profile/profile_main" class="p-2 text-white">
-                                    <%= user.name %> 님 환영합니다</a>
-                                <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
-                                <% } %>
-                            
-                            <li class="nav-item">
-                                <a class="nav-link" href="/logout">logout <span class="sr-only">(current)</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <button class="btn btn-outline-success my-2 my-sm-0" href="#">App download</button>
-                            </li>
-                        </ul>
-                    </form>
-                </div>
-            </nav>
-        </header>
-
-
-        <div id="jb-sidebar-left"></div>
-        <div id="jb-content">
-            <div align="center">
-                <h1>My Page</h1>
-            </div><br><br>
-            <div class="card-deck mb-4 text-center">
-                <div class="card mb-5 shadow-sm">
-                    <div class="card-header">
-                        <h3 class="my-0 font-weight-normal">정보 수정</h3>
-                    </div>
-                    <div class="card-body">
-
-                        <!--            <h1 class="card-title pricing-card-title">정보수정</h1>-->
-                        <ul class="list-unstyled mt-2 mb-4">
-                            <i class="fas fa-user fa-6x icon-dimgray"><br></i>
-                            <!--              <li><h2><br>정보 수정</h2></li>-->
-
-                        </ul><br>
-                        <a class="btn btn-lg btn-block btn-outline-primary" "style=float:right;" href="/profile_modify" role="botton">수정</a>
-                    </div>
-                </div>
-                <div class="card mb-5 shadow-sm">
-                    <div class="card-header">
-                        <h3 class="my-0 font-weight-normal">토큰 정보</h3>
-                    </div>
-                    <div class="card-body">
-
-                        <!--              <h1 class="card-title pricing-card-title">토큰관리</h1>-->
-                        <ul class="list-unstyled mt-2 mb-4">
-                            <i class="fas fa-wallet fa-6x icon-dimgray"><br></i>
-
-                            <!--                <li><h2><br>토큰 정보</h2></li>-->
-                        </ul><br>
-                        <a href="/token" role="button" class="btn btn-lg btn-block btn-outline-primary">관리</a>
-                    </div>
-                </div>
-                <div class="card mb-5 shadow-sm">
-                    <div class="card-header">
-                        <h3 class="my-0 font-weight-normal">보안 강화</h3>
-                    </div>
-                    <div class="card-body">
-
-                        <!--            <h1 class="card-title pricing-card-title">보안</h1>-->
-                        <ul class="list-unstyled mt-2 mb-4">
-                            <i class="fas fa-shield-alt fa-6x icon-dimgray"><br></i>
-                            <!--              <li><h2><br>보안 강화</h2></li>-->
-
-                        </ul>
-                        <br>
-                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">인증</button>
-                    </div>
-                </div>
-                <div class="card mb-5 shadow-sm">
-                    <div class="card-header">
-                        <h3 class="my-0 font-weight-normal">방 관리</h3>
-                    </div>
-                    <div class="card-body">
-
-                        <!--            <h1 class="card-title pricing-card-title">방관리</h1>-->
-                        <ul class="list-unstyled mt-2 mb-4">
-                            <i class="fas fa-door-open fa-6x icon-dimgray"><br></i>
-
-                            <!--                <li><h2><br>방 관리</h2></li>-->
-                        </ul>
-                        <br>
-                        <a class="btn btn-lg btn-block btn-outline-primary" href="/mymoim">관리</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="jb-sidebar-right"></div>
-    </div>
-
-
-</body>
-
+        
+			
+	</body>
 </html>
