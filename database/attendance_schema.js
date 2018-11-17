@@ -8,7 +8,7 @@ Schema.createSchema = function(mongoose) {
 
 var AttendanceSchema = mongoose.Schema({
 		moim_id: {type: String, default:''}
-        , date: {type:String, dafault:''}
+        , date: {type:Date, dafault:''}
         , user_id: {type: String, default:''}
         , total_num: {type:Number, default:0}
         , num: {type:Number, default:0}

@@ -41,7 +41,7 @@ module.exports = function (router, passport) {
         });
 
     });
-    //백선희
+    //백
     //회원가입 메일안내 페이지
     router.route('/signup_mail').get(function (req, res) {
         console.log('/signup_mail패스 요청됨.');
@@ -51,7 +51,7 @@ module.exports = function (router, passport) {
         res.render('signupMail.ejs');
     });
 
-    //백선희
+    //백
     //메일 인증완료 페이지
     router.route('/confirmMail').get(function (req, res) {
         console.log('/confirmMail패스 요청됨.');
@@ -198,7 +198,7 @@ module.exports = function (router, passport) {
         }
     });
 
-    //백선희
+    //백
     // 토큰 화면
     router.route('/token').get(function (req, res) {
         console.log('/token 패스 요청됨.');
@@ -1045,6 +1045,8 @@ module.exports = function (router, passport) {
         }
     });
 
+    var this_num = 1; //출석인증하는 모임 회차. 일단 1로 초기화
+
     //백
     //출석인증 (get)
     router.route('/moim/att_verification').get(function (req, res) {
@@ -1099,7 +1101,7 @@ module.exports = function (router, passport) {
         }
     });
 
-    //백 !수정 더해야함!
+    //백 
     //출석인증 (post)
     //gps api사용해서 user의 location값을 받아와 db에 있는 모임location과 같은지 값대조
     //user_location==moim.location이면 출석
@@ -1146,10 +1148,14 @@ module.exports = function (router, passport) {
                     database.Attendance.updateOne({
                         moim_id: moimId,
                         user_id: req.user._id
+                            //,num:3 회차 출결 변경 <-몇회차 출석인지는 방장에게 입력받는걸로.
+                            ,
+                        num: this_num
                     }, {
                         $set: {
-                            "state": '출석'
-                            ,"total_num":+1
+                            "state": '출석',
+                            "date": new Date(),
+                            "total_num": +1
                             //total_num을 모임의 전체횟수로 보는지 or 회원이 모임에 참여한 횟수로 보는지..?
                         }
                     }, function (err, att) {
@@ -1164,11 +1170,12 @@ module.exports = function (router, passport) {
         //값 다르면 다시인증하라는 페이지
         res.redirect('/moim/att_done?id=' + moimId);
     });
-
+    
+    //백
     // 출석 완료페이지 (get)
     // 그냥 안내하는 페이지
     router.route('/moim/att_done').get(function (req, res) {
-        console.log('/start 패스 요청됨.');
+        console.log('/att_done 패스 요청됨.');
 
         console.log('req.user의 정보');
         console.dir(req.user);
@@ -1195,7 +1202,81 @@ module.exports = function (router, passport) {
         });
     });
 
+    //백
     // /moim/att_manager삭제: 출서인증을 gps값으로 하니 방장이 따로 인증번호를 받을 필요가 없다. 
+    // 근데 몇회차 출석 시작할건지는 설정해야해서 post에서 입력받게 바꿨다. 
+    router.route('/moim/att_manager').get(function (req, res) {
+        console.log('/att_manager 패스 요청됨.');
+
+        console.log('req.user의 정보');
+        console.dir(req.user);
+        var moimId = req.param('id');
+        var database = req.app.get('database');
+        var moim = new database.MoimList();
+
+        database.MoimList.findOne({
+            _id: moimId
+        }, function (err, moim) {
+            if (err) throw err;
+
+            if (Array.isArray(req.user)) {
+                res.render('moim/att_manager.ejs', {
+                    user: req.user[0]._doc,
+                    moim: moim
+                });
+            } else {
+                res.render('moim/att_manager.ejs', {
+                    user: req.user,
+                    moim: moim
+                });
+            }
+        });
+    });
+    //백
+    // 방장이 설정한 회차 값 받아오기
+    router.route('/moim/att_manager').post(function (req, res) {
+        console.log('/att_manager (post)패스 요청됨.');
+
+        //받아온 회차는 멤버변수 this_num에 저장.
+        this_num = req.body.this_num;
+        console.log("this_num : " + this_num);
+
+        var moimId = req.body.moimid;
+        console.log(moimId + " 모임 관리 시작");
+
+        var database = req.app.get('database');
+        var moim = new database.MoimList();
+        var moimTable = new database.MoimTable();
+
+        database.MoimTable.find({
+            moim_id: moimId
+        }).sort({
+            num: +1
+        }).exec(function (err, table) {
+            if (err) throw err;
+
+            database.MoimList.findOne({
+                _id: moimId
+            }, function (err, moim) {
+                if (err) throw err;
+
+                if (Array.isArray(req.user)) {
+                    res.render('moim/moimHome.ejs', {
+                        user: req.user[0]._doc,
+                        moim: moim,
+                        table: table
+                    });
+                } else {
+                    res.render('moim/moimHome.ejs', {
+                        user: req.user,
+                        moim: moim,
+                        table: table
+                    });
+                }
+            });
+        });
+    });
+
 
     // 모임 회차별 관리 (get)
     router.route('/moim/moimSetting').get(function (req, res) {

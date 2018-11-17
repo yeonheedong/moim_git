@@ -61,12 +61,18 @@
 
     <main role="main" class="container">
         <div class="jumbotron">
-            <h1 class="mb-4">OTP발급</h1>
+            <h1 class="mb-4">출석인증 시작</h1>
          
-            <h2> 인증번호 : <%=OTP%> </h2>
-            <br>
-            <br>
-            <h5>모임회원들에게 출석인증을 안내하세요!</h5>
+            <h5>몇 회차 모임출석인지 설정하고 시작하세요!</h5>
+            <form action="/moim/att_manager" method="post">
+                <br />
+                <input type="hidden" name="moimid" value="<%=moim._id%>">
+                <input type="text" name="this_num" > 차 모임 출석 
+                <br>
+                <Button class="btn btn-lg btn-primary btn-block" type="submit" >시작
+                </Button>
+            </form>
+            
             
         </div>
         <a class="btn btn-lg btn-primary" "style=float:right;" href="/moim/moimHome?id=<%=moim._id%>" role="botton">모임홈으로</a>
