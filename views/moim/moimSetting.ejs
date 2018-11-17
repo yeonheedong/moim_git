@@ -170,6 +170,7 @@
                     </li>
                 </ul>
 
+                <% if(moim.num=0){%>
                 <form action="/moim/moimSetting" method="post" class="list-group-item d-flex justify-content-between">
                     <div class="input-group">
                         <input type="hidden" name="moimid" value="<%=moim._id%>">
@@ -179,6 +180,7 @@
                         </div>
                     </div>
                 </form>
+                <% } %>
 
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h3 class="h3">전체 모임</h3>
