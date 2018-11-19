@@ -104,6 +104,7 @@ module.exports = function (router, passport) {
 
             var searchMoim = new database.MoimList();
             var notification = new Array();
+            var alarm = new Array();
             var user = new Date(req.user.updated_at);
             var database = req.app.get('database');
             database.db.collection("moimlists").find({
@@ -119,8 +120,10 @@ module.exports = function (router, passport) {
                             for (var j = 0; j < moims.length; j++) {
                                 if (moimlists[i]._id.toString() == moims[j].moim_id && user.getTime() < moims[j].updatedAt.getTime()) {
                                     for (var k = 0; k < users.length; k++) {
-                                        if (users[k]._id.toString() == moims[j].user_id)
+                                        if (users[k]._id.toString() == moims[j].user_id){
                                             notification.push(users[k].name + "님이 " + moimlists[i].title + "모임에 입장하셨습니다.");
+                                            alarm.push(moimlists[i]._id.toString());
+                                          }
                                     }
                                 }
                             }
@@ -138,11 +141,12 @@ module.exports = function (router, passport) {
                                         Moim: searchMoim
                                     });
                                 } else {
+                                  console.log(searchMoim);
                                     res.render('home.ejs', {
                                         user: req.user,
                                         Moim: searchMoim,
                                         contents: notification,
-                                        length: notification.length
+                                        alarm: alarm
                                     });
                                 }
                             });
@@ -152,6 +156,28 @@ module.exports = function (router, passport) {
             });
         }
     });
+
+    //홈 화면에서 검색시
+    router.route('/home_search').post(function (req,res){
+      console.log('/home_search 패스 요청됨.');
+      console.log(req.body.search);
+      var database = req.app.get('database');
+      database.db.collection("moimlists").find({'title': {$regex:req.body.search}}).toArray(function(err,searchMoim){
+        console.log(searchMoim)
+        if (Array.isArray(req.user)) {
+            res.render('home_search.ejs', {
+                user: req.user[0]._doc,
+                Moim: searchMoim
+            });
+        } else {
+            res.render('home_search.ejs', {
+                user: req.user,
+                Moim: searchMoim
+          });
+        }
+      });
+    });
+
     // 프로필 화면( 헤더 파일 있음 )
     router.route('/profile/profile_main').get(function (req, res) {
         console.log('/profile 패스 요청됨.');
@@ -1101,7 +1127,7 @@ module.exports = function (router, passport) {
         }
     });
 
-    //백 
+    //백
     //출석인증 (post)
     //gps api사용해서 user의 location값을 받아와 db에 있는 모임location과 같은지 값대조
     //user_location==moim.location이면 출석
@@ -1132,7 +1158,7 @@ module.exports = function (router, passport) {
             var Moim_list = new database.MoimList();
             var att = new database.Attendance();
 
-            //moimId같은 모임의 장소가 user_loc과 같은지 
+            //moimId같은 모임의 장소가 user_loc과 같은지
             database.MoimList.findOne({
                 _id: moimId,
                 location: user_loc
@@ -1170,7 +1196,7 @@ module.exports = function (router, passport) {
         //값 다르면 다시인증하라는 페이지
         res.redirect('/moim/att_done?id=' + moimId);
     });
-    
+
     //백
     // 출석 완료페이지 (get)
     // 그냥 안내하는 페이지
@@ -1203,8 +1229,8 @@ module.exports = function (router, passport) {
     });
 
     //백
-    // /moim/att_manager삭제: 출서인증을 gps값으로 하니 방장이 따로 인증번호를 받을 필요가 없다. 
-    // 근데 몇회차 출석 시작할건지는 설정해야해서 post에서 입력받게 바꿨다. 
+    // /moim/att_manager삭제: 출서인증을 gps값으로 하니 방장이 따로 인증번호를 받을 필요가 없다.
+    // 근데 몇회차 출석 시작할건지는 설정해야해서 post에서 입력받게 바꿨다.
     router.route('/moim/att_manager').get(function (req, res) {
         console.log('/att_manager 패스 요청됨.');
 

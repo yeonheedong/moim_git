@@ -66,26 +66,26 @@
                     <nav class="dropdown my-2 my-md-0 mr-md-3">
                         <a id="dLabel" class="dropdown text-blue fa fa-bell" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
                             <span style="position: absolute;top: -2px;left: 12px;background-color: rgba(212, 19, 13, 1);color: #fff;border-radius: 3px;padding: 1px 3px;font: 8px Verdana;">
-                                <%= length %>
+                                <%= contents.length %>
                             </span>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <% for(var i=0; i<length; i++){ %>
+                            <% for(var i=0; i<contents.length; i++){ %>
                             <li>
-                                <a href="/home">
+                                <a href="/join/moimDetail?id=<%= alarm[i]%>">
                                     <%= contents[i] %></a>
                             </li>
                             <% } %>
                         </ul>
                     </nav>
                     <ul class="navbar-nav mr-auto">
-                           
+
                             <% if (user.provider == undefined || user.provider == '') { %>
                             <a href="/profile/profile_main" class="p-2 text-white">
                                 <%= user.name %> 님 환영합니다</a>
                             <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in"></span></a>
                             <% } %>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link" href="/logout"> logout <span class="sr-only">(current)</span></a>
                         </li>
@@ -101,7 +101,7 @@
     <br><br><br>
 
     <section class="jumbotron text-center" style="background-image:url(../public/은하수3.png); background-size: 1900px 324px;">
-        <form class="needs-validation" novalidate>
+        <form action="/home_search" method="post" class="needs-validation" name='formname' novalidate>
             <div class="container">
 
 
@@ -110,8 +110,8 @@
                 </h1>
 
                 <br>
-                <input class="form-control mr-sm-2 mb-2" type="text" placeholder="관심 있는 모임을 찾아보세요!" aria-label="Search" style="width:800px" display="inline">
-                <!--            <a href="/" class="btn btn-primary my-2">Search</a>-->
+                <input class="form-control mr-sm-2 mb-2" name= 'search' type="text" placeholder="관심 있는 모임을 찾아보세요!" aria-label="Search" style="width:800px" display="inline">
+                <!-- <a href="/" class="btn btn-primary my-2">Search</a> -->
                 <p>
                     <a href="/new/new_info" class="btn btn-primary my-2">모임 만들기</a>
                     <a href="/mymoim" class="btn btn-secondary my-2">내 모임 보기</a>
@@ -192,6 +192,13 @@
         });
 
     </script>
+    <!-- <script>
+    function press(f){
+       if(f.keyCode == 13){
+           formname.submit();
+        }
+    }
+    </script> -->
 
 
 
