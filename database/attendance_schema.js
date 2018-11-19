@@ -8,7 +8,7 @@ Schema.createSchema = function(mongoose) {
 
 var AttendanceSchema = mongoose.Schema({
 		moim_id: {type: String, default:''}
-        , date: {type:Date, dafault:''}
+        , date: {type:String, dafault:''}//type: date로 해서 '미정'으로 초기화할때 에러났던거
         , user_id: {type: String, default:''}
         , total_num: {type:Number, default:0}
         , num: {type:Number, default:0}
