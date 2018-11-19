@@ -160,10 +160,10 @@ module.exports = function (router, passport) {
     //홈 화면에서 검색시
     router.route('/home_search').post(function (req,res){
       console.log('/home_search 패스 요청됨.');
-      console.log(req.body.search);
       var database = req.app.get('database');
-      database.db.collection("moimlists").find({'title': {$regex:req.body.search}}).toArray(function(err,searchMoim){
-        console.log(searchMoim)
+      database.db.collection("moimlists")
+      .find({$or:[{'title': {$regex:req.body.search}},{'keyword': {$regex:req.body.search}}]})
+      .toArray(function(err,searchMoim){
         if (Array.isArray(req.user)) {
             res.render('home_search.ejs', {
                 user: req.user[0]._doc,
