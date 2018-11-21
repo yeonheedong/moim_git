@@ -120,10 +120,10 @@ module.exports = function (router, passport) {
                             for (var j = 0; j < moims.length; j++) {
                                 if (moimlists[i]._id.toString() == moims[j].moim_id && user.getTime() < moims[j].updatedAt.getTime()) {
                                     for (var k = 0; k < users.length; k++) {
-                                        if (users[k]._id.toString() == moims[j].user_id){
+                                        if (users[k]._id.toString() == moims[j].user_id) {
                                             notification.push(users[k].name + "님이 " + moimlists[i].title + "모임에 입장하셨습니다.");
                                             alarm.push(moimlists[i]._id.toString());
-                                          }
+                                        }
                                     }
                                 }
                             }
@@ -141,7 +141,7 @@ module.exports = function (router, passport) {
                                         Moim: searchMoim
                                     });
                                 } else {
-                                  console.log(searchMoim);
+                                    console.log(searchMoim);
                                     res.render('home.ejs', {
                                         user: req.user,
                                         Moim: searchMoim,
@@ -158,24 +158,34 @@ module.exports = function (router, passport) {
     });
 
     //홈 화면에서 검색시
-    router.route('/home_search').post(function (req,res){
-      console.log('/home_search 패스 요청됨.');
-      var database = req.app.get('database');
-      database.db.collection("moimlists")
-      .find({$or:[{'title': {$regex:req.body.search}},{'keyword': {$regex:req.body.search}}]})
-      .toArray(function(err,searchMoim){
-        if (Array.isArray(req.user)) {
-            res.render('home_search.ejs', {
-                user: req.user[0]._doc,
-                Moim: searchMoim
+    router.route('/home_search').post(function (req, res) {
+        console.log('/home_search 패스 요청됨.');
+        var database = req.app.get('database');
+        database.db.collection("moimlists")
+            .find({
+                $or: [{
+                    'title': {
+                        $regex: req.body.search
+                    }
+                }, {
+                    'keyword': {
+                        $regex: req.body.search
+                    }
+                }]
+            })
+            .toArray(function (err, searchMoim) {
+                if (Array.isArray(req.user)) {
+                    res.render('home_search.ejs', {
+                        user: req.user[0]._doc,
+                        Moim: searchMoim
+                    });
+                } else {
+                    res.render('home_search.ejs', {
+                        user: req.user,
+                        Moim: searchMoim
+                    });
+                }
             });
-        } else {
-            res.render('home_search.ejs', {
-                user: req.user,
-                Moim: searchMoim
-          });
-        }
-      });
     });
 
     // 프로필 화면( 헤더 파일 있음 )
@@ -1137,6 +1147,7 @@ module.exports = function (router, passport) {
         var latitude = req.body.latitude.substring(0, 9);
         var longitude = req.body.longitude.substring(0, 10);
         var moimId = req.body.moimid;
+        var bool = 1;
 
         var OPTIONS = {
             headers: {
@@ -1163,20 +1174,29 @@ module.exports = function (router, passport) {
                 _id: moimId,
                 location: user_loc
             }, function (err, Moim_list) {
-                if (err) {
-                    console.log("모임의 위치가 다릅니다. 예외처리"); //왜 로그 안찍히지..?
-                    throw err; //위치 다른경우는 에러가 난다. 예외처리
-                } else {
-                    console.log("<모임정보>\n" + Moim_list);
+                if (Moim_list == null) {
+                    console.log("모임의 위치가 다릅니다. 예외처리");
+                    //attendance
+                    database.Attendance.updateOne({
+                        moim_id: moimId,
+                        user_id: req.user._id,
+                        num: this_num 
+                    }, {
+                        $set: {
+                            "state": '인증실패'
+                        }
+                    }, function (err, att) {
+                        console.log(att);
+                    });
+                } else {//모임 위치==유저 위치
+                    console.log("<모임정보>\n" + Moim_list); 
                     console.log(moimId + "모임의 위치::\n" + Moim_list.location + "\n");
 
                     //attendance
                     database.Attendance.updateOne({
                         moim_id: moimId,
-                        user_id: req.user._id
-                            //,num:3 회차 출결 변경 <-몇회차 출석인지는 방장에게 입력받는걸로.
-                            ,
-                        num: this_num
+                        user_id: req.user._id,
+                        num: this_num //<-몇회차 출석인지는 방장에게 입력받는걸로.
                     }, {
                         $set: {
                             "state": '출석',
@@ -1185,15 +1205,14 @@ module.exports = function (router, passport) {
                             //total_num을 모임의 전체횟수로 보는지 or 회원이 모임에 참여한 횟수로 보는지..?
                         }
                     }, function (err, att) {
-                        //att.total_num=1;
-                        //att.state="출석"
                         console.log(att);
                     });
+                    //여기 res.redirect도 아닌거같은데
                 }
             });
         });
         //값 같으면 1.attendance데이터베이스 update하고 2.출석완료 페이지render
-        //값 다르면 다시인증하라는 페이지
+        //출석부에서 확인하라는 페이지
         res.redirect('/moim/att_done?id=' + moimId);
     });
 
@@ -1268,7 +1287,7 @@ module.exports = function (router, passport) {
         console.log("this_num : " + this_num);
 
         var moimId = req.body.moimid;
-        console.log(moimId + " 모임 관리 시작");
+        console.log(moimId + " 출석회차 설정");
 
         var database = req.app.get('database');
         var moim = new database.MoimList();
