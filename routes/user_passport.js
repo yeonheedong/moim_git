@@ -1180,7 +1180,7 @@ module.exports = function (router, passport) {
                     database.Attendance.updateOne({
                         moim_id: moimId,
                         user_id: req.user._id,
-                        num: this_num 
+                        num: this_num
                     }, {
                         $set: {
                             "state": '인증실패'
@@ -1188,8 +1188,8 @@ module.exports = function (router, passport) {
                     }, function (err, att) {
                         console.log(att);
                     });
-                } else {//모임 위치==유저 위치
-                    console.log("<모임정보>\n" + Moim_list); 
+                } else { //모임 위치==유저 위치
+                    console.log("<모임정보>\n" + Moim_list);
                     console.log(moimId + "모임의 위치::\n" + Moim_list.location + "\n");
 
                     //attendance
@@ -1692,6 +1692,88 @@ module.exports = function (router, passport) {
                                     });
                                 } else {
                                     res.render('moim/allAttendance.ejs', {
+                                        user: req.user,
+                                        moim: moim,
+                                        table: table,
+                                        attendance: attendance,
+                                        users: users
+                                    });
+                                }
+                            });
+                        });
+                    });
+                });
+            });
+        }
+    });
+
+    //백
+    // 모임 참여자 목록 (get)
+    router.route('/moim/members').get(function (req, res) {
+        console.log('/members 패스 요청됨.');
+
+        console.log('req.user의 정보');
+        console.dir(req.user);
+
+        // 인증 안된 경우
+        if (!req.user) {
+            console.log('사용자 인증 안된 상태임.');
+            res.render('/', {
+                login_success: false
+            });
+        } else {
+            var moimId = req.param('id');
+            console.log(moimId + " 모임 회차별 관리");
+
+            var database = req.app.get('database');
+            var moim = new database.MoimList();
+            var moimTable = new database.MoimTable();
+            var attendance = new database.Attendance();
+            var Moim = new database.Moim();
+            var users = new database.UserModel();
+
+            database.UserModel.find({}).sort({
+                _id: +1
+            }).exec(function (err, users) {
+                if (err) throw err;
+                console.log(users);
+
+                database.Moim.find({
+                    moim_id: moimId
+                }).sort({
+                    createdAt: +1
+                }).exec(function (err, Moim) {
+                    if (err) throw err;
+
+                    database.MoimTable.find({
+                        moim_id: moimId
+                    }).sort({
+                        num: +1
+                    }).exec(function (err, table) {
+                        if (err) throw err;
+
+                        database.Attendance.find({
+                            moim_id: moimId
+                        }).sort({
+                            num: +1
+                        }).exec(function (err, attendance) {
+                            if (err) throw err;
+
+                            database.MoimList.findOne({
+                                _id: moimId
+                            }, function (err, moim) {
+                                if (err) throw err;
+
+                                if (Array.isArray(req.user)) {
+                                    res.render('moim/att_user.ejs', {
+                                        user: req.user[0]._doc,
+                                        moim: moim,
+                                        table: table,
+                                        attendance: attendance,
+                                        users: users
+                                    });
+                                } else {
+                                    res.render('moim/att_user.ejs', {
                                         user: req.user,
                                         moim: moim,
                                         table: table,
