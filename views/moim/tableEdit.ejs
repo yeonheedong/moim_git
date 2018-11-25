@@ -76,63 +76,65 @@
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="/moim/moimHome?id=<%=moim._id%>">
-                                <span data-feather="home"></span>
-                                MoimHome
+                            <a class="nav-link active" href="/moim/moimHome?id=<%=moim._id%>">
+                                <img src="../../public/지구.png" width="30px">
+                                MoimHome <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                <span data-feather="users"></span>
+                                <img src="../../public/천문대.png" width="30px">
                                 참여자 목록
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="shopping-cart"></span>
+                            <a class="nav-link" href="/moim/attendance?id=<%=moim._id%>">
+                                <img src="../../public/출석부.png" width="30px">
                                 출석부
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file"></span>
+                            <a class="nav-link" href="/moim/boardIndex?id=<%=moim._id%>">
+                                <img src="../../public/지구.png" width="30px">
                                 게시판
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="layers"></span>
+                            <a class="nav-link" href="/moim/att_verification?id=<%=moim._id%>">
+                                <img src="../../public/행성.png" width="30px">
                                 출석인증
                             </a>
                         </li>
                     </ul>
 
+                   <% if(moim.manager==user._id){%>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                         <span>모임 관리</span>
                         <a class="d-flex align-items-center text-muted" href="#">
-                            <span data-feather="plus-circle"></span>
+                           
                         </a>
                     </h6>
                     <ul class="nav flex-column mb-2">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
+                            <a class="nav-link" href="/moim/att_manager?id=<%=moim._id%>">
+                                <img src="../../public/깃발.png" width="30px">
                                 인증 번호
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
+                            <a class="nav-link" href="/moim/allAttendance?id=<%=moim._id%>">
+                                <img src="../../public/출석부.png" width="30px">
                                 전체 출석부
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/moim/moimSetting?id=<%=moim._id%>">
-                                <span data-feather="file-text"></span>
-                                회차별 관리 <span class="sr-only">(current)</span>
+                            <a class="nav-link" href="/moim/moimSetting?id=<%=moim._id%>">
+                                <img src="../../public/천문대.png" width="30px">
+                                회차별 관리
                             </a>
                         </li>
                     </ul>
+                    <% } %>
                 </div>
             </nav>
 

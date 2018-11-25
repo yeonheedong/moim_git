@@ -107,6 +107,7 @@
                         </li>
                     </ul>
 
+                   <% if(moim.manager==user._id){%>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                         <span>모임 관리</span>
                         <a class="d-flex align-items-center text-muted" href="#">
@@ -115,7 +116,7 @@
                     </h6>
                     <ul class="nav flex-column mb-2">
                         <li class="nav-item">
-                            <a class="nav-link" href="/moim/manager_att?id=<%=moim._id%>">
+                            <a class="nav-link" href="/moim/att_manager?id=<%=moim._id%>">
                                 <img src="../../public/깃발.png" width="30px">
                                 인증 번호
                             </a>
@@ -133,6 +134,7 @@
                             </a>
                         </li>
                     </ul>
+                    <% } %>
                 </div>
             </nav>
 
