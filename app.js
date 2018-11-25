@@ -14,6 +14,19 @@ var express = require('express')
   , http = require('http')
   , path = require('path');
 
+var fs = require('fs');
+var multer = require('multer');
+var upload = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'public/uploads');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname);
+    }
+  }),
+});
+
 // Express의 미들웨어 불러오기
 var bodyParser = require('body-parser')
   , cookieParser = require('cookie-parser')

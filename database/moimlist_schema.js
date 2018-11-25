@@ -23,6 +23,8 @@ var MoimListSchema = mongoose.Schema({
         , createdAt:{type:Date, 'default':Date.now}
         , updatedAt: {type:Date, 'default':Date.now}
         , state: {type:String, 'default':'waiting'}
+	, fileName: {type : String, 'default':'default.png'}
+        , path:  {type: String}
 	});
     
     

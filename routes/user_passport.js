@@ -1,6 +1,25 @@
 /* userPassport, moimList merge ver. + header */
 var eth = require("../dapp/eth.js");
 var request = require("request");
+var fs = require('fs');
+var multer = require('multer');
+var upload = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/upload/');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname);
+    }
+  }),
+});
+var option = {
+    mode : 'text',
+    pythonPath: '',
+    pythonOptions: ['-u'],
+    scriptPath: '',
+    args: ['image', 'page', 'result']
+};
 module.exports = function (router, passport) {
     console.log('user_passport 호출됨.');
     console.log('moimlist 호출됨');
@@ -379,7 +398,7 @@ module.exports = function (router, passport) {
 
 
     // 모임 만들기 (post)
-    router.route('/new/new_moim').post(function (req, res) {
+    router.route('/new/new_moim').post(upload.single('file'), function (req, res) {
         //60토큰 차감
         // eth.join(req.user.address, req.user.hashed_password, 60);
         console.log('new_moim 패스 요청됨.');
@@ -423,6 +442,12 @@ module.exports = function (router, passport) {
                 "finish_at": finish_at,
                 count: 1
             });
+            
+            console.log(req.file);
+            if(req.file){
+                newMoimList.fileName = req.file.originalname;
+                newMoimList.path = req.file.path;
+            }
 
             newMoimList.save(function (err) {
                 if (err) {
