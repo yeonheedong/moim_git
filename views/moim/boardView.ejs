@@ -133,7 +133,9 @@
                             </a>
                         </li>
                     </ul>
-
+                    
+                    <!--방장만 보이는 메뉴-->
+                    <% if(moim.manager==user._id){%>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                         <span>모임 관리</span>
                         <a class="d-flex align-items-center text-muted" href="#">
@@ -160,6 +162,7 @@
                             </a>
                         </li>
                     </ul>
+                    <% } %>
                 </div>
             </nav>
 
