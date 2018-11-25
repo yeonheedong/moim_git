@@ -110,8 +110,7 @@
                                         <%=moim.title%></a></p>
                                 <%}%>
                                 <td for="data">날짜
-                                    <%=moim.start_at%>~
-                                    <%=moim.finish_at%>
+                                    <%=(moim.start_at).getFullYear()%>.<%=((moim.start_at).getMonth())+1 %>.<%=((moim.start_at).getDate()) %> ~ <%=(moim.finish_at).getFullYear()%>.<%=((moim.finish_at).getMonth())+1 %>.<%=((moim.finish_at).getDate()) %>
                                 </td><br>
                                 <td for="member_type">권한
                                     <%=Moim.member_type%>
