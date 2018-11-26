@@ -4,17 +4,17 @@ var request = require("request");
 var fs = require('fs');
 var multer = require('multer');
 var upload = multer({
-  storage: multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, './public/upload/');
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.originalname);
-    }
-  }),
+    storage: multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, './public/upload/');
+        },
+        filename: function (req, file, cb) {
+            cb(null, file.originalname);
+        }
+    }),
 });
 var option = {
-    mode : 'text',
+    mode: 'text',
     pythonPath: '',
     pythonOptions: ['-u'],
     scriptPath: '',
@@ -398,10 +398,11 @@ module.exports = function (router, passport) {
 
 
     // 모임 만들기 (post)
-    // 모임 만들기 (post)
-    router.route('/new/new_moim').post(upload.single('file'), function(req, res) {
+    router.route('/new/new_moim').post(upload.single('file'), function (req, res) {
+        //60토큰 차감
+        // eth.join(req.user.address, req.user.hashed_password, 60);
         console.log('new_moim 패스 요청됨.');
-        
+
         // 인증된 경우, req.user 객체에 사용자 정보 있으며, 인증안된 경우 req.user는 false값임
         console.log('req.user 객체의 값');
         console.dir(req.user);
@@ -414,8 +415,11 @@ module.exports = function (router, passport) {
             console.log('사용자 인증된 상태임.');
             console.log('/new_moim 패스 요청됨.');
             console.dir(req.user);
-            
+
             var database = req.app.get('database');
+
+            //git올리다가 이부분 빠졌는데
+            //다시쓰니까 에러남ㅜㅠ어째서
             
             var title = req.body.title;
             var introduction = req.body.introduction;
@@ -428,46 +432,83 @@ module.exports = function (router, passport) {
             var start_at = req.body.start_at;
             var finish_at = req.body.finishat;
 
-            var newMoimList = new database.MoimList({"title":title, "manager":req.user._id, "introduction":introduction, "keyword":keyword, "min_num":min_num, "max_num":max_num, "location":location, "start":start, "finish":finish, "start_at":start_at, "finish_at":finish_at, count:1});
-            
+            var newMoimList = new database.MoimList({
+                "title": title,
+                "manager": req.user._id,
+                "introduction": introduction,
+                "keyword": keyword,
+                "min_num": min_num,
+                "max_num": max_num,
+                "location": location,
+                "start": start,
+                "finish": finish,
+                "start_at": start_at,
+                "finish_at": finish_at,
+                count: 1
+            });
+
             console.log(req.file);
-            if(req.file){
+            if (req.file) {
                 newMoimList.fileName = req.file.originalname;
                 newMoimList.path = req.file.path;
             }
-            
-            newMoimList.save(function(err) {
-                  if (err) {
-                     throw err;
-                  }
-                  console.log("모임리스트 데이터 추가함.");
+
+            newMoimList.save(function (err) {
+                if (err) {
+                    throw err;
+                }
+                console.log("모임리스트 데이터 추가함.");
             });
 
             var moimId = newMoimList._id;
 
             var newMoim = new database.Moim({
-              moim_id:moimId
-            , user_id: req.user._id 
-            , member_type: 'manager'
-            , payment: 0
-            , event_refund: 0
-            , total_refund: 0
-            , state: 'waiting'});
-        
-            newMoim.save(function(err) {
-                  if (err) {
-                     throw err;
-                  }
-                  console.log("모임 데이터 추가함.");
+                moim_id: moimId,
+                user_id: req.user._id,
+                member_type: 'manager',
+                payment: 0,
+                event_refund: 0,
+                total_refund: 0,
+                state: 'waiting'
             });
+            newMoim.save(function (err) {
+                if (err) {
+                    throw err;
+                }
+                console.log("모임 데이터 추가함.");
+            });
+            
+            //git 올리면서 history부분 지워져서 다시올림
+            database.MoimList.findOne({
+                _id: moimId
+            }, function (err, moim) {
+                if (err) throw err;
+                var history = new database.History({
+                    user_id: req.user._id,
+                    history: title + "모임을 생성해서 60토큰 차감"
+                    //moim.title하면 에러나서 그냥 위에 req.body로 받아온 title로
+                });
+                history.save(function (err) {
+                    if (err) {
+                        throw err;
+                    }
+                    console.log("history 추가 완료");
+                });
+            });
+            
 
             if (Array.isArray(req.user)) {
-                res.render('new/new_complete.ejs', {user: req.user[0]._doc, moim:newMoimList});
+                res.render('new/new_complete.ejs', {
+                    user: req.user[0]._doc,
+                    moim: newMoimList
+                });
             } else {
-                res.render('new/new_complete.ejs', {user: req.user, moim:newMoimList});
+                res.render('new/new_complete.ejs', {
+                    user: req.user,
+                    moim: newMoimList
+                });
             }
         }
-        
     });
 
 
@@ -1754,7 +1795,7 @@ module.exports = function (router, passport) {
                                 if (Array.isArray(req.user)) {
                                     res.render('moim/members.ejs', {
                                         user: req.user[0]._doc,
-                                        moim: moim,//moimlist
+                                        moim: moim, //moimlist
                                         table: table,
                                         attendance: attendance,
                                         users: users
