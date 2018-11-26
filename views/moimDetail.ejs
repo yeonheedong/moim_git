@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang=en>
-
-<head>
+    <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -12,124 +11,99 @@
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 
     <!-- Custom styles for this template -->
     <link href="form-validation.css" rel="stylesheet">
-</head>
-
-<body>
+   </head>
+   <body>
     <header>
         <div class="fixed-top d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-            <a href="/home" class="p-2 text-dark">MOIM</a>
-            <h5 class="my-0 mr-md-auto font-weight-normal"></h5>
-            <nav class="my-2 my-md-0 mr-md-3">
-                <a href="#" class="p-2 text-dark"><span class="fa fa-search"></span></a>
-                <% if (user.provider == undefined || user.provider == '') { %>
-                <a href="/profile/profile_main" class="p-2 text-blue">
-                    <%= user.name %> 님 환영합니다</a>
-                <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in">
-                        <% } %>
-                    </span></a>
-            </nav>
+        <a href="/home" class="p-2 text-dark">MOIM</a>
+        <h5 class="my-0 mr-md-auto font-weight-normal"></h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+        <a href="#" class="p-2 text-dark"><span class="fa fa-search"></span></a>
+        <% if (user.provider == undefined || user.provider == '') { %>
+        <a href="/profile/profile_main" class="p-2 text-blue"><%= user.name %> 님 환영합니다</a>
+        <a href="/logout" class="p-2 text-dark"><span class="fa fa-sign-in">
+        <% } %>
+        </span></a>
+        </nav>
         </div>
     </header>
-
-    <main role="main">
-        <br><br><br>
-        <section class="container">
-            <h1 class="jumbotron-heading">모임 상세보기</h1><br>
-
-
-            <section class=mb-4>
-                <div class=mb-4>
-                    <h3>
-                        <%= Moim.title %>
-                    </h3>
-                    <img src="../public/upload/<%= Moim.fileName%>" width="400" height="300">
+        
+       <main role="main">
+    <br><br><br>
+      <section class="container">
+              <h1 class="jumbotron-heading">모임 상세보기</h1><br>
+                     
+                
+                <section class = mb-4>
+                <div class = mb-4>
+                <h3> <%= Moim.title %> </h3>
+                <img src="../public/upload/<%= Moim.fileName%>" width="400" height="300">
                 </div>
-
-
+             
+                
                 <h5> 상세보기 </h5>
-
-                <div class="mb-2">
-                    <div class="title">모임이름:
-                        <%= Moim.title %>
-                    </div>
-
-                    <% if(manager.length>0){ %>
-                    <% var i=0;%>
-                    <% manager.forEach(function(manager){%>
-                    <% i++; %>
-                    <% if(manager._id == Moim.manager) { %>
-                    <div class="manager">방장:
-                        <%= manager.name %>
-                    </div>
-                    <%}%>
-
-                    <%})%>
-                    <%}%>
-
-                    <div class="keyword">주제:
-                        <%= Moim.keyword %>
-                    </div>
-                    <div class="introduction">소개:
-                        <%= Moim.introduction %>
-                    </div>
-                    <div class="location">지역:
-                        <%= Moim.location %>
-                    </div>
-                    <div class="max">총 모집인원:
-                        <%= Moim.max_num %>
-                    </div>
-                    <div class="count">현재 참여인원:
-                        <%= Moim.count %>
-                    </div>
-                    <div for="data">모임기간:
-                        <%=Moim.start%>-
-                        <%=Moim.finish%>
-                    </div>
-                    <div for="waiting_data">모집기간:
-                        <%=Moim.start_at%>-
-                        <%=Moim.finish_at%>
-                    </div>
-                </div>
-
-                <% if(Moim.manager != user._id && Moim._id == moim.moim_id){%>
-                <form method="post" action="/join/moimDetail">
-                    <input type="hidden" name="moimid" value="<%=id%>">
-                    <input class="btn btn-lg btn-secondary" "style=float:right;" type="submit" value="참여하기" role="botton">
-                </form>
-                <%}%>
-
-                <% if(Moim.manager == user._id){%>
-                <a class="btn btn-lg btn-secondary" href="/cancel/waiting_cancel?id=<%= Moim._id%>">개설 취소</a>
-                <%}%>
-
-                <% if(Moim.max_num == Moim.count && Moim.manager == user._id){%>
-                <a class="btn btn-lg btn-secondary" href="/approval?id=<%= Moim._id%>">모임 시작하기</a>
-                <%}%>
-
-                <% var today = Date.now();%>
-
-                <% if(Moim.finish_at == today && Moim.manager == user._id){%>
-                <a class="btn btn-lg btn-secondary" href="/approval?id=<%= Moim._id%>">모임 시작하기</a>
-                <%}%>
-
-
-                <a class="btn btn-lg btn-primary" href="javascript:history.back();" role="botton">돌아가기</a>
-
-
-            </section>
-
-
-        </section>
-
-
-
-    </main>
-</body>
-
+        
+                            <div class="mb-2">
+                            <div class="title">모임이름: <%= Moim.title %></div>
+                                                            
+                            <% if(manager.length>0){ %>
+                                <% var i=0;%>
+                                <% manager.forEach(function(manager){%>
+                                <% i++; %>
+                                    <% if(manager._id == Moim.manager) { %>
+                                    <div class="manager">방장: <%= manager.name %></div>
+                                <%}%>
+                                    
+                                <%})%>
+                            <%}%>
+                            
+                            <div class="keyword">주제: <%= Moim.keyword %></div>
+                            <div class="introduction">소개: <%= Moim.introduction %></div>
+                            <div class="location">지역: <%= Moim.location %></div>
+                            <div class="max">총 모집인원: <%= Moim.max_num %></div>
+                            <div class="count">현재 참여인원: <%= Moim.count %></div>
+                            <div for="data">모임기간: <%=Moim.start%>-<%=Moim.finish%></div>
+                            <div for="waiting_data">모집기간: <%=Moim.start_at%>-<%=Moim.finish_at%></div>
+                            </div>
+                            
+                            <% if(Moim.manager != user._id && Moim._id == moim.moim_id){%>
+                            <form method="post" action="/join/moimDetail">
+                            <input type="hidden" name="moimid" value="<%=id%>">
+                            <input class="btn btn-lg btn-secondary" "style=float:right;" type="submit" value="참여하기" role="botton">
+                            </form>
+                            <%}%>
+                    
+                            <% if(Moim.manager == user._id){%>
+                            <a class="btn btn-lg btn-secondary" href="/cancel/waiting_cancel?id=<%= Moim._id%>">개설 취소</a>
+                            <%}%>
+                    
+                            <% if(Moim.max_num == Moim.count && Moim.manager == user._id){%>
+                            <a class="btn btn-lg btn-secondary" href="/approval?id=<%= Moim._id%>">모임 시작하기</a>
+                            <%}%>
+                    
+                            <% var today = Date.now();%>
+                    
+                            <% if(Moim.finish_at == today && Moim.manager == user._id){%>
+                            <a class="btn btn-lg btn-secondary" href="/approval?id=<%= Moim._id%>">모임 시작하기</a>
+                            <%}%>                    
+                    
+                    
+                            <a class="btn btn-lg btn-primary" href="javascript:history.back();" role="botton">돌아가기</a>
+                            
+                    
+                </section>
+               
+         
+    </section>
+     
+            
+        
+        </main>         
+   </body>
 </html>

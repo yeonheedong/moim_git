@@ -398,11 +398,10 @@ module.exports = function (router, passport) {
 
 
     // 모임 만들기 (post)
-    router.route('/new/new_moim').post(upload.single('file'), function (req, res) {
-        //60토큰 차감
-        // eth.join(req.user.address, req.user.hashed_password, 60);
+    // 모임 만들기 (post)
+    router.route('/new/new_moim').post(upload.single('file'), function(req, res) {
         console.log('new_moim 패스 요청됨.');
-
+        
         // 인증된 경우, req.user 객체에 사용자 정보 있으며, 인증안된 경우 req.user는 false값임
         console.log('req.user 객체의 값');
         console.dir(req.user);
@@ -415,7 +414,9 @@ module.exports = function (router, passport) {
             console.log('사용자 인증된 상태임.');
             console.log('/new_moim 패스 요청됨.');
             console.dir(req.user);
-
+            
+            var database = req.app.get('database');
+            
             var title = req.body.title;
             var introduction = req.body.introduction;
             var keyword = req.body.keyword;
@@ -427,85 +428,46 @@ module.exports = function (router, passport) {
             var start_at = req.body.start_at;
             var finish_at = req.body.finishat;
 
-            var database = req.app.get('database');
-            var newMoimList = new database.MoimList({
-                "title": title,
-                "manager": req.user._id,
-                "introduction": introduction,
-                "keyword": keyword,
-                "min_num": min_num,
-                "max_num": max_num,
-                "location": location,
-                "start": start,
-                "finish": finish,
-                "start_at": start_at,
-                "finish_at": finish_at,
-                count: 1
-            });
+            var newMoimList = new database.MoimList({"title":title, "manager":req.user._id, "introduction":introduction, "keyword":keyword, "min_num":min_num, "max_num":max_num, "location":location, "start":start, "finish":finish, "start_at":start_at, "finish_at":finish_at, count:1});
             
             console.log(req.file);
             if(req.file){
                 newMoimList.fileName = req.file.originalname;
                 newMoimList.path = req.file.path;
             }
-
-            newMoimList.save(function (err) {
-                if (err) {
-                    throw err;
-                }
-                console.log("모임리스트 데이터 추가함.");
+            
+            newMoimList.save(function(err) {
+                  if (err) {
+                     throw err;
+                  }
+                  console.log("모임리스트 데이터 추가함.");
             });
-
 
             var moimId = newMoimList._id;
 
             var newMoim = new database.Moim({
-                moim_id: moimId,
-                user_id: req.user._id,
-                member_type: 'manager',
-                payment: 0,
-                event_refund: 0,
-                total_refund: 0,
-                state: 'waiting'
-            });
-
-            newMoim.save(function (err) {
-                if (err) {
-                    throw err;
-                }
-                console.log("모임 데이터 추가함.");
-            });
-
-            database.MoimList.findOne({
-                _id: moimId
-            }, function (err, moim) {
-                if (err) throw err;
-                var history = new database.History({
-                    user_id: req.user._id,
-                    history: moim.title + "모임을 생성해서 60토큰 차감"
-                });
-
-                history.save(function (err) {
-                    if (err) {
-                        throw err;
-                    }
-                    console.log("history 추가 완료");
-                });
+              moim_id:moimId
+            , user_id: req.user._id 
+            , member_type: 'manager'
+            , payment: 0
+            , event_refund: 0
+            , total_refund: 0
+            , state: 'waiting'});
+        
+            newMoim.save(function(err) {
+                  if (err) {
+                     throw err;
+                  }
+                  console.log("모임 데이터 추가함.");
             });
 
             if (Array.isArray(req.user)) {
-                res.render('new/new_complete.ejs', {
-                    user: req.user[0]._doc,
-                    moim: newMoimList
-                });
+                res.render('new/new_complete.ejs', {user: req.user[0]._doc, moim:newMoimList});
             } else {
-                res.render('new/new_complete.ejs', {
-                    user: req.user,
-                    moim: newMoimList
-                });
+                res.render('new/new_complete.ejs', {user: req.user, moim:newMoimList});
             }
         }
-
+        
     });
 
 
@@ -1790,15 +1752,15 @@ module.exports = function (router, passport) {
                                 if (err) throw err;
 
                                 if (Array.isArray(req.user)) {
-                                    res.render('moim/att_user.ejs', {
+                                    res.render('moim/members.ejs', {
                                         user: req.user[0]._doc,
-                                        moim: moim,
+                                        moim: moim,//moimlist
                                         table: table,
                                         attendance: attendance,
                                         users: users
                                     });
                                 } else {
-                                    res.render('moim/att_user.ejs', {
+                                    res.render('moim/members.ejs', {
                                         user: req.user,
                                         moim: moim,
                                         table: table,
