@@ -267,16 +267,17 @@ module.exports = function (router, passport) {
                     user: req.user[0]._doc
                 });
             } else {
-                console.log("route/token - address : " + req.user.address)
-                // var tokenAmount = eth.getTokenAmount(req.user.address);
+                //eth부분 주석 풀었음
+                console.log("route/token - address : " + req.user.address);
+                 var tokenAmount = eth.getTokenAmount(req.user.address);
                 console.log(tokenAmount + "@@@@@@@@@@@");
-                // var test = new ObjectId(historys[0].user_id);
-                // var tokenAmount,data2;
-                // database.db.collection("users").findOne({'_id': test},function(err,data){
-                //   data2 = data;
-                //   tokenAmount = eth.getTokenAmount(data);
-                // })
-                // console.log('/token  = addr : ' + data2)
+                 var test = new ObjectId(historys[0].user_id);
+                 var tokenAmount,data2;
+                 database.db.collection("users").findOne({'_id': test},function(err,data){
+                   data2 = data;
+                   tokenAmount = eth.getTokenAmount(data);
+                 })
+                 console.log('/token  = addr : ' + data2);
                 res.render('profile/token.ejs', {
                     user: req.user,
                     history: historys,
@@ -400,7 +401,7 @@ module.exports = function (router, passport) {
     // 모임 만들기 (post)
     router.route('/new/new_moim').post(upload.single('file'), function (req, res) {
         //60토큰 차감
-        // eth.join(req.user.address, req.user.hashed_password, 60);
+         eth.join(req.user.address, req.user.hashed_password, 60);
         console.log('new_moim 패스 요청됨.');
 
         // 인증된 경우, req.user 객체에 사용자 정보 있으며, 인증안된 경우 req.user는 false값임
@@ -634,12 +635,12 @@ module.exports = function (router, passport) {
         if (!req.user) {
             console.log('사용자 인증 안된 상태임.');
             res.redirect('/');
-            // } else if (eth.getTokenAmount(req.user.address) <= 40) {
-            //     res.send('<script type="text/javascript">alert("토큰이 부족합니다.");</script>');
+             } else if (eth.getTokenAmount(req.user.address) <= 40) {
+                 res.send('<script type="text/javascript">alert("토큰이 부족합니다.");</script>');
         } else {
             //40토큰 차감
             console.log("@@" + req.user.address);
-            // eth.join(req.user.address, req.user.hashed_password, 40);
+             eth.join(req.user.address, req.user.hashed_password, 40);
             console.log('사용자 인증된 상태임.');
             console.log('req.user의 정보');
             console.dir(req.user);

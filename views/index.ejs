@@ -158,9 +158,10 @@ a {
                     <% var i=0;%>
                     <% Moim.forEach(function(Moim){%>
                     <%i++;%>
-                    <div class="col-md-4"><a href="/join/moimDetail?id=<%= Moim._id%>">
+                    <div class="col-md-4">
                         <div class="card mb-4 shadow-sm"><img class="card-img-top" src="../public/upload/<%= Moim.fileName%>" alt="Card image cap" data-holder-rendered="true" height="230">
                             <div class="card-body">
+                               <a href="/join/moimDetail?id=<%= Moim._id%>">
                                 <% if(Moim.state=='waiting'){%>
                                 <p class="card=text">
                                         <%=Moim.title%></p>
@@ -170,6 +171,7 @@ a {
                                         <%=Moim.title%>
                                     </a></p>
                                 <%}%>
+                                </a>
                                 <%=Moim.keyword%> 모임
                                 <p class="card-text">
                                     <%=(Moim.start_at).getFullYear()%>.
@@ -189,7 +191,7 @@ a {
                                 </div>
                             </div>
                         </div>
-                        </a>
+                        
                     </div>
                     <%})%>
                     <%}else{%>
